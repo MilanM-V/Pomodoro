@@ -1,7 +1,8 @@
 body{
     background-image:url("../images/fond1.gif");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
+    background-size: 120vw;
     font-family: 'Nuku Nuku',sans-serif;
 }
 
