@@ -134,3 +134,17 @@ window.addEventListener("wheel", function(e) {
         e.preventDefault();
     }
 }, { passive: false });
+
+
+
+document.getElementById("start").addEventListener("click", async () => {
+    // Fetch music
+    const response = await fetch('http://127.0.0.1:5000/music');
+    const data = await response.json();
+  
+  
+    // Play music preview
+    const audio = new Audio(data.preview);
+    audio.play();
+  });
+  

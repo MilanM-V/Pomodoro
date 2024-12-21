@@ -30,7 +30,7 @@ header .wrapper{
 .content{
     background-color: rgba(0, 0, 0, 0.45);
     position: relative;
-    border-radius:30px;
+    border-radius:2vw;
     top: 30vh;
     left: 33vw;
     height: 22vh;
@@ -45,7 +45,7 @@ header .wrapper{
 
 .content button{
     font-family: 'Nuku Nuku',sans-serif;
-    border-radius: 15px;
+    border-radius: 1vw;
     position: absolute;
     background-color: rgb(216, 203, 203);
     font-size: 2vw;
