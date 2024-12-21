@@ -17,20 +17,18 @@ header .wrapper{
 
 .content{
     background-color: rgba(0, 0, 0, 0.45);
-    position: absolute;
+    position: relative;
     border-radius:30px;
-    top: 37.5%;
-    left: 35%;
-    height: 25%;
+    top: 16vw;
+    left: 31vw;
+    height: 12vw;
     width: 30%;
     text-align: center;
     
 }
 .content p {
-    position: absolute;
     font-size: 6vw;
-    top: -50%;
-    left: 27.22%;
+
   }
 
 .content button{
