@@ -36,10 +36,12 @@ header .wrapper{
     border-radius: 15px;
     position: absolute;
     background-color: rgb(216, 203, 203);
-    font-size: 32px;
+    font-size: 2vw;
+    margin-right: 10px;
 }
 
 .content #start{
+    margin-right: 10px;
     top: 65%;
     left: 6.5%;
 }
