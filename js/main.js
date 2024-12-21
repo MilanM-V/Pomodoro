@@ -20,10 +20,19 @@ x = setInterval(function() {
   var seconds = Math.floor(distance-minutes*60);
     
   //modidier le text
-  document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+  if(minutes<10 && seconds>9){
+    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
+  }else if(minutes<10 && seconds<10){
+    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
+  }else if(minutes>9 && seconds<10){
+    document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
+  }else{
+    document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+  }
+  
   distance-=1;
   //stop repetiton
-  if (minutes == 0) {
+  if (distance == 0) {
     distance=299
     clearInterval(x);
     document.getElementById("chrono").innerHTML =25 + ":" + '00';
@@ -108,3 +117,20 @@ button_restart.addEventListener('click',function(){
         }
     }
 })
+
+
+// Désactiver les raccourcis clavier pour zoomer
+window.addEventListener("keydown", function(e) {
+    if ((e.ctrlKey && e.key === '+') || (e.ctrlKey && e.key === '-') || (e.ctrlKey && e.key === '0')) {
+        e.preventDefault();
+    }
+});
+// Désactiver le zoom tactile (pinch-to-zoom)
+window.addEventListener("gesturestart", function(e) {
+    e.preventDefault();
+});
+window.addEventListener("wheel", function(e) {
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+}, { passive: false });
