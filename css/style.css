@@ -1,0 +1,66 @@
+body{
+    background-image:url("../images/fond1.gif");
+    background-repeat: no-repeat;
+    background-size: 120%;
+    font-family: 'Nuku Nuku',sans-serif;
+}
+
+@font-face {
+    font-family: 'Nuku Nuku';
+    src: url("../font/nuku-nuku.regular.ttf") format('truetype');
+}
+
+header .wrapper{
+    position: absolute;
+    left: 2%;
+}
+
+.content{
+    background-color: rgba(0, 0, 0, 0.45);
+    position: absolute;
+    border-radius:30px;
+    top: 37.5%;
+    left: 35%;
+    height: 25%;
+    width: 30%;
+    text-align: center;
+    
+}
+.content p {
+    position: absolute;
+    font-size: 6vw;
+    top: -50%;
+    left: 27.22%;
+  }
+
+.content button{
+    font-family: 'Nuku Nuku',sans-serif;
+    border-radius: 15px;
+    position: absolute;
+    background-color: rgb(216, 203, 203);
+    font-size: 32px;
+}
+
+.content #start{
+    top: 65%;
+    left: 6.5%;
+}
+
+.content #Stop{
+    top: 65%;
+    left: 37.5%;
+}
+
+.content #restart{
+    top: 65%;
+    left: 65%;
+}
+
+footer{
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
+    color: rgb(0, 0, 0);
+}
+
+
