@@ -1,7 +1,7 @@
 body{
     background-image:url("../images/fond1.gif");
     background-repeat: no-repeat;
-    background-size: 120%;
+    background-size: 100%;
     font-family: 'Nuku Nuku',sans-serif;
 }
 
@@ -12,6 +12,7 @@ body{
 
 header .wrapper{
     position: absolute;
+    top: 2%;
     left: 2%;
 }
 
