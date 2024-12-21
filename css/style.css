@@ -1,8 +1,10 @@
 body{
     background-image:url("../images/fond1.gif");
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; 
+    background-position: center center;
     background-size: cover;
-    background-size: 120vw;
+    height: 100vh;
+    margin: 0;
     font-family: 'Nuku Nuku',sans-serif;
 }
 
@@ -21,9 +23,9 @@ header .wrapper{
     background-color: rgba(0, 0, 0, 0.45);
     position: relative;
     border-radius:30px;
-    top: 16vw;
-    left: 31vw;
-    height: 12vw;
+    top: 30vh;
+    left: 33vw;
+    height: 22vh;
     width: 30%;
     text-align: center;
     
