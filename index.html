@@ -18,24 +18,29 @@
     </header>
     <main>
         <div class="content">
-            <p id="chrono">25:00</p>
-            <button id="start">Start</button>
-            <button id="Stop">Stop</button>
-            <button id="restart">restart</button>
-            <audio id="music-player">
-                <source id="audio-source" src="./musique/3-HOUR Yokohama at Sunset.mp3" type="audio/mp3">
-            </audio>
             <div class="musique">
+                <img id="coverImage"  alt="Cover MP3">
+                <p id="duree">test</p>
+                <div class="info-music">
+                    
+                    <div class="scrolling-text-container">
+                        <p  class="scrolling-text" id="titreMusique"></p>
+                    </div>
+                </div>
                 <button class="start_musique" onclick="playMusic()"><i class="fa-solid fa-play"></i></button>
                 <button class="pause_musique" onclick="pauseMusic()"><i class="fa-solid fa-pause"></i></button>
                 <button class="next_musique" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
+
             </div>
-            <img id="coverImage"  alt="Cover MP3">
-            <div class="scrolling-text-container">
-                <p  class="scrolling-text" id="titreMusique"></p>
+            <p id="chrono">25:00</p>
+            <div class="timer">
+                <button id="start">Start</button>
+                <button id="Stop">Stop</button>
+                <button id="restart">restart</button>
             </div>
-            <p id="duree">test</p>
-            
+            <audio id="music-player">
+                <source id="audio-source" src="./musique/3-HOUR Yokohama at Sunset.mp3" type="audio/mp3">
+            </audio>
         </div>
         
     </main>

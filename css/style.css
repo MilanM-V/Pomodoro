@@ -1,7 +1,8 @@
 html, body {
     margin: 0;              /* Supprime les marges par défaut */
     padding: 0;             /* Supprime les marges internes */
-    overflow: hidden;       /* Empêche le défilement */
+    overflow-x: hidden;
+    overflow-y: auto;     /* Empêche le défilement */
     height: 100%;           /* Force la hauteur à occuper tout l'écran */
 }
 
@@ -38,10 +39,18 @@ header .wrapper{
     text-align: center;
     
 }
+
+.musique{
+    position: relative;
+    background-color: #00000000;
+    width: 100%;
+    height: auto;
+}
+
 .content p {
     font-size: 6vw;
     position: relative;
-    top: 10vh;
+    top: 30%;
 
   }
 
@@ -95,46 +104,50 @@ footer{
 }
 
 .musique .start_musique{
-    top: 1vh;
-    left: 18vw;
+    top: 3%;
+    right: 22%;
 }
 .musique .pause_musique{
-    top: 1vh;
-    left: 22vw;
+    top: 3%;
+    right: 12%;
 }
 .musique .next_musique{
-    top: 1vh;
-    left: 25vw;
+    top: 3%;
+    right: 2%;
 }
 
-.content #coverImage{
-    height: 10.5vh;
-    width: 7vw;
+.musique img{
+    height: auto;
+    width: 20%;
     position: absolute;
     border-width: 0px;
     top: 1.5vh;
     border-radius: 1vw;
     left: 1vw;
 }
+.musique #duree{
+    font-size: 2.5vw;
+    position: absolute;
+    left: 8.5vw;
+    top: -50%;
+    color: aliceblue;
 
-.scrolling-text-container {
+}
+.musique .scrolling-text-container {
+    
     width: 12vw;
-    height: 5vh;
+    height: auto;
     overflow: hidden;
     background-color: #00000000;
     position: absolute;
-    top:8vh ;
-    left: 9vw;
-    font-size: 5px;
-
+    left: 7vw;
+    top: 1.5vh;
 }
 
-
-
-.scrolling-text {
+.musique .scrolling-text {
     left: 1vw;
     position: absolute;
-    color: #000000;
+    color: #ffffff;
     animation: scrollText 30s linear infinite;
     white-space: nowrap;
     transform: translateX(0);
@@ -143,33 +156,22 @@ footer{
     0% {
         transform: translateX(0); /* Débute visible */
         font-size:1.5vw;
-        top:-4vh;
     }
     10% {
         transform: translateX(0); /* Reste visible pendant 2 secondes */
         font-size:1.5vw;
-        top:-4vh;
     }
     50% {
         transform: translateX(-100%); /* Défile vers la gauche */
         font-size:1.5vw;
-        top:-4vh;
     }
     100% {
         transform: translateX(-100%); /* Reviens à la position de départ */
         font-size:1.5vw;
-        top:-4vh;
     }
     100% {
         transform: translateX(0); /* Reviens à la position de départ */
         font-size:1.5vw;
-        top:-4vh;
     }
 }
 
-#duree{
-    font-size: 1.8vw;
-    position: absolute;
-    top: -1.5vh;
-    left: 11vw;
-}
