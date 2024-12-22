@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="./css/style.css">
 	<script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
-    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
     <title>Pomodoro</title>
 </head>
 <body class="page">
     <header>
 		<div class="wrapper">
 			<h1 class="Title" >Pomodoro Timer by Milan</h1>
+            <p id="song-title"></p>
 		</div>
     </header>
     <main>
@@ -20,15 +22,33 @@
             <button id="start">Start</button>
             <button id="Stop">Stop</button>
             <button id="restart">restart</button>
+            <audio id="music-player">
+                <source id="audio-source" src="./musique/3-HOUR Yokohama at Sunset.mp3" type="audio/mp3">
+            </audio>
+            <div class="musique">
+                <button class="start_musique" onclick="playMusic()"><i class="fa-solid fa-play"></i></button>
+                <button class="pause_musique" onclick="pauseMusic()"><i class="fa-solid fa-pause"></i></button>
+                <button class="next_musique" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
+            </div>
+            <img id="coverImage"  alt="Cover MP3">
+            <div class="scrolling-text-container">
+                <p  class="scrolling-text" id="titreMusique"></p>
+            </div>
+            <p id="duree">test</p>
+            
         </div>
+        
     </main>
 
 	<footer>
+        
 		<div class="copyright">
 			&copy; Copyright <strong><span>Milan MARCHAND--VALAT</span></strong>. All Rights Reserved
         </div>
 	</footer>
     
 <script src="./js/main.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
 </body>
 </html>

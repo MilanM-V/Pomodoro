@@ -16,8 +16,8 @@ x = setInterval(function() {
 
 
   //calcule du temps
-  var minutes = Math.floor(distance /60);
-  var seconds = Math.floor(distance-minutes*60);
+  let minutes = Math.floor(distance /60);
+  let seconds = Math.floor(distance-minutes*60);
     
   //modidier le text
   if(minutes<10 && seconds>9){
@@ -54,11 +54,19 @@ x = setInterval(function() {
 
 
   //calcule du temps
-  var minutes = Math.floor(distance /60);
-  var seconds = Math.floor(distance-minutes*60);
+  let minutes = Math.floor(distance /60);
+  let seconds = Math.floor(distance-minutes*60);
     
   //modidier le text
-  document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+  if(minutes<10 && seconds>9){
+    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
+  }else if(minutes<10 && seconds<10){
+    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
+  }else if(minutes>9 && seconds<10){
+    document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
+  }else{
+    document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+  }
   distance-=1;
   //stop repetiton
   if (minutes ==0) {
@@ -72,6 +80,7 @@ x = setInterval(function() {
 const button_start=document.getElementById('start');
 button_start.addEventListener('click',function(){
     if (run==false){
+        audioPlayer.play();  
         if (chronos=='chrono25'){
             chrono25()
             run=true
@@ -101,7 +110,7 @@ button_restart.addEventListener('click',function(){
             chrono25()
         }else{
             distance=299
-            document.getElementById('chrono').innerHTML ='5' + ":" + '00';
+            document.getElementById('chrono').innerHTML ='05' + ":" + '00';
             chrono5()
         }
         run=false
@@ -113,7 +122,7 @@ button_restart.addEventListener('click',function(){
             document.getElementById('chrono').innerHTML ='25' + ":" + '00';
         }else{
             distance=299
-            document.getElementById('chrono').innerHTML ='5' + ":" + '00';
+            document.getElementById('chrono').innerHTML ='05' + ":" + '00';
         }
     }
 })
@@ -135,16 +144,107 @@ window.addEventListener("wheel", function(e) {
     }
 }, { passive: false });
 
+const playlist = [
+    './musique/3-HOUR Yokohama at Sunset.mp3',
+    './musique/2-HOUR Shibuya.mp3'
+    
+];
+let currentTrackIndex = 0;
 
+const audioPlayer = document.getElementById('music-player');
 
-document.getElementById("start").addEventListener("click", async () => {
-    // Fetch music
-    const response = await fetch('http://127.0.0.1:5000/music');
-    const data = await response.json();
-  
-  
-    // Play music preview
-    const audio = new Audio(data.preview);
-    audio.play();
-  });
-  
+// Lecture de la musique
+function playMusic() {
+    audioPlayer.play();    
+        
+}
+
+// Mettre en pause la musique
+function pauseMusic() {
+    audioPlayer.pause();
+}
+
+// Passer à la musique suivante
+function playNext() {
+    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    const audioSource = document.getElementById('audio-source');
+    audioSource.src = playlist[currentTrackIndex];
+    audioPlayer.load();
+    audioPlayer.play();
+    cover()
+    title()
+}
+
+function cover(){
+    fetch(playlist[currentTrackIndex])
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => {
+            jsmediatags.read(new Blob([arrayBuffer]), {
+                onSuccess: function(tag) {
+                    const picture = tag.tags.picture;
+                    if (picture) {
+                        const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), "");
+                        const base64 = "data:" + picture.format + ";base64," + btoa(base64String);
+                        coverImage.src = base64;
+                        const img = document.getElementById("coverImage");
+                        img.src = base64;
+                        img.style.display = "block";
+                    } else {
+                        coverImage.src = ""; // Aucune cover trouvée
+                    }
+                },
+            });
+        })
+}
+cover()
+
+function title(){
+    fetch(playlist[currentTrackIndex])
+        .then(response => response.arrayBuffer())
+        .then(arrayBuffer => {
+            jsmediatags.read(new Blob([arrayBuffer]), {
+                onSuccess: function(tag) {
+                    const titre = tag.tags.title;
+                    if (titre) {
+                        document.getElementById("titreMusique").innerHTML=titre
+                    }
+                },
+            });
+        })
+}
+title()
+
+function duree(){
+    var audio= new Audio(playlist[currentTrackIndex])
+        audio.onloadedmetadata=function(){
+            const temps_musique=audio.duration
+            if (temps_musique) {
+                var heure = Math.floor(temps_musique / 3600);
+                var minutes = Math.floor((temps_musique % 3600) / 60);
+                var seconds = Math.floor(temps_musique % 60);
+                document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":"+'0' + seconds;
+            }
+        }    
+    audioPlayer.ontimeupdate = function(){
+        var playbackTime = audioPlayer.currentTime;
+        var audio= new Audio(playlist[currentTrackIndex])
+        audio.onloadedmetadata=function(){
+            const temps_musique=audio.duration-Math.floor(playbackTime.toFixed(2))
+            if (temps_musique) {
+                var heure = Math.floor(temps_musique / 3600);
+                var minutes = Math.floor((temps_musique % 3600) / 60);
+                var seconds = Math.floor(temps_musique % 60);
+                if(minutes<10 && seconds>9){
+                    document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + seconds;
+                }else if(minutes<10 && seconds<10){
+                    document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + "0"+seconds;
+                }else if(minutes>9 && seconds<10){
+                    document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + "0"+seconds;
+                }else{
+                    document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + seconds;
+                }
+            }
+        }
+    }
+}
+duree()

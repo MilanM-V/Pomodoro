@@ -23,23 +23,25 @@ body{
 
 header .wrapper{
     position: absolute;
-    top: 2%;
-    left: 2%;
+    top: 0.2vh;
+    left: 0.8vw;
 }
 
 .content{
     background-color: rgba(0, 0, 0, 0.45);
     position: relative;
     border-radius:2vw;
-    top: 30vh;
+    top: 22vh;
     left: 33vw;
-    height: 22vh;
+    height: 34vh;
     width: 30vw;
     text-align: center;
     
 }
 .content p {
     font-size: 6vw;
+    position: relative;
+    top: 10vh;
 
   }
 
@@ -50,21 +52,22 @@ header .wrapper{
     background-color: rgb(216, 203, 203);
     font-size: 2vw;
     margin-right: 10px;
+    border-width: 0.2vw;
 }
 
 .content #start{
     margin-right: 10px;
-    top: 14.3vh;
+    top: 25.5vh;
     left: 2.2vw;
 }
 
 .content #Stop{
-    top:  14.3vh;
+    top:  25.5vh;
     left: 11.4vw;
 }
 
 .content #restart{
-    top:  14.3vh;
+    top:  25.5vh;
     left:19.7vw;
 }
 
@@ -75,4 +78,98 @@ footer{
     color: rgb(0, 0, 0);
 }
 
+#music-player {
+    display: none;
+}
 
+.musique button{
+    font-family: 'Nuku Nuku',sans-serif;
+    border-radius: 1vw;
+    background-color: rgba(255, 255, 255, 0.712);
+    font-size: 2vw;
+    margin-right: 10px;
+    position: absolute;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    
+}
+
+.musique .start_musique{
+    top: 1vh;
+    left: 18vw;
+}
+.musique .pause_musique{
+    top: 1vh;
+    left: 22vw;
+}
+.musique .next_musique{
+    top: 1vh;
+    left: 25vw;
+}
+
+.content #coverImage{
+    height: 10.5vh;
+    width: 7vw;
+    position: absolute;
+    border-width: 0px;
+    top: 1.5vh;
+    border-radius: 1vw;
+    left: 1vw;
+}
+
+.scrolling-text-container {
+    width: 12vw;
+    height: 5vh;
+    overflow: hidden;
+    background-color: #00000000;
+    position: absolute;
+    top:8vh ;
+    left: 9vw;
+    font-size: 5px;
+
+}
+
+
+
+.scrolling-text {
+    left: 1vw;
+    position: absolute;
+    color: #000000;
+    animation: scrollText 30s linear infinite;
+    white-space: nowrap;
+    transform: translateX(0);
+}
+@keyframes scrollText {
+    0% {
+        transform: translateX(0); /* Débute visible */
+        font-size:1.5vw;
+        top:-4vh;
+    }
+    10% {
+        transform: translateX(0); /* Reste visible pendant 2 secondes */
+        font-size:1.5vw;
+        top:-4vh;
+    }
+    50% {
+        transform: translateX(-100%); /* Défile vers la gauche */
+        font-size:1.5vw;
+        top:-4vh;
+    }
+    100% {
+        transform: translateX(-100%); /* Reviens à la position de départ */
+        font-size:1.5vw;
+        top:-4vh;
+    }
+    100% {
+        transform: translateX(0); /* Reviens à la position de départ */
+        font-size:1.5vw;
+        top:-4vh;
+    }
+}
+
+#duree{
+    font-size: 1.8vw;
+    position: absolute;
+    top: -1.5vh;
+    left: 11vw;
+}
