@@ -32,29 +32,24 @@ header .wrapper{
     background-color: rgba(0, 0, 0, 0.45);
     position: relative;
     border-radius:2vw;
-    top: 22vh;
+    top: 26vh;
     left: 33vw;
-    height: 34vh;
+    height: 40vh;
     width: 30vw;
-    text-align: center;
     
 }
 
-.musique{
-    position: relative;
-    background-color: #00000000;
-    width: 100%;
-    height: auto;
-}
 
-.content p {
+
+.timer p {
     font-size: 6vw;
-    position: relative;
-    top: 30%;
+    position: absolute;
+    top: 0%;
+    left: 27.5%;
 
   }
 
-.content button{
+.timer button{
     font-family: 'Nuku Nuku',sans-serif;
     border-radius: 1vw;
     position: absolute;
@@ -64,33 +59,34 @@ header .wrapper{
     border-width: 0.2vw;
 }
 
-.content #start{
+.timer #start{
     margin-right: 10px;
-    top: 25.5vh;
+    top: 30.5vh;
     left: 2.2vw;
 }
 
-.content #Stop{
-    top:  25.5vh;
+.timer #Stop{
+    top:  30.5vh;
     left: 11.4vw;
 }
 
-.content #restart{
-    top:  25.5vh;
+.timer #restart{
+    top:  30.5vh;
     left:19.7vw;
 }
 
-footer{
-    position: absolute;
-    bottom: 2%;
-    right: 1%;
-    color: rgb(0, 0, 0);
-}
+
 
 #music-player {
     display: none;
 }
-
+.musique{
+    position: relative;
+    background-color: #00000000;
+    width: 100%;
+    height:40%;
+    border-radius:2vw;
+}
 .musique button{
     font-family: 'Nuku Nuku',sans-serif;
     border-radius: 1vw;
@@ -126,29 +122,31 @@ footer{
     left: 1vw;
 }
 .musique #duree{
-    font-size: 2.5vw;
+    font-size: 40px;
     position: absolute;
-    left: 8.5vw;
-    top: -50%;
-    color: aliceblue;
+    left: 8vw;
+    top: -35%;
+    color: rgb(0, 0, 0);
 
 }
 .musique .scrolling-text-container {
-    
     width: 12vw;
-    height: auto;
+    height: 3.5vh;
     overflow: hidden;
-    background-color: #00000000;
-    position: absolute;
-    left: 7vw;
-    top: 1.5vh;
+    background-color: #ff000000;
+    position: relative;
+    left: 7.5vw;
+    top: 6vh;
+    text-align: center;
+    
 }
 
-.musique .scrolling-text {
+.scrolling-text {
+    margin:0px;
     left: 1vw;
     position: absolute;
-    color: #ffffff;
-    animation: scrollText 30s linear infinite;
+    color: #000000;
+    animation: scrollText 40s linear infinite;
     white-space: nowrap;
     transform: translateX(0);
 }
@@ -156,6 +154,7 @@ footer{
     0% {
         transform: translateX(0); /* Débute visible */
         font-size:1.5vw;
+        
     }
     10% {
         transform: translateX(0); /* Reste visible pendant 2 secondes */
@@ -173,5 +172,12 @@ footer{
         transform: translateX(0); /* Reviens à la position de départ */
         font-size:1.5vw;
     }
+}
+
+footer{
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
+    color: rgb(0, 0, 0);
 }
 

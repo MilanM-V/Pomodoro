@@ -1,0 +1,70 @@
+html, body {
+    margin: 0;              /* Supprime les marges par défaut */
+    padding: 0;             /* Supprime les marges internes */
+    overflow-x: hidden;
+    overflow-y: auto;     /* Empêche le défilement */
+    background-image:url("../images/fond1.gif");
+    background-repeat: no-repeat; 
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    font-family: 'Nuku Nuku',sans-serif;       /* Force la hauteur à occuper tout l'écran */
+}
+
+
+
+
+@font-face {
+    font-family: 'Nuku Nuku';
+    src: url("../font/nuku-nuku.regular.ttf") format('truetype');
+}
+
+header .wrapper{
+    position: absolute;
+    top: 0.2vh;
+    left: 0.8vw;
+}
+
+.content{
+    background-color: rgba(0, 0, 0, 0.45);
+    position: relative;
+    border-radius:2vw;
+    top: 22vh;
+    left: 33vw;
+    height: 40vh;
+    width: 30vw;
+    text-align: center;
+    
+}
+
+
+
+
+.musique{
+    background-color: #0000007e;
+    position: relative;
+    top: 10%;
+    left:0%;
+    width: 100%;
+    height:40%;
+    text-align: center;
+}
+
+
+
+#duree{
+    position: absolute;
+    left: 0%;
+    top: -20%;
+    color: aliceblue;
+    font-size: 40px;
+
+}
+
+footer{
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
+    color: rgb(0, 0, 0);
+}
+
