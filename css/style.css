@@ -323,7 +323,47 @@ footer{
 
 #musique-parametre{
     opacity: 0;
+    
 }
+
+#musique-parametre form{
+    position: relative;
+    font-size: 2vw;
+    top: 5vh;
+    line-height: 8vh;
+    left: 2vw;
+    text-align: left;
+    
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 2vw;
+    height: 4vh;
+    border-radius: 5px;
+    background-color: #6b6464;
+    border: 0.2vw solid #8c1c96;
+    top: 1vh;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #000000;
+    border-color: #8c1c96;
+}
+
+/* Ajout d'un "checkmark" personnalisé */
+input[type="checkbox"]:checked::before {
+    content: '✔';  /* Ajouter un checkmark */
+    position: absolute;
+    text-align: center;
+    top: -0.75vh;
+    left: 0.25vw;
+    font-size: 24px;
+    color: white;
+}
+
 
 #fond-parametre{
     opacity: 0;

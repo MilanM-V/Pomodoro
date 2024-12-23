@@ -4,41 +4,52 @@ var chronos='chrono25'
 var distance = 1499;
 var run=false
 
-function chrono25(){
-
-chronos='chrono25'
-
-//update chrono
-if (x!==null){
-    clearInterval(x)
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        // Choisir un index aléatoire entre 0 et i
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Échanger les éléments array[i] et array[j]
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
-x = setInterval(function() {
 
 
-  //calcule du temps
-  let minutes = Math.floor(distance /60);
-  let seconds = Math.floor(distance-minutes*60);
+function chrono25(){
+    chronos='chrono25'
+
+    //update chrono
+    if (x!==null){
+        clearInterval(x)
+    }
+    x = setInterval(function() {
+
+
+    //calcule du temps
+    let minutes = Math.floor(distance /60);
+    let seconds = Math.floor(distance-minutes*60);
+        
+    //modidier le text
+    if(minutes<10 && seconds>9){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
+    }else if(minutes<10 && seconds<10){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
+    }else if(minutes>9 && seconds<10){
+        document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
+    }else{
+        document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+    }
     
-  //modidier le text
-  if(minutes<10 && seconds>9){
-    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
-  }else if(minutes<10 && seconds<10){
-    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
-  }else if(minutes>9 && seconds<10){
-    document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
-  }else{
-    document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
-  }
-  
-  distance-=1;
-  //stop repetiton
-  if (distance == 0) {
-    distance=299
-    clearInterval(x);
-    document.getElementById("chrono").innerHTML =25 + ":" + '00';
-    chrono5()
-  }
-}, 1000);
+    distance-=1;
+    //stop repetiton
+    if (distance == 0) {
+        distance=299
+        clearInterval(x);
+        document.getElementById("chrono").innerHTML =25 + ":" + '00';
+        chrono5()
+    }
+    }, 1000);
 }
 
 
@@ -144,18 +155,61 @@ window.addEventListener("wheel", function(e) {
     }
 }, { passive: false });
 
-const playlist = [
-    "./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
-    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3"
+var playlist = [];
+
+
+// Initialiser les cases cochées par défaut au premier lancement
+if (!localStorage.getItem('playlist_select')) {
+    // Récupérer tous les noms des cases
+    const defaultChecked = Array.from(document.querySelectorAll('#playlist input')).map(input => input.name);
     
-];
-let currentTrackIndex = 0;
+    // Sauvegarder dans localStorage
+    localStorage.setItem('playlist_select', JSON.stringify(defaultChecked));
+}
+
+// Récupérer les données de localStorage au chargement
+var playlist_select = JSON.parse(localStorage.getItem('playlist_select')) || [];
+
+// Appliquer l'état initial des cases à cocher
+document.querySelectorAll('#playlist input').forEach(input => {
+    if (playlist_select.includes(input.name)) {
+        input.checked = true;
+        if (input.name=='Arcane'){
+            playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
+                "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3",
+                "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version) [Us1IwcpRE1Y].mp3",
+                "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
+            )
+        }
+        if(input.name=='Snk'){
+            playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending) [IOZd-HarjZw].mp3",
+                "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme) [buZcLljh9eI].mp3",
+                "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop [AU-JN4bWI44].mp3",
+                "./musique/snk/進撃pf-medley20130629巨人 [IPWiiR5MVv4].mp3"
+            )
+        }
+        if(input.name=='Chill'){
+            playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha [aBkTkxKDduc].mp3",
+                "./musique/chill/Dinner In Paris [cfCKtt7OwdI].mp3",
+                "./musique/chill/Lofitopía - Day Dream [Ft2wWaP8avI].mp3",
+                "./musique/chill/purpose_not_found.mp3 [sinlicB1WyU].mp3"
+            )
+        }
+    }
+});
+playlist=shuffle(playlist)
+console.log(playlist_select)
+var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
-
 // Lecture de la musique
 function playMusic() {
-    audioPlayer.play();    
+    const audioSource = document.getElementById('audio-source');
+    audioSource.src = playlist[currentTrackIndex];
+    audioPlayer.load();
+    audioPlayer.play();
+    cover()
+    title()
         
 }
 
@@ -167,12 +221,20 @@ function pauseMusic() {
 // Passer à la musique suivante
 function playNext() {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+    
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
-    audioPlayer.load();
-    audioPlayer.play();
+    if(!audioPlayer.paused){
+        audioPlayer.load();
+        audioPlayer.play();
+    }
+    
     cover()
     title()
+    duree()
+    if(currentTrackIndex==playlist.length-1){
+        playlist=shuffle(playlist)
+    }
 }
 
 function playPrevious(){
@@ -183,11 +245,15 @@ function playPrevious(){
     }
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
-    audioPlayer.load();
-    audioPlayer.play();
+    if(!audioPlayer.paused){
+        audioPlayer.load();
+        audioPlayer.play();
+    }
     cover()
     title()
+    duree()
 }
+
 
 
 function cover(){
@@ -353,23 +419,12 @@ var In=true
 
 // Initialiser les cases cochées par défaut au premier lancement
 if (!localStorage.getItem('playlist_select')) {
-    console.log(localStorage.getItem('playlist_select'))
     // Récupérer tous les noms des cases
     const defaultChecked = Array.from(document.querySelectorAll('#playlist input')).map(input => input.name);
     
     // Sauvegarder dans localStorage
     localStorage.setItem('playlist_select', JSON.stringify(defaultChecked));
 }
-
-// Récupérer les données de localStorage au chargement
-var playlist_select = JSON.parse(localStorage.getItem('playlist_select')) || [];
-
-// Appliquer l'état initial des cases à cocher
-document.querySelectorAll('#playlist input').forEach(input => {
-    if (playlist_select.includes(input.name)) {
-        input.checked = true;
-    }
-});
 
 document.querySelectorAll('#playlist input').forEach(input =>{
     input.addEventListener('change',()=>{
@@ -381,12 +436,51 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         }
         if (input.checked){
             if (In==true){
-                playlist_select.push(input.name)
+                if (input.name=='Arcane'){
+                    playlist_select.push('Arcane')
+                }
+                if(input.name=='Snk'){
+                    playlist_select.push('Snk')
+                }
+                if(input.name=='Chill'){
+                    playlist_select.push('Chill')
+                }
             }
         }else{
             playlist_select=playlist_select.filter(item => item !==input.name)
         }
+        var taille_playlist=playlist.length
+        playlist=[]
+        for (let i=0;i<playlist_select.length;i++){
+            if (playlist_select[i]=='Arcane'){
+                playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
+                    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3",
+                    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version) [Us1IwcpRE1Y].mp3",
+                    "./musique/arcene/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
+                )
+            }
+            if(playlist_select[i]=='Snk'){
+                playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending) [IOZd-HarjZw].mp3",
+                    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme) [buZcLljh9eI].mp3",
+                    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop [AU-JN4bWI44].mp3",
+                    "./musique/snk/進撃pf-medley20130629巨人 [IPWiiR5MVv4].mp3"
+                )
+            }
+            if(playlist_select[i]=='Chill'){
+                playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha [aBkTkxKDduc].mp3",
+                    "./musique/chill/Dinner In Paris [cfCKtt7OwdI].mp3",
+                    "./musique/chill/Lofitopía - Day Dream [Ft2wWaP8avI].mp3",
+                    "./musique/chill/purpose_not_found.mp3 [sinlicB1WyU].mp3"
+                )
+            }
+        }
+
         localStorage.setItem('playlist_select', JSON.stringify(playlist_select));
         console.log(playlist_select)
+        playlist=shuffle(playlist)
+        if (taille_playlist>playlist.length){
+            playMusic()
+        }
+        
     })
 })
