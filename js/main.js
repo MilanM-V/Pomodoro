@@ -351,6 +351,16 @@ function show_fond(){
 
 var In=true
 
+// Initialiser les cases cochées par défaut au premier lancement
+if (!localStorage.getItem('playlist_select')) {
+    console.log(localStorage.getItem('playlist_select'))
+    // Récupérer tous les noms des cases
+    const defaultChecked = Array.from(document.querySelectorAll('#playlist input')).map(input => input.name);
+    
+    // Sauvegarder dans localStorage
+    localStorage.setItem('playlist_select', JSON.stringify(defaultChecked));
+}
+
 // Récupérer les données de localStorage au chargement
 var playlist_select = JSON.parse(localStorage.getItem('playlist_select')) || [];
 
