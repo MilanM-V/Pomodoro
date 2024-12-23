@@ -33,6 +33,7 @@
                 <button class="start_musique" onclick="playMusic()"><i class="fa-solid fa-play"></i></button>
                 <button class="pause_musique" onclick="pauseMusic()"><i class="fa-solid fa-pause"></i></button>
                 <button class="next_musique" onclick="playNext()"><i class="fa-solid fa-forward-step"></i></button>
+                <button class="previous_musique" onclick="playPrevious()"><i class="fa-solid fa-backward-step"></i></button>
 
             </div>
             <div class="timer">
@@ -40,12 +41,41 @@
                 <button id="start">Start</button>
                 <button id="Stop">Stop</button>
                 <button id="restart">restart</button>
+                <button id="openModalBtn"><i class="fa-solid fa-gear"></i></button>
             </div>
             <audio id="music-player">
-                <source id="audio-source" src="./musique/3-HOUR Yokohama at Sunset.mp3" type="audio/mpeg">
+                <source id="audio-source" src="./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3" type="audio/mpeg">
             </audio>
         </div>
         
+        <div id="modal" class="modal">
+            <div class="modal-content" id="modal-content">
+                <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                <div class="list-page" id="list-page">
+                    <button id="musique-select" onclick="show_music()">Musique</button>
+                    <button id="fond-select" onclick="show_fond()">Fond</button>
+                </div>
+                <div id="info-parametre">
+                    <div id="musique-parametre">
+                        <form id='playlist'>
+                            <input type="checkbox" name="Arcane" value="1">
+                            Arcane
+                            <br>
+                                <input type="checkbox" name="Snk" value="2">
+                                Snk
+                            <br>
+                                <input type="checkbox" name="Chill" value="3">
+                                Chill
+                        </form>
+                    </div>
+                    <div id="fond-parametre">
+                        <p id="contenue">slt</p>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
     </main>
 
 	<footer>
