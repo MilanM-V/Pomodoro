@@ -582,7 +582,9 @@ function colori(){
         style.sheet.insertRule(`
             #progressBar::-webkit-slider-thumb {
                 background-color: #381717; /* Change la couleur de fond du thumb */
-
+            #progressBar::-moz-range-thumb{
+                background-color: #381717; /* Change la couleur de fond du thumb */
+            }
             }
         `, style.sheet.cssRules.length);
         let footer=document.getElementById('copyright')
@@ -606,6 +608,9 @@ function colori(){
         style.sheet.insertRule(`
             #progressBar::-webkit-slider-thumb {
                 background-color: #ccb7b1; /* Change la couleur de fond du thumb */
+            #progressBar::-moz-range-thumb{
+                background-color: #ccb7b1; /* Change la couleur de fond du thumb */
+            }
 
             }
         `, style.sheet.cssRules.length);
