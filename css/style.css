@@ -352,8 +352,6 @@ input[type="checkbox"]:checked::before {
 }
 
 
-
-
 #progressBar {
     width: 8vw;
     position: absolute;
@@ -369,6 +367,7 @@ input[type="checkbox"]:checked::before {
 
 #progressBar::-webkit-slider-thumb {
     appearance: none; 
+    -moz-appearance: none;
     width: 1.4vw;
     height: 1.4vw;
     border-radius: 50%;
