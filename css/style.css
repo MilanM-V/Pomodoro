@@ -367,6 +367,14 @@ input[type="checkbox"]:checked::before {
 
 #progressBar::-webkit-slider-thumb {
     appearance: none; 
+    width: 1.4vw;
+    height: 1.4vw;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}
+
+#progressBar::-moz-range-thumb {
     -moz-appearance: none;
     width: 1.4vw;
     height: 1.4vw;
@@ -423,8 +431,8 @@ input[type="checkbox"]:checked::before {
     padding-right: 2.4vw;
 }
 
-#fond-select option{
-    font-family:'Nuku Nuku',sans-serif;
+select, option{
+    font: -moz-pull-down-menu;
 }
 option:checked,option:hover {
     background-color: #9f94ad;
