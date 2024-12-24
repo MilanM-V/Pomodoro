@@ -368,3 +368,28 @@ input[type="checkbox"]:checked::before {
 #fond-parametre{
     opacity: 0;
 }
+
+
+
+
+#progressBar {
+    width: 8vw;
+    position: absolute;
+    top: 7vh;
+    right: 1vw;
+    appearance: none;
+    border-radius: 0.5vw;
+    height: 1.5vh;
+    background-color: #381717;
+}
+
+
+
+#progressBar::-webkit-slider-thumb {
+    appearance: none; 
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}

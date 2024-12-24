@@ -202,12 +202,23 @@ console.log(playlist_select)
 var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
+
+audioPlayer.addEventListener('timeupdate', () => {
+    progressBar.value = audioPlayer.currentTime; 
+    progressBar.max = audioPlayer.duration || 0; 
+});
+
+progressBar.addEventListener('input', () => {
+    audioPlayer.currentTime = progressBar.value; 
+});
+
 // Lecture de la musique
 function playMusic() {
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
     audioPlayer.load();
     audioPlayer.play();
+    audioPlayer.currentTime=progressBar.value
     cover()
     title()
         
@@ -221,7 +232,7 @@ function pauseMusic() {
 // Passer à la musique suivante
 function playNext() {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    
+    progressBar.value=0
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
     if(!audioPlayer.paused){
