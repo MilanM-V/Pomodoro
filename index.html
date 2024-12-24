@@ -11,9 +11,8 @@
 </head>
 <body class="page">
     <header>
-		<div class="wrapper">
+		<div class="wrapper" id="wrapper">
 			<h1 class="Title" >Pomodoro Timer by Milan</h1>
-            <p id="song-title"></p>
 		</div>
     </header>
     <main>
@@ -54,37 +53,56 @@
         
         <div id="modal" class="modal">
             <div class="modal-content" id="modal-content">
+                
                 <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
                 <div class="list-page" id="list-page">
-                    <button id="musique-select" onclick="show_music()">Musique</button>
-                    <button id="fond-select" onclick="show_fond()">Fond</button>
+                    <div class="tabs">
+                        <div class="tab active" data-tab="tab1">Musique</div>
+                        <div class="tab" data-tab="tab2">Fond</div>
+                        <div class="tab" data-tab="tab3">Onglet 3</div>
+                    </div>
+
                 </div>
                 <div id="info-parametre">
-                    <div id="musique-parametre">
-                        <form id='playlist'>
-                            <input type="checkbox" name="Arcane" value="1">
-                            Arcane
-                            <br>
-                                <input type="checkbox" name="Snk" value="2">
-                                Snk
-                            <br>
-                                <input type="checkbox" name="Chill" value="3">
-                                Chill
-                        </form>
+                    <div class="tab-content active" id="tab1">
+                        <div id="musique-parametre">
+                            <form id='playlist'>
+                                <input type="checkbox" name="Arcane" value="1">
+                                Arcane
+                                <br>
+                                    <input type="checkbox" name="Snk" value="2">
+                                    Snk
+                                <br>
+                                    <input type="checkbox" name="Chill" value="3">
+                                    Chill
+                            </form>
+                        </div>
                     </div>
-                    <div id="fond-parametre">
-                        <p id="contenue">slt</p>
-                    </div>
-                    
-                </div>
+                    <div class="tab-content" id="tab2">
+                        <div id="fond-parametre">
+                            <select id="fond-select">
+                                <option value="">choisissez votre fond d'écran</option>
+                                <option value="Train in tokyo">Train in tokyo</option>
+                                <option value="Cyberpunk">Cyberpunk</option>
+                                <option value="Train with nature">Train with nature</option>
+                                <option value="Chateau ambulant">Chateau ambulant</option>
+                                <option value="Mont fuji">Mont fuji</option>
+                                <option value="Star Wars">Star Wars</option>
+                                <option value="Chill with instruments">Chill with instruments</option>
+                                <option value="Reflet nocturne">Reflet nocturne</option>
+                                <option value="Coffee shop">Coffee shop</option>
+                            </select>
 
+                        </div>
+                    </div>    
+                </div>
             </div>
         </div>
     </main>
 
 	<footer>
         
-		<div class="copyright">
+		<div class="copyright" id="copyright">
 			&copy; Copyright <strong><span>Milan MARCHAND--VALAT</span></strong>. All Rights Reserved
         </div>
 	</footer>

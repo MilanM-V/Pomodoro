@@ -198,7 +198,6 @@ document.querySelectorAll('#playlist input').forEach(input => {
     }
 });
 playlist=shuffle(playlist)
-console.log(playlist_select)
 var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
@@ -412,19 +411,7 @@ window.onclick = function(event) {
     }
 }
 
-var fond_div=document.getElementById('fond-parametre')
-var musique_div=document.getElementById('musique-parametre')
 
-function show_music(){
-    musique_div.style.opacity=1
-    fond_div.style.opacity=0
-}
-
-function show_fond(){
-    
-    fond_div.style.opacity=1
-    musique_div.style.opacity=0
-}
 
 var In=true
 
@@ -441,7 +428,6 @@ document.querySelectorAll('#playlist input').forEach(input =>{
     input.addEventListener('change',()=>{
         In=true
         for (let i=0;i<playlist_select.length;i++){
-            console.log(playlist_select[i]+":"+input.name)
             if (playlist_select[i]==input.name)
                 In=false
         }
@@ -487,11 +473,123 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         }
 
         localStorage.setItem('playlist_select', JSON.stringify(playlist_select));
-        console.log(playlist_select)
         playlist=shuffle(playlist)
-        if (taille_playlist>playlist.length){
+        if (taille_playlist>playlist.length && audioPlayer.paused){
+            currentTrackIndex=currentTrackIndex
+            playMusic()
+            setTimeout(() => {
+            }, 500);
+            pauseMusic()
+        }else if (taille_playlist>playlist.length){
+            currentTrackIndex=currentTrackIndex
             playMusic()
         }
         
     })
 })
+
+const tabs = document.querySelectorAll('.tab');
+const tabContents = document.querySelectorAll('.tab-content');
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+});
+
+var savedBackground = localStorage.getItem('backgroundImage');
+window.onload = function() {
+    var savedBackground = localStorage.getItem('backgroundImage');
+    if (savedBackground) {
+        document.body.style.backgroundImage = savedBackground;
+        console.log(savedBackground)
+        
+    }
+    colori()
+};
+const fond_select=document.getElementById('fond-select')
+let image=null
+fond_select.addEventListener('change',(event)=>{
+    if(event.target.value=='Train in tokyo'){
+        image='url(./images/fond1.gif)'
+    }else if(event.target.value=='Cyberpunk'){
+        image='url(./images/cyberpunk.gif)'
+    }else if(event.target.value=="Train with nature"){
+        image='url(./images/natureWithTrain.gif)'
+    }else if(event.target.value=='Chateau ambulant'){
+        image='url(./images/chateauAmbulant.gif)'
+    }else if(event.target.value=='Mont fuji'){
+        image='url(./images/Fuji.gif)'
+    }else if(event.target.value=='Star Wars'){
+        image='url(./images/starWars.gif)'
+    }else if(event.target.value=='Chill with instruments'){
+        image='url(./images/instruments.gif)'
+    }else if(event.target.value=='Reflet nocturne'){
+        image='url(./images/night.gif)'
+    }else if(event.target.value=='Coffee shop'){
+        image='url(./images/cofeeShop.gif)'
+    }
+    document.body.style.backgroundImage =image
+    localStorage.setItem('backgroundImage', image);
+    savedBackground=image
+    colori()
+
+})
+
+function colori(){
+    if (savedBackground=='url(./images/cyberpunk.gif)'||savedBackground=='url(./images/natureWithTrain.gif)'||savedBackground=='url(./images/chateauAmbulant.gif)'
+        ||savedBackground=='url(./images/Fuji.gif)'||savedBackground=='url(./images/cofeeShop.gif)'
+    ){
+        let timer=document.getElementById('chrono')
+        timer.style.color='#f8bfd7'
+        let music_timer=document.getElementById('duree')
+        music_timer.style.color='#f8bfd7'
+        let titre=document.getElementById('titreMusique')
+        titre.style.color='#f8bfd7'
+        let gear=document.getElementById("openModalBtn")
+        gear.style.color='#f8bfd7'
+        let bar=document.getElementById('progressBar')
+        bar.style.backgroundColor='#ccb7b1'
+
+        const style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(`
+            #progressBar::-webkit-slider-thumb {
+                background-color: #381717; /* Change la couleur de fond du thumb */
+
+            }
+        `, style.sheet.cssRules.length);
+        let footer=document.getElementById('copyright')
+        footer.style.color='#f8bfd7'
+        let header=document.getElementById('wrapper')
+        header.style.color='#f8bfd7'
+    }else{
+        let timer=document.getElementById('chrono')
+        timer.style.color='#000000'
+        let music_timer=document.getElementById('duree')
+        music_timer.style.color='#000000'
+        let titre=document.getElementById('titreMusique')
+        titre.style.color='#000000'
+        let gear=document.getElementById("openModalBtn")
+        gear.style.color='#000000'
+        let bar=document.getElementById('progressBar')
+        bar.style.backgroundColor='#381717'
+
+        const style = document.createElement('style');
+        document.head.appendChild(style);
+        style.sheet.insertRule(`
+            #progressBar::-webkit-slider-thumb {
+                background-color: #ccb7b1; /* Change la couleur de fond du thumb */
+
+            }
+        `, style.sheet.cssRules.length);
+        let footer=document.getElementById('copyright')
+        footer.style.color='#381717'
+        let header=document.getElementById('wrapper')
+        header.style.color='#381717'
+    }
+}
