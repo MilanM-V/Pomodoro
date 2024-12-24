@@ -3,6 +3,7 @@ var x=null;
 var chronos='chrono25'
 var distance = 1499;
 var run=false
+const audioSourceBell = document.getElementById('music-player-bell');
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -44,9 +45,10 @@ function chrono25(){
     distance-=1;
     //stop repetiton
     if (distance == 0) {
+        audioSourceBell.play()
         distance=299
         clearInterval(x);
-        document.getElementById("chrono").innerHTML =25 + ":" + '00';
+        document.getElementById("chrono").innerHTML ='05 '+ ":" + '00';
         chrono5()
     }
     }, 1000);
@@ -57,35 +59,35 @@ function chrono25(){
 function chrono5(){
     chronos='chrono5'
 
-//update chrono
-if (x!==null){
-    clearInterval(x)
-}
-x = setInterval(function() {
+    //update chrono
+    if (x!==null){
+        clearInterval(x)
+    }
+    x = setInterval(function() {
 
 
-  //calcule du temps
-  let minutes = Math.floor(distance /60);
-  let seconds = Math.floor(distance-minutes*60);
-    
-  //modidier le text
-  if(minutes<10 && seconds>9){
-    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
-  }else if(minutes<10 && seconds<10){
-    document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
-  }else if(minutes>9 && seconds<10){
-    document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
-  }else{
-    document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
-  }
-  distance-=1;
-  //stop repetiton
-  if (minutes ==0) {
-    clearInterval(x);
-    distance=1499
-    chrono25()
-  }
-}, 1000);
+    //calcule du temps
+    let minutes = Math.floor(distance /60);
+    let seconds = Math.floor(distance-minutes*60);
+    //modidier le text
+    if(minutes<10 && seconds>9){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
+    }else if(minutes<10 && seconds<10){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
+    }else if(minutes>9 && seconds<10){
+        document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
+    }else{
+        document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+    }
+    distance-=1;
+    //stop repetiton
+    if (minutes ==0) {
+        audioSourceBell.play()
+        clearInterval(x);
+        distance=1499
+        chrono25()
+    }
+    }, 1000);
 }
 
 const button_start=document.getElementById('start');
@@ -501,40 +503,60 @@ tabs.forEach(tab => {
     });
 });
 
+
+var extrait=document.getElementById('extrait')
+
+
 var savedBackground = localStorage.getItem('backgroundImage');
 window.onload = function() {
     var savedBackground = localStorage.getItem('backgroundImage');
+    var extraitSaved=localStorage.getItem('extraitImage')
     if (savedBackground) {
         document.body.style.backgroundImage = savedBackground;
         console.log(savedBackground)
-        
+    }
+    if(extraitSaved){
+        extrait.src=extraitSaved
+
     }
     colori()
 };
 const fond_select=document.getElementById('fond-select')
 let image=null
+let ext=null
 fond_select.addEventListener('change',(event)=>{
     if(event.target.value=='Train in tokyo'){
         image='url(./images/fond1.gif)'
+        ext='../images/fond1.gif'
     }else if(event.target.value=='Cyberpunk'){
         image='url(./images/cyberpunk.gif)'
+        ext='./images/cyberpunk.gif'
     }else if(event.target.value=="Train with nature"){
         image='url(./images/natureWithTrain.gif)'
+        ext='../images/natureWithTrain.gif'
     }else if(event.target.value=='Chateau ambulant'){
         image='url(./images/chateauAmbulant.gif)'
+        ext='../images/chateauAmbulant.gif'
     }else if(event.target.value=='Mont fuji'){
         image='url(./images/Fuji.gif)'
+        ext='../images/Fuji.gif'
     }else if(event.target.value=='Star Wars'){
         image='url(./images/starWars.gif)'
+        ext='../images/starWars.gif'
     }else if(event.target.value=='Chill with instruments'){
         image='url(./images/instruments.gif)'
+        ext='../images/instruments.gif'
     }else if(event.target.value=='Reflet nocturne'){
         image='url(./images/night.gif)'
+        ext='../images/night.gif'
     }else if(event.target.value=='Coffee shop'){
         image='url(./images/cofeeShop.gif)'
+        ext='../images/cofeeShop.gif'
     }
     document.body.style.backgroundImage =image
+    extrait.src=ext
     localStorage.setItem('backgroundImage', image);
+    localStorage.setItem('extraitImage', ext);
     savedBackground=image
     colori()
 
@@ -588,8 +610,8 @@ function colori(){
             }
         `, style.sheet.cssRules.length);
         let footer=document.getElementById('copyright')
-        footer.style.color='#381717'
+        footer.style.color='#000000'
         let header=document.getElementById('wrapper')
-        header.style.color='#381717'
+        header.style.color='#000000'
     }
 }

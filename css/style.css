@@ -404,3 +404,31 @@ input[type="checkbox"]:checked::before {
 .tab-content.active {
     display: block;
 }
+
+#fond-select{
+    appearance: none;
+    background: url('../images/chevron-down-medium.png') no-repeat right center;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
+    font-family:'Nuku Nuku',sans-serif;
+    height: 5vh;
+    position: relative;
+    text-align: left;
+    top: 10vh;
+    left: -1vw;
+    background-color: #c9badd;
+    cursor: pointer;
+    padding: 0.2vw;
+    padding-right: 2.4vw;
+}
+
+option:checked,option:hover {
+    background-color: #9f94ad;
+}
+
+#fond-parametre img{
+    width: 15vw;
+    height: auto;
+    position: relative;
+    top: 20vh;
+}
