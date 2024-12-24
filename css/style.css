@@ -347,7 +347,7 @@ input[type="checkbox"]:checked::before {
     text-align: center;
     top: -0.75vh;
     left: 0.25vw;
-    font-size: 24px;
+    font-size: 1.5vw;
     color: white;
 }
 
@@ -369,8 +369,8 @@ input[type="checkbox"]:checked::before {
 
 #progressBar::-webkit-slider-thumb {
     appearance: none; 
-    width: 20px;
-    height: 20px;
+    width: 1.4vw;
+    height: 1.4vw;
     border-radius: 50%;
     background: #ccb7b1;
     cursor: pointer;
@@ -424,6 +424,9 @@ input[type="checkbox"]:checked::before {
     padding-right: 2.4vw;
 }
 
+#fond-select option{
+    font-family:'Nuku Nuku',sans-serif;
+}
 option:checked,option:hover {
     background-color: #9f94ad;
 }
