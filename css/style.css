@@ -68,6 +68,7 @@ button{
     margin-right: 0.7vw;
     top: 30.5vh;
     left: 2.2vw;
+    text-align: center;
 }
 
 .timer #Stop{
@@ -111,6 +112,7 @@ button{
     top: 3%;
     right: 12%;
     width: 3vw;
+    text-align: center;
     height: auto;
 }
 .musique .pause_musique{
@@ -120,6 +122,7 @@ button{
     padding-right: 0.7vw;
     width: 2.9vw;
     height: auto;
+    text-align: center;
 }
 .musique .next_musique{
     top: 3%;
@@ -128,6 +131,7 @@ button{
     padding-right: 0.7vw;
     width: 2.9vw;
     height: auto;
+    text-align: center;
 }
 
 .musique .previous_musique{
@@ -137,6 +141,7 @@ button{
     padding-right: 0.7vw;
     width: 2.9vw;
     height: auto;
+    text-align: center;
 }
 
 .musique img{
@@ -333,7 +338,7 @@ footer{
     
 }
 
-input[type="checkbox"] {
+ input[type="checkbox"] {
     appearance: none;
     width: 2vw;
     height: 4vh;
@@ -351,7 +356,7 @@ input[type="checkbox"]:checked {
 }
 
 /* Ajout d'un "checkmark" personnalisé */
-input[type="checkbox"]:checked::before {
+#musique-parametre input[type="checkbox"]:checked::before {
     content: '✔';  /* Ajouter un checkmark */
     position: absolute;
     text-align: center;
@@ -393,6 +398,8 @@ input[type="checkbox"]:checked::before {
     cursor: pointer;
 }
 
+
+
 .tabs {
     background-color: #00000000;
     cursor: pointer;
@@ -427,6 +434,7 @@ input[type="checkbox"]:checked::before {
 #fond-select{
     appearance: none;
     background: url('../images/chevron-down-medium.png') no-repeat right center;
+    background-size: 2vw;
     border-radius: 0.5vw;
     font-size: 1.2vw;
     font-family:'Nuku Nuku',sans-serif;
@@ -515,7 +523,8 @@ option:checked,option:hover {
 
 #numberInputLongTitle{
     left: 16.75vw;
-    top: 7vw;
+    top: 7.5vw;
+    font-size: 1vw;
 }
 
 #numberInputWorkTemps{
@@ -539,18 +548,29 @@ option:checked,option:hover {
     margin-left: 1vw;
     margin-right: 2vw;
     display: flex;
-  align-items: flex-start;
+    align-items: flex-start;
+    font-size: 1.5vw;
     
 }
 
 #parametre_sequence input{
-    width: 3.5vw;
+    width: 4.5vw;
+    
 }
-
+#parametre_sequence input[type="checkbox"]:checked::before {
+    content: '✔';  
+    text-align: center;
+    font-size: 1.5vw;
+    color: white;
+    position: absolute;
+    top: -0.5vh;
+    left: 0.20vw;
+}
 .parametre_sequence_text{
-    display: block; /* Le texte est maintenant un bloc qui peut sauter des lignes */
-    margin-left: 0.7vw; /* Espace entre la case et le texte */
-    white-space: normal; /* Permet au texte de sauter des lignes */
-    word-wrap: break-word; /* Gère le retour à la ligne du texte */
+    display: block; 
+    margin-left: 0.7vw; 
+    white-space: normal;
+    word-wrap: break-word; 
     text-align: left; 
+    
 }
