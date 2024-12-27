@@ -61,11 +61,12 @@ function chrono25(){
         audioSourceBell.play()
         distance=localStorage.getItem('timerPomodoro') || [];
         clearInterval(x);
-        if (repetition<3){
-            chrono5()
-        }else{
-            chrono10()
+        if (repetition>3 && sequence=='true'){
             repetition=0
+            chrono10()
+        }else{
+            chrono5()
+            
         }
         
     }
@@ -752,3 +753,23 @@ timerLong.addEventListener('change',(event)=>{
 
 })
 
+var parametre_sequence=document.getElementById("checkbox-sequence")
+sequence=localStorage.getItem('Sequence');
+console.log(sequence)
+console.log(parametre_sequence)
+if (sequence=='true'){
+    parametre_sequence.checked=true
+}else{
+    parametre_sequence.checked=false
+}
+
+
+
+parametre_sequence.addEventListener('change',()=>{
+    if(parametre_sequence.checked){
+        sequence='true'
+    }else{
+        sequence='false'
+    }
+    localStorage.setItem('Sequence', sequence);
+})

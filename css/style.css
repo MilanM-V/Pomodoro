@@ -523,4 +523,24 @@ option:checked,option:hover {
     top: 11.5vw;
 }
 
+#parametre_sequence{
+    position: absolute;
+    top: 38vh;
+    margin-left: 1vw;
+    margin-right: 2vw;
+    display: flex;
+  align-items: flex-start;
+    
+}
 
+#parametre_sequence input{
+    width: 3.5vw;
+}
+
+.parametre_sequence_text{
+    display: block; /* Le texte est maintenant un bloc qui peut sauter des lignes */
+    margin-left: 10px; /* Espace entre la case et le texte */
+    white-space: normal; /* Permet au texte de sauter des lignes */
+    word-wrap: break-word; /* Gère le retour à la ligne du texte */
+    text-align: left; 
+}
