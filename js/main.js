@@ -7,7 +7,7 @@ var distance = localStorage.getItem('timerPomodoro') || [];
 var distanceShort =localStorage.getItem('timerShort') || [];
 
 var distanceLong=localStorage.getItem('timerLong') || [];
-
+console.log(distance+':'+distanceLong+':'+distanceShort)
 var run=false
 var repetition=0
 const audioSourceBell = document.getElementById('music-player-bell');
