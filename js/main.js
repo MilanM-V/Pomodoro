@@ -2,11 +2,22 @@
 var x=null;
 var chronos='chrono25'
 
-var distance = localStorage.getItem('timerPomodoro') || [];
+var distance = localStorage.getItem('timerPomodoro');
 
-var distanceShort =localStorage.getItem('timerShort') || [];
+var distanceShort =localStorage.getItem('timerShort');
 
-var distanceLong=localStorage.getItem('timerLong') || [];
+var distanceLong=localStorage.getItem('timerLong');
+
+if(!distance){
+    distance=25*60-1
+}
+if(!distanceShort){
+    distanceShort=5*60-1
+}
+if(!distanceLong){
+    distanceLong=10*60-1
+}
+
 console.log(distance+':'+distanceLong+':'+distanceShort)
 var run=false
 var repetition=0
@@ -714,7 +725,12 @@ function colori(){
 }
 
 var timerPomodoro=document.getElementById("numberInputWork")
-timerPomodoro.value=(Number(localStorage.getItem('timerPomodoro'))+1)/60 || [];
+var timerPomodoroNb=(Number(localStorage.getItem('timerPomodoro'))+1)/60;
+if(!localStorage.getItem('timerPomodoro')){
+    timerPomodoroNb=25
+}
+timerPomodoro.value=timerPomodoroNb
+
 timerPomodoro.addEventListener('change',(event)=>{
     distance=(timerPomodoro.value*60)-1
     minutes = Math.floor((distance+1) /60);
@@ -728,7 +744,11 @@ timerPomodoro.addEventListener('change',(event)=>{
 })
 
 var timerShort=document.getElementById("numberInputShort")
-timerShort.value=(Number(localStorage.getItem('timerShort'))+1)/60 || [];
+var timerShortNb=(Number(localStorage.getItem('timerShort'))+1)/60;
+if (!localStorage.getItem('timerShort')){
+    timerShortNb=5
+}
+timerShort.value=timerShortNb
 timerShort.addEventListener('change',(event)=>{
     distanceShort=(timerShort.value*60)-1
     minutes = Math.floor((distance+1) /60);
@@ -741,7 +761,11 @@ timerShort.addEventListener('change',(event)=>{
 })
 
 var timerLong=document.getElementById("numberInputLong")
-timerLong.value=(Number(localStorage.getItem('timerLong'))+1)/60|| [];
+var timerLongNb=(Number(localStorage.getItem('timerLong'))+1)/60;
+if (!localStorage.getItem('timerLong')){
+    timerLongNb=10
+}
+timerLong.value=timerLongNb
 timerLong.addEventListener('change',(event)=>{
     distanceLong=(timerLong.value*60)-1
     minutes = Math.floor((distance+1) /60);
@@ -755,6 +779,9 @@ timerLong.addEventListener('change',(event)=>{
 
 var parametre_sequence=document.getElementById("checkbox-sequence")
 sequence=localStorage.getItem('Sequence');
+if (!sequence){
+    parametre_sequence.checked=true
+}
 console.log(sequence)
 console.log(parametre_sequence)
 if (sequence=='true'){
