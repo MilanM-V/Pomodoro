@@ -18,7 +18,6 @@ if(!distanceLong){
     distanceLong=10*60-1
 }
 
-console.log(distance+':'+distanceLong+':'+distanceShort)
 var run=false
 var repetition=0
 const audioSourceBell = document.getElementById('music-player-bell');
@@ -782,11 +781,10 @@ sequence=localStorage.getItem('Sequence');
 if (!sequence){
     parametre_sequence.checked=true
 }
-console.log(sequence)
-console.log(parametre_sequence)
+
 if (sequence=='true'){
     parametre_sequence.checked=true
-}else{
+}else if (sequence=='false'){
     parametre_sequence.checked=false
 }
 

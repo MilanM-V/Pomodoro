@@ -57,7 +57,7 @@ button{
     position: absolute;
     background-color: rgb(216, 203, 203);
     font-size: 2vw;
-    margin-right: 10px;
+    margin-right: 0.7vw;
     border-width: 0.2vw;
 }
 .timer button:hover {
@@ -65,7 +65,7 @@ button{
 }
 
 .timer #start{
-    margin-right: 10px;
+    margin-right: 0.7vw;
     top: 30.5vh;
     left: 2.2vw;
 }
@@ -97,7 +97,7 @@ button{
     border-radius: 1vw;
     background-color: rgba(255, 255, 255, 0.562);
     font-size: 2vw;
-    margin-right: 10px;
+    margin-right: 0.7vw;
     position: absolute;
     margin-left: 1vw;
     margin-right: 1vw;
@@ -114,21 +114,21 @@ button{
 .musique .pause_musique{
     top: 3%;
     right: 0%;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.7vw;
+    padding-right: 0.7vw;
 }
 .musique .next_musique{
     top: 3%;
     right: 24%;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.7vw;
+    padding-right: 0.7vw;
 }
 
 .musique .previous_musique{
     top: 3%;
     left: 21.5%;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0.7vw;
+    padding-right: 0.7vw;
 }
 
 .musique img{
@@ -327,7 +327,7 @@ input[type="checkbox"] {
     appearance: none;
     width: 2vw;
     height: 4vh;
-    border-radius: 5px;
+    border-radius: 0.3vw;
     background-color: #6b6464;
     border: 0.2vw solid #8c1c96;
     top: 1vh;
@@ -392,7 +392,7 @@ input[type="checkbox"]:checked::before {
     left: 3.5vw;
     top: 4vh;
     width: 9vw;
-    margin-bottom: 50px;
+    margin-bottom: 2.5vw;
     text-align: center;
 
 }
@@ -539,7 +539,7 @@ option:checked,option:hover {
 
 .parametre_sequence_text{
     display: block; /* Le texte est maintenant un bloc qui peut sauter des lignes */
-    margin-left: 10px; /* Espace entre la case et le texte */
+    margin-left: 0.7vw; /* Espace entre la case et le texte */
     white-space: normal; /* Permet au texte de sauter des lignes */
     word-wrap: break-word; /* Gère le retour à la ligne du texte */
     text-align: left; 
