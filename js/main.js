@@ -490,7 +490,12 @@ openModalBtn.onclick = function() {
     modal.style.display = "block"; 
     modal_content.style.display="block"
     setTimeout(function() {
-        modal_content.style.top = '-20%';
+        if (window.matchMedia("(max-width: 600px)").matches){
+            modal_content.style.top = '2%';
+        }else{
+            modal_content.style.top = '-20%';
+        }
+        
         modal.style.opacity = 1;
     }, 10);
 

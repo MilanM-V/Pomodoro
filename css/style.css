@@ -17,6 +17,8 @@ body{
     font-family: 'Nuku Nuku',sans-serif;
 }
 
+
+
 @font-face {
     font-family: 'Nuku Nuku';
     src: url("../font/nuku-nuku.regular.ttf") format('truetype');
@@ -26,6 +28,7 @@ header .wrapper{
     position: absolute;
     top: 0.2vh;
     left: 0.8vw;
+    font-size: 1vw;
 }
 
 .content{
@@ -38,6 +41,9 @@ header .wrapper{
     width: 30vw;
     
 }
+
+
+
 
 button{
     cursor: pointer;
@@ -114,6 +120,7 @@ button{
     width: 3vw;
     text-align: center;
     height: auto;
+    padding: 0;
 }
 .musique .pause_musique{
     top: 3%;
@@ -153,6 +160,7 @@ button{
     border-radius: 1vw;
     left: 1vw;
 }
+
 .musique #duree{
     margin: 0;
     font-size: 2.5vw;
@@ -163,6 +171,38 @@ button{
     color: #000000;
 
 }
+
+#progressBar {
+    width: 8vw;
+    position: absolute;
+    top: 7vh;
+    right: 1vw;
+    appearance: none;
+    border-radius: 0.5vw;
+    height: 1.5vh;
+    background-color: #381717;
+}
+
+
+
+#progressBar::-webkit-slider-thumb {
+    appearance: none; 
+    width: 1.4vw;
+    height: 1.4vw;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}
+
+#progressBar::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 1.4vw;
+    height: 1.4vw;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}
+
 .musique .scrolling-text-container {
     width: 12vw;
     height: 3.5vh;
@@ -184,6 +224,7 @@ button{
     white-space: nowrap;
     transform: translateX(0);
 }
+
 @keyframes scrollText {
     0% {
         transform: translateX(0); /* Débute visible */
@@ -279,6 +320,8 @@ button{
     color: #fff8f8;
 }
 
+
+
 .list-page{
     background-color: #000000;
     border-right: 0.1vw solid #c5c5c5;
@@ -317,7 +360,6 @@ button{
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-
 
 
 footer{
@@ -367,39 +409,6 @@ input[type="checkbox"]:checked {
 }
 
 
-#progressBar {
-    width: 8vw;
-    position: absolute;
-    top: 7vh;
-    right: 1vw;
-    appearance: none;
-    border-radius: 0.5vw;
-    height: 1.5vh;
-    background-color: #381717;
-}
-
-
-
-#progressBar::-webkit-slider-thumb {
-    appearance: none; 
-    width: 1.4vw;
-    height: 1.4vw;
-    border-radius: 50%;
-    background: #ccb7b1;
-    cursor: pointer;
-}
-
-#progressBar::-moz-range-thumb {
-    -moz-appearance: none;
-    width: 1.4vw;
-    height: 1.4vw;
-    border-radius: 50%;
-    background: #ccb7b1;
-    cursor: pointer;
-}
-
-
-
 .tabs {
     background-color: #00000000;
     cursor: pointer;
@@ -430,6 +439,8 @@ input[type="checkbox"]:checked {
 .tab-content.active {
     display: block;
 }
+
+
 
 #fond-select{
     appearance: none;
@@ -468,6 +479,7 @@ option:checked,option:hover {
     max-height: 80vh;
     overflow-x: auto;  
 }
+
 
 .input-container input{
     appearance: none;
@@ -510,6 +522,7 @@ option:checked,option:hover {
     position: absolute;
     font-size: 1.25vw;
 }
+
 
 #numberInputWorkTitle{
     left: 1vw;
@@ -555,6 +568,7 @@ option:checked,option:hover {
 
 #parametre_sequence input{
     width: 4.5vw;
+    height: 4vh;
     
 }
 #parametre_sequence input[type="checkbox"]:checked::before {
@@ -562,7 +576,8 @@ option:checked,option:hover {
     text-align: center;
     font-size: 1.5vw;
     color: white;
-    position: absolute;
+    position: relative;
+    margin: 0;
     top: -0.5vh;
     left: 0.20vw;
 }
@@ -573,4 +588,424 @@ option:checked,option:hover {
     word-wrap: break-word; 
     text-align: left; 
     
+}
+
+
+@media (max-width: 600px){
+    header .wrapper{
+        font-size: 4vw;
+    }
+    .content{
+        top: 28vh;
+        left: 20vw;
+        height: 40vh;
+        width: 60vw;
+    }
+    .timer button{
+        font-size: 4vw;
+        margin-right: 0.7vw;
+        border-width: 0.2vw;
+    }
+    .timer #start{
+        top: 30.5vh;
+        left: 3.vw;
+    }
+    
+    .timer #Stop{
+        top:  30.5vh;
+        left: 18.5vw;
+    }
+    
+    .timer #restart{
+        top:  30.5vh;
+        left: 32vw;
+    }
+
+    .timer p {
+        font-size: 17vw;
+        position: absolute;
+        top: 22%;
+        left: 20.5%;
+    
+      }
+
+    .musique img{
+        height: auto;
+        width: 40%;
+        position: absolute;
+        border-width: 0px;
+        top: 1.5vh;
+        border-radius: 1vw;
+        left: 2vw;
+    }
+
+    .musique button{
+        font-size: 5vw;
+        margin-right: 0.7vw;
+        position: absolute;
+        margin-left: 1vw;
+        margin-right: 1vw;
+        
+    }
+
+    .musique .start_musique{
+        top: 28%;
+        right: 27%;
+        width: 8vw;
+        padding: 0;
+        text-align: center;
+        height: auto;
+    }
+    .musique .pause_musique{
+        top: 28%;
+        right: 14%;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        width: 8vw;
+        height: auto;
+        text-align: center;
+        padding: 0;
+    }
+    .musique .next_musique{
+        top: 28%;
+        right: 0%;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        width: 8vw;
+        height: auto;
+        text-align: center;
+        padding: 0;
+    }
+    
+    .musique .previous_musique{
+        top: 28%;
+        left: 43%;
+        padding-left: 0.7vw;
+        padding-right: 0.7vw;
+        width: 8vw;
+        height: auto;
+    }
+
+    .musique #duree{
+        margin: 0;
+        font-size: 9.5vw;
+        position: absolute;
+        text-align: center;
+        left: 32vw;
+        top: 0vh;
+        color: #000000;
+    
+    }
+
+    .musique .scrolling-text-container {
+        width: 34vw;
+        height: 6vh;
+        background-color: #ff000000;
+        left: 0vw;
+        top: 8vh;
+        
+    }
+    
+    .scrolling-text {
+        margin-top:2.5vw;
+        left: 1vw;
+    }
+
+    @keyframes scrollText {
+        0% {
+            transform: translateX(0); /* Débute visible */
+            font-size:8vw;
+            
+        }
+        10% {
+            transform: translateX(0); /* Reste visible pendant 2 secondes */
+            font-size:8vw;
+        }
+        50% {
+            transform: translateX(-100%); /* Défile vers la gauche */
+            font-size:8vw;
+        }
+    
+        100% {
+            transform: translateX(0); /* Reviens à la position de départ */
+            font-size:8vw;
+        }
+    }
+    
+    #openModalBtn {
+        background-color: #ffffff00;
+        font-size: 6vw;
+        position: absolute;
+        top: 30.5vh;
+        right: 10%;
+        border: none;
+        cursor: pointer;
+        width: 3vw;
+        height: auto;
+        
+    }
+    
+    #openModalBtn i{
+        transition: transform 5s ease;
+    }
+
+    #progressBar {
+        width: 22vw;
+        position: absolute;
+        top: 10.5vh;
+        right: 1vw;
+        appearance: none;
+        border-radius: 0.5vw;
+        height: 1.5vh;
+        background-color: #381717;
+    }
+    
+    #progressBar::-webkit-slider-thumb {
+        appearance: none; 
+        width: 5vw;
+        height: 5vw;
+        border-radius: 50%;
+    }
+    
+    #progressBar::-moz-range-thumb {
+        -moz-appearance: none;
+        width: 5vw;
+        height: 5vw;
+        border-radius: 50%;
+    }
+
+    /* Contenu de la modale */
+    .modal-content {
+        width: 80%;
+        max-width: 80vw;
+        height: 80%;
+        max-height: 80vh;
+        top: 50%;
+        left: 10%;
+    }
+
+    /* Bouton pour fermer la modale */
+    .close-btn {
+        font-size: 2rem;
+        top: 1vh;
+        right: 5vw;
+    }
+
+    .list-page{
+        background-color: #000000;
+        border-right: 0.1vw solid #c5c5c5;
+        width: 39.2%;
+        max-width: 50vw;
+        height: 100%;
+        max-height: 80vh;
+    }
+    
+    #info-parametre{
+        background-color: #141414;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 70%;
+        max-width: 48.5vw;
+        height: 100%;
+        max-height: 80vh;
+    }
+
+    footer{
+        margin: 0;
+        padding: 0;
+        font-size: 3vw;
+        position: absolute;
+        bottom: 2%;
+        right: 2%;
+        color: rgb(0, 0, 0);
+
+    }
+    
+    
+    #musique-parametre form{
+        font-size: 4vw;
+        top: 5vh;
+        line-height: 8vh;
+        left: 2vw;
+        
+    }
+    
+     input[type="checkbox"] {
+        width: 4vw;
+        height: 2vh;
+        top: 1vh;
+    }
+    
+    /* Ajout d'un "checkmark" personnalisé */
+    #musique-parametre input[type="checkbox"]:checked::before {
+        top: -0.1vh;
+        left: 0.4vw;
+        font-size: 3vw;
+    }
+    
+    .tabs {
+        font-size: 4vw;
+        left: 7vw;
+        top: 4vh;
+        width: 18vw;
+        margin-bottom: 2.5vw;
+        text-align: center;
+    
+    }
+    
+    .tab{
+        margin-bottom: 4vh;
+    }
+    .tab.active {
+        margin-bottom: 4vh;
+    }
+
+    #fond-select{
+        appearance: none;
+        background: url('../images/chevron-down-medium.png') no-repeat right center;
+        background-size: 4vw;
+        border-radius: 2vw;
+        font-size: 3.4vw;
+        font-family:'Nuku Nuku',sans-serif;
+        height: 5vh;
+        width: 32vw;
+        position: relative;
+        text-align: left;
+        top: 10vh;
+        left: 0vw;
+        background-color: #c9badd;
+        cursor: pointer;
+        padding: 0.2vw;
+        padding-right: 2.4vw;
+        white-space: normal; /* Permet au texte de sauter des lignes */
+        word-wrap: break-word;
+    }
+    
+    select, option{
+        font: -moz-pull-down-menu;
+        font-size: 1.5vw;
+        width: 10vw;
+    }
+
+    option:checked,option:hover {
+        background-color: #9f94ad;
+    }
+    
+    #fond-parametre img{
+        width: 30vw;
+        height: auto;
+        position: relative;
+        top: 20vh;
+        left: 0vw;
+    }
+
+    .input-container input{
+        appearance: none;
+        width: 12vw;
+        height: 8vh;
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 0.5vw;
+        font-size: 8vw;
+        text-align: center;
+        border: 0.2vw solid #8c1c96;
+    
+    }
+    
+    .input-container input:focus{
+        outline: 0;
+        border: 0.2vw solid #bd26ca;
+    }
+    
+    #numberInputWork{
+        position: absolute;
+        left: 1vw;
+        top: 20vw;
+    }
+    
+    #numberInputShort{
+        position: absolute;
+        left: 18vw;
+        top: 20vw;
+    }
+    
+    
+    #numberInputLong{
+        position: absolute;
+        left: 34vw;
+        top: 20vw;
+    }
+    
+    .input-container p{
+        position: absolute;
+        font-size: 3vw;
+    }
+    #numberInputWorkTitle{
+        left: 2vw;
+        top: 11vw;
+    }
+    
+    #numberInputShortTitle{
+        left: 18vw;
+        top: 11vw;
+    }
+    
+    #numberInputLongTitle{
+        left: 35vw;
+        top: 10vw;
+        font-size: 3vw;
+    }
+    
+    #numberInputWorkTemps{
+        left: 2vw;
+        top: 37vw;
+    }
+    
+    #numberInputShortTemps{
+        left: 19vw;
+        top: 37vw;
+    }
+    
+    #numberInputLongTemps{
+        left: 35vw;
+        top: 37vw;
+    }
+
+    #parametre_sequence{
+        position: absolute;
+        top: 30vh;
+        margin-left: 1vw;
+        margin-right: 2vw;
+        display: flex;
+        align-items: flex-start;
+        font-size: 3.5vw;
+        
+    }
+    
+    #parametre_sequence input{
+        width: 22.5vw;
+        height: 3.5vh;
+        
+    }
+    #parametre_sequence input[type="checkbox"]:checked::before {
+        content: '✔';  
+        text-align: center;
+        font-size: 5.5vw;
+        color: white;
+        position: relative;
+        margin: 0;
+        top: -0.2vh;
+        left: 1vw;
+    }
+    .parametre_sequence_text{
+        display: block; 
+        margin-left: 0.7vw; 
+        white-space: normal;
+        word-wrap: break-word; 
+        text-align: left; 
+        
+    }
+     
+
 }
