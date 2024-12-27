@@ -733,7 +733,7 @@ timerShort.addEventListener('change',(event)=>{
     distanceShort=(timerShort.value*60)-1
     minutes = Math.floor((distance+1) /60);
     seconds = Math.floor((distance+1)-minutes*60);
-    localStorage.setItem('timerShort', distance);
+    localStorage.setItem('timerShort', distanceShort);
     if (chronos=='chrono5'){
         actChrono()
     }
@@ -746,7 +746,7 @@ timerLong.addEventListener('change',(event)=>{
     distanceLong=(timerLong.value*60)-1
     minutes = Math.floor((distance+1) /60);
     seconds = Math.floor((distance+1)-minutes*60);
-    localStorage.setItem('timerLong', distance);
+    localStorage.setItem('timerLong', distanceLong);
     if (chronos=='chrono10'){
         actChrono()
     }
