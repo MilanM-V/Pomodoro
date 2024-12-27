@@ -444,3 +444,9 @@ option:checked,option:hover {
     position: relative;
     top: 20vh;
 }
+
+#tab2{
+    height: 100%;
+    max-height: 80vh;
+    overflow-x: auto;  /* Ajoute une barre de défilement si le contenu dépasse */
+}

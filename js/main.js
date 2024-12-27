@@ -204,9 +204,12 @@ var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
 
+
+
 audioPlayer.addEventListener('timeupdate', () => {
     progressBar.value = audioPlayer.currentTime; 
     progressBar.max = audioPlayer.duration || 0; 
+    
 });
 
 progressBar.addEventListener('input', () => {
@@ -234,16 +237,18 @@ function pauseMusic() {
 function playNext() {
     currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
     progressBar.value=0
+    
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
     if(!audioPlayer.paused){
         audioPlayer.load();
         audioPlayer.play();
     }
-    
     cover()
     title()
     duree()
+    
+    
     if(currentTrackIndex==playlist.length-1){
         playlist=shuffle(playlist)
     }
@@ -255,6 +260,7 @@ function playPrevious(){
     }else{
         currentTrackIndex=currentTrackIndex-1
     }
+    progressBar.value=0
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
     if(!audioPlayer.paused){
@@ -264,6 +270,7 @@ function playPrevious(){
     cover()
     title()
     duree()
+    
 }
 
 
@@ -455,7 +462,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
                     "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3",
                     "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version) [Us1IwcpRE1Y].mp3",
-                    "./musique/arcene/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
+                    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
                 )
             }
             if(playlist_select[i]=='Snk'){
@@ -513,7 +520,6 @@ window.onload = function() {
     var extraitSaved=localStorage.getItem('extraitImage')
     if (savedBackground) {
         document.body.style.backgroundImage = savedBackground;
-        console.log(savedBackground)
     }
     if(extraitSaved){
         extrait.src=extraitSaved
