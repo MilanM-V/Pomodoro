@@ -605,6 +605,7 @@ option:checked,option:hover {
         font-size: 4vw;
         margin-right: 0.7vw;
         border-width: 0.2vw;
+        height: 10vw;
     }
     .timer #start{
         top: 30.5vh;
@@ -624,8 +625,8 @@ option:checked,option:hover {
     .timer p {
         font-size: 17vw;
         position: absolute;
-        top: 22%;
-        left: 20.5%;
+        top: 9vh;
+        left: 22.5%;
     
       }
 
@@ -650,7 +651,7 @@ option:checked,option:hover {
 
     .musique .start_musique{
         top: 28%;
-        right: 27%;
+        right: 16.15vw;
         width: 8vw;
         padding: 0;
         text-align: center;
@@ -658,7 +659,7 @@ option:checked,option:hover {
     }
     .musique .pause_musique{
         top: 28%;
-        right: 14%;
+        right: 13.5%;
         padding-left: 0.7vw;
         padding-right: 0.7vw;
         width: 8vw;
@@ -684,6 +685,8 @@ option:checked,option:hover {
         padding-right: 0.7vw;
         width: 8vw;
         height: auto;
+        text-align: center;
+        padding: 0;
     }
 
     .musique #duree{
@@ -692,7 +695,7 @@ option:checked,option:hover {
         position: absolute;
         text-align: center;
         left: 32vw;
-        top: 0vh;
+        top: -0.75vh;
         color: #000000;
     
     }
@@ -736,7 +739,7 @@ option:checked,option:hover {
         background-color: #ffffff00;
         font-size: 6vw;
         position: absolute;
-        top: 30.5vh;
+        top: 31.5vh;
         right: 10%;
         border: none;
         cursor: pointer;
