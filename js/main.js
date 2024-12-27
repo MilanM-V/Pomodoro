@@ -13,7 +13,7 @@ var repetition=0
 const audioSourceBell = document.getElementById('music-player-bell');
 var minutes = Math.floor((Number(distance)+1) /60);
 var seconds = Math.floor((Number(distance)+1)-minutes*60);
-console.log(minutes+':'+seconds)
+var inputProgressBar=false
 actChrono()
 
 function shuffle(array) {
@@ -50,8 +50,8 @@ function chrono25(){
 
 
     //calcule du temps
-    minutes = Math.floor((distance+1) /60);
-    seconds = Math.floor((distance+1)-minutes*60);
+    minutes = Math.floor((distance) /60);
+    seconds = Math.floor((distance)-minutes*60);
     //modidier le text
     actChrono()
     
@@ -85,8 +85,8 @@ function chrono5(){
 
 
     //calcule du temps
-    minutes = Math.floor((distanceShort+1) /60);
-    seconds = Math.floor((distanceShort+1)-minutes*60);
+    minutes = Math.floor((distanceShort) /60);
+    seconds = Math.floor((distanceShort)-minutes*60);
     //modidier le text
     actChrono()
     distanceShort-=1;
@@ -112,8 +112,8 @@ function chrono10(){
     x = setInterval(function() {
 
     //calcule du temps
-    minutes = Math.floor((distanceLong+1) /60);
-    seconds = Math.floor((distanceLong+1)-minutes*60);
+    minutes = Math.floor((distanceLong) /60);
+    seconds = Math.floor((distanceLong)-minutes*60);
     //modidier le text
     actChrono()
     distanceLong-=1;
@@ -258,16 +258,34 @@ var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
 
+const audioSource = document.getElementById('audio-source');
+audioSource.src = playlist[currentTrackIndex];
+var progressBar=document.getElementById('progressBar');
 
+audioPlayer.load();
+audioPlayer.addEventListener('loadedmetadata', () => {
+    progressBar.max = audioPlayer.duration;
+});
 
 audioPlayer.addEventListener('timeupdate', () => {
-    progressBar.value = audioPlayer.currentTime; 
+    if  (inputProgressBar==false){
+        progressBar.value = audioPlayer.currentTime; 
+    }
+    
     progressBar.max = audioPlayer.duration || 0; 
     
 });
 
 progressBar.addEventListener('input', () => {
+    inputProgressBar=true
+});
+
+progressBar.addEventListener('change', () => {
     audioPlayer.currentTime = progressBar.value; 
+});
+
+progressBar.addEventListener('mouseup', () => {
+    inputProgressBar=false
 });
 
 // Lecture de la musique
@@ -294,6 +312,10 @@ function playNext() {
     
     const audioSource = document.getElementById('audio-source');
     audioSource.src = playlist[currentTrackIndex];
+    audioPlayer.load();
+    audioPlayer.addEventListener('loadedmetadata', () => {
+        progressBar.max = audioPlayer.duration;
+    });
     if(!audioPlayer.paused){
         audioPlayer.load();
         audioPlayer.play();
@@ -302,6 +324,7 @@ function playNext() {
     title()
     duree()
     
+
     
     if(currentTrackIndex==playlist.length-1){
         playlist=shuffle(playlist)
@@ -324,7 +347,11 @@ function playPrevious(){
     cover()
     title()
     duree()
-    
+    audioPlayer.load();
+    audioPlayer.addEventListener('loadedmetadata', () => {
+        progressBar.max = audioPlayer.duration;
+    });
+
 }
 
 
@@ -405,6 +432,10 @@ function duree(){
         var audio= new Audio(playlist[currentTrackIndex])
         audio.onloadedmetadata=function(){
             const temps_musique=audio.duration-Math.floor(playbackTime.toFixed(2))
+            if (Math.floor(temps_musique)==0){
+                playNext()
+                playMusic()
+            }
             if (temps_musique) {
                 var heure = Math.floor(temps_musique / 3600);
                 var minutes = Math.floor((temps_musique % 3600) / 60);
