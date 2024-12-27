@@ -624,20 +624,21 @@ option:checked,option:hover {
 
     .timer p {
         font-size: 17vw;
-        position: absolute;
-        top: 9vh;
-        left: 22.5%;
+        position: relative;
+        top: -8vh;
+        left: 12.15vw;
     
       }
 
     .musique img{
-        height: auto;
+        height: 16vw;
         width: 40%;
         position: absolute;
         border-width: 0px;
         top: 1.5vh;
         border-radius: 1vw;
         left: 2vw;
+
     }
 
     .musique button{
@@ -717,21 +718,21 @@ option:checked,option:hover {
     @keyframes scrollText {
         0% {
             transform: translateX(0); /* Débute visible */
-            font-size:8vw;
+            font-size:7.5vw;
             
         }
         10% {
             transform: translateX(0); /* Reste visible pendant 2 secondes */
-            font-size:8vw;
+            font-size:7.5vw;
         }
         50% {
             transform: translateX(-100%); /* Défile vers la gauche */
-            font-size:8vw;
+            font-size:7.5vw;
         }
     
         100% {
             transform: translateX(0); /* Reviens à la position de départ */
-            font-size:8vw;
+            font-size:7.5vw;
         }
     }
     
