@@ -448,5 +448,79 @@ option:checked,option:hover {
 #tab2{
     height: 100%;
     max-height: 80vh;
-    overflow-x: auto;  /* Ajoute une barre de défilement si le contenu dépasse */
+    overflow-x: auto;  
 }
+
+.input-container input{
+    appearance: none;
+    width: 5vw;
+    height: 4vh;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 0.5vw;
+    font-size: 2vw;
+    text-align: center;
+    border: 0.2vw solid #8c1c96;
+
+}
+
+.input-container input:focus{
+    outline: 0;
+    border: 0.2vw solid #bd26ca;
+}
+
+#numberInputWork{
+    position: absolute;
+    left: 1vw;
+    top: 10vw;
+}
+
+#numberInputShort{
+    position: absolute;
+    left: 9vw;
+    top: 10vw;
+}
+
+
+#numberInputLong{
+    position: absolute;
+    left: 17vw;
+    top: 10vw;
+}
+
+.input-container p{
+    position: absolute;
+    font-size: 1.25vw;
+}
+
+#numberInputWorkTitle{
+    left: 1vw;
+    top: 7vw;
+}
+
+#numberInputShortTitle{
+    left: 8.5vw;
+    top: 7vw;
+}
+
+#numberInputLongTitle{
+    left: 16.75vw;
+    top: 7vw;
+}
+
+#numberInputWorkTemps{
+    left: 1.5vw;
+    top: 11.5vw;
+}
+
+#numberInputShortTemps{
+    left: 9.5vw;
+    top: 11.5vw;
+}
+
+#numberInputLongTemps{
+    left: 17.5vw;
+    top: 11.5vw;
+}
+
+

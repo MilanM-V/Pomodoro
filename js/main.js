@@ -1,9 +1,20 @@
 
 var x=null;
 var chronos='chrono25'
-var distance = 1499;
+
+var distance = localStorage.getItem('timerPomodoro') || [];
+
+var distanceShort =localStorage.getItem('timerShort') || [];
+
+var distanceLong=localStorage.getItem('timerLong') || [];
+
 var run=false
+var repetition=0
 const audioSourceBell = document.getElementById('music-player-bell');
+var minutes = Math.floor((Number(distance)+1) /60);
+var seconds = Math.floor((Number(distance)+1)-minutes*60);
+console.log(minutes+':'+seconds)
+actChrono()
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -16,6 +27,17 @@ function shuffle(array) {
     return array;
 }
 
+function actChrono(){
+    if(minutes<10 && seconds>9){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
+    }else if(minutes<10 && seconds<10){
+        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
+    }else if(minutes>9 && seconds<10){
+        document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
+    }else{
+        document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
+    }
+}
 
 function chrono25(){
     chronos='chrono25'
@@ -28,28 +50,24 @@ function chrono25(){
 
 
     //calcule du temps
-    let minutes = Math.floor(distance /60);
-    let seconds = Math.floor(distance-minutes*60);
-        
+    minutes = Math.floor((distance+1) /60);
+    seconds = Math.floor((distance+1)-minutes*60);
     //modidier le text
-    if(minutes<10 && seconds>9){
-        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
-    }else if(minutes<10 && seconds<10){
-        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
-    }else if(minutes>9 && seconds<10){
-        document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
-    }else{
-        document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
-    }
+    actChrono()
     
     distance-=1;
     //stop repetiton
     if (distance == 0) {
         audioSourceBell.play()
-        distance=299
+        distance=localStorage.getItem('timerPomodoro') || [];
         clearInterval(x);
-        document.getElementById("chrono").innerHTML ='05 '+ ":" + '00';
-        chrono5()
+        if (repetition<3){
+            chrono5()
+        }else{
+            chrono10()
+            repetition=0
+        }
+        
     }
     }, 1000);
 }
@@ -67,28 +85,48 @@ function chrono5(){
 
 
     //calcule du temps
-    let minutes = Math.floor(distance /60);
-    let seconds = Math.floor(distance-minutes*60);
+    minutes = Math.floor((distanceShort+1) /60);
+    seconds = Math.floor((distanceShort+1)-minutes*60);
     //modidier le text
-    if(minutes<10 && seconds>9){
-        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + seconds;
-    }else if(minutes<10 && seconds<10){
-        document.getElementById("chrono").innerHTML ='0'+minutes + ":" + "0"+seconds;
-    }else if(minutes>9 && seconds<10){
-        document.getElementById("chrono").innerHTML =minutes + ":" + "0"+seconds;
-    }else{
-        document.getElementById("chrono").innerHTML =minutes + ":" + seconds;
-    }
-    distance-=1;
+    actChrono()
+    distanceShort-=1;
     //stop repetiton
-    if (minutes ==0) {
+    if (distanceShort ==0) {
         audioSourceBell.play()
+        distanceShort=localStorage.getItem('timerShort') || [];
         clearInterval(x);
-        distance=1499
+        chrono25()
+        repetition+=1
+    }
+    }, 1000);
+}
+
+
+function chrono10(){
+    chronos='chrono10'
+
+    //update chrono
+    if (x!==null){
+        clearInterval(x)
+    }
+    x = setInterval(function() {
+
+    //calcule du temps
+    minutes = Math.floor((distanceLong+1) /60);
+    seconds = Math.floor((distanceLong+1)-minutes*60);
+    //modidier le text
+    actChrono()
+    distanceLong-=1;
+    //stop repetiton
+    if (distanceLong ==0) {
+        audioSourceBell.play()
+        distanceLong=localStorage.getItem('timerLong') || [];
+        clearInterval(x);
         chrono25()
     }
     }, 1000);
 }
+
 
 const button_start=document.getElementById('start');
 button_start.addEventListener('click',function(){
@@ -97,8 +135,11 @@ button_start.addEventListener('click',function(){
         if (chronos=='chrono25'){
             chrono25()
             run=true
-        }else{
+        }else if (chronos=='chrono5'){
             chrono5()
+            run=true
+        }else{
+            chrono10()
             run=true
         }
     }
@@ -118,24 +159,37 @@ button_restart.addEventListener('click',function(){
     if (x!==null ){
         clearInterval(x)
         if(chronos=='chrono25'){
-            distance=1499
-            document.getElementById('chrono').innerHTML ='25' + ":" + '00';
+            distance=localStorage.getItem('timerPomodoro') || [];
+            actChrono()
             chrono25()
-        }else{
-            distance=299
-            document.getElementById('chrono').innerHTML ='05' + ":" + '00';
+        }else if(chronos=='chrono5'){
+            distanceShort =localStorage.getItem('timerShort') || [];
+            actChrono()
             chrono5()
+        }else{
+            distanceLong =localStorage.getItem('timerLong') || [];
+            actChrono()
+            chrono10()
         }
         run=false
 
     }else{
         clearInterval(x)
         if(chronos=='chrono25'){
-            distance=1499
-            document.getElementById('chrono').innerHTML ='25' + ":" + '00';
+            distance=localStorage.getItem('timerPomodoro') || [];
+            minutes = Math.floor((distance+1) /60);
+            seconds = Math.floor((distance+1)-minutes*60);
+            actChrono()
+        }else if(chronos=='chrono5'){
+            distanceShort =localStorage.getItem('timerShort') || [];
+            minutes = Math.floor((distanceShort+1) /60);
+            seconds = Math.floor((distanceShort+1)-minutes*60);
+            actChrono()
         }else{
-            distance=299
-            document.getElementById('chrono').innerHTML ='05' + ":" + '00';
+            distanceLong =localStorage.getItem('timerLong') || [];
+            minutes = Math.floor((distanceLong+1) /60);
+            seconds = Math.floor((distanceLong+1)-minutes*60);
+            actChrono()
         }
     }
 })
@@ -626,4 +680,44 @@ function colori(){
         header.style.color='#000000'
     }
 }
+
+var timerPomodoro=document.getElementById("numberInputWork")
+timerPomodoro.value=(Number(localStorage.getItem('timerPomodoro'))+1)/60 || [];
+timerPomodoro.addEventListener('change',(event)=>{
+    distance=(timerPomodoro.value*60)-1
+    minutes = Math.floor((distance+1) /60);
+    seconds = Math.floor((distance+1)-minutes*60);
+    localStorage.setItem('timerPomodoro', distance);
+    if (chronos=='chrono25'){
+        actChrono()
+    }
+    
+
+})
+
+var timerShort=document.getElementById("numberInputShort")
+timerShort.value=(Number(localStorage.getItem('timerShort'))+1)/60 || [];
+timerShort.addEventListener('change',(event)=>{
+    distanceShort=(timerShort.value*60)-1
+    minutes = Math.floor((distance+1) /60);
+    seconds = Math.floor((distance+1)-minutes*60);
+    localStorage.setItem('timerShort', distance);
+    if (chronos=='chrono5'){
+        actChrono()
+    }
+
+})
+
+var timerLong=document.getElementById("numberInputLong")
+timerLong.value=(Number(localStorage.getItem('timerLong'))+1)/60|| [];
+timerLong.addEventListener('change',(event)=>{
+    distanceLong=(timerLong.value*60)-1
+    minutes = Math.floor((distance+1) /60);
+    seconds = Math.floor((distance+1)-minutes*60);
+    localStorage.setItem('timerLong', distance);
+    if (chronos=='chrono10'){
+        actChrono()
+    }
+
+})
 
