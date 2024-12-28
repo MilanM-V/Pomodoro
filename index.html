@@ -17,7 +17,7 @@
     </header>
     <main>
         <audio id="music-player-bell">
-            <source id="audio-source-bell" src="./musique/Boxing Bell Sound Effect [0sORXQ-KHXw].mp3" type="audio/mpeg">
+            <source id="audio-source-bell" src="./musique/bells/Boxing Bell Sound Effect [0sORXQ-KHXw].mp3" type="audio/mpeg">
         </audio>
         <div class="content">
             <div class="musique">
@@ -60,7 +60,7 @@
                 <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
                 <div class="list-page" id="list-page">
                     <div class="tabs">
-                        <div class="tab active" data-tab="tab1">Generale</div>
+                        <div class="tab active" data-tab="tab1">General</div>
                         <div class="tab" data-tab="tab2">Timer</div>
                         <div class="tab" data-tab="tab3">Musique</div>
                         <div class="tab" data-tab="tab4">Fond</div>
@@ -69,7 +69,24 @@
                 </div>
                 <div id="info-parametre">
                     <div class="tab-content active" id="tab1">
-
+                        <form id='parametre_music_chrono'>
+                            <input type="checkbox" id="checkbox-music" value="1">
+                            <span class="parametre_music_chrono_text">Activer la musique lors du lancement du chrono</span>
+                        </form>
+                        <input id="progressBarSound" type="range" value="0" min="0" max="1" step="0.1">
+                        <span class="progressBarSound_text">Modifier le volume de la musique</span>
+                        <div class="bells">
+                            <select id="bell-select">
+                                <option id="option" value="">changer le son de la sonnerie</option>
+                                <option id="option" value="Boxing Bell">Boxing Bell</option>
+                                <option id="option" value="Meditation Bell">Meditation Bell</option>
+                                <option id="option" value="Ram Bell">Ram Bell</option>
+                                <option id="option" value="Iphone Bell">Iphone Bell</option>
+                            </select>
+                            <input id="progressBarbell" type="range" value="0" min="0" max="1" step="0.1">
+                            <button id="SoundBell" class="close-btn"><i class="fa-solid fa-volume-high"></i></button>
+                            <p>pomodoro-timer-chill n'est pas affilié au titulaire de la marque déposée Pomodoro Technique™, la société Cirillo, et respecte ses droits de marque. Pomodoro Technique® et Pomodoro® sont des marques déposées de Francesco Cirillo.</p>
+                        </div>
                     </div>
                     <div class="tab-content" id="tab2">
                         <div class="input-container">

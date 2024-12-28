@@ -20,6 +20,14 @@ if(!distanceLong){
 
 var run=false
 var repetition=0
+
+var audio_source_bell_player=document.getElementById('audio-source-bell')
+var Bell=localStorage.getItem('Bell');
+if(Bell){
+    audio_source_bell_player.src=Bell
+}
+
+
 const audioSourceBell = document.getElementById('music-player-bell');
 var minutes = Math.floor((Number(distance)+1) /60);
 var seconds = Math.floor((Number(distance)+1)-minutes*60);
@@ -142,7 +150,10 @@ function chrono10(){
 const button_start=document.getElementById('start');
 button_start.addEventListener('click',function(){
     if (run==false){
-        audioPlayer.play();  
+        if (MusicChrono=='true'){
+            audioPlayer.play();  
+        }
+        
         if (chronos=='chrono25'){
             chrono25()
             run=true
@@ -808,7 +819,7 @@ timerLong.addEventListener('change',(event)=>{
 var parametre_sequence=document.getElementById("checkbox-sequence")
 sequence=localStorage.getItem('Sequence');
 if (!sequence){
-    parametre_sequence.checked=true
+    sequence='true'
 }
 
 if (sequence=='true'){
@@ -826,4 +837,98 @@ parametre_sequence.addEventListener('change',()=>{
         sequence='false'
     }
     localStorage.setItem('Sequence', sequence);
+})
+
+var parametre_music=document.getElementById("checkbox-music")
+MusicChrono=localStorage.getItem('MusicChrono');
+if (!MusicChrono){
+    MusicChrono='true'
+}
+
+if (MusicChrono=='true'){
+    parametre_music.checked=true
+}else if (MusicChrono=='false'){
+    parametre_music.checked=false
+}
+
+
+
+parametre_music.addEventListener('change',()=>{
+    if(parametre_music.checked){
+        MusicChrono='true'
+    }else{
+        MusicChrono='false'
+    }
+    localStorage.setItem('MusicChrono', MusicChrono);
+})
+
+var volume=localStorage.getItem('Volume');
+var progressBarSound=document.getElementById('progressBarSound')
+
+if (!volume){
+    volume=0.5
+    progressBarSound.value=0.5
+}else{
+    progressBarSound.value=volume
+}
+audioPlayer.volume=volume
+
+progressBarSound.addEventListener('input',()=>{
+    volume=progressBarSound.value
+    audioPlayer.volume=volume
+    
+})
+
+progressBarSound.addEventListener('mouseup',()=>{
+    localStorage.setItem('Volume', volume);
+})
+
+
+var selectBel=document.getElementById('bell-select')
+var audio_source_bell=document.getElementById('audio-source-bell')
+var lien=null
+
+selectBel.addEventListener('change',(event)=>{
+    if(event.target.value=='Boxing Bell'){
+        lien="./musique/bells/Boxing Bell Sound Effect [0sORXQ-KHXw].mp3"
+        audio_source_bell.src=lien
+    }else if(event.target.value=='Meditation Bell'){
+        lien="./musique/bells/iPhone Chime Alarm⧸Ringtone (Apple Sound) - Sound Effect for Editing [rKhehGcObNI].mp3"
+        audio_source_bell.src=lien
+    }else if(event.target.value=='Ram Bell'){
+        lien="./musique/bells/Meditation bell sound relaxation deep sleep [8tHQfe5D69I].mp3"
+        audio_source_bell.src=lien
+    }else if(event.target.value=='Iphone Bell'){
+        lien="./musique/bells/Ram Bell Sound [FuPvbVgEH_c].mp3"
+        audio_source_bell.src=lien
+    }
+    audioSourceBell.load()
+    localStorage.setItem('Bell', lien);
+})
+
+var btn_bell=document.getElementById('SoundBell')
+
+btn_bell.onclick=function(){
+    audioSourceBell.play()
+}
+
+var volumeBell=localStorage.getItem('VolumeBell');
+var progressBarbell=document.getElementById('progressBarbell')
+
+if (!volumeBell){
+    volumeBell=0.5
+    progressBarbell.value=0.5
+}else{
+    progressBarbell.value=volumeBell
+}
+audioSourceBell.volume=volumeBell
+
+progressBarbell.addEventListener('input',()=>{
+    volumeBell=progressBarbell.value
+    audioSourceBell.volume=volumeBell
+    
+})
+
+progressBarbell.addEventListener('mouseup',()=>{
+    localStorage.setItem('VolumeBell', volumeBell);
 })

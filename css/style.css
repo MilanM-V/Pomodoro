@@ -227,21 +227,21 @@ button{
 
 @keyframes scrollText {
     0% {
-        transform: translateX(0); /* Débute visible */
+        transform: translateX(0); 
         font-size:1.5vw;
         
     }
     10% {
-        transform: translateX(0); /* Reste visible pendant 2 secondes */
+        transform: translateX(0); 
         font-size:1.5vw;
     }
     50% {
-        transform: translateX(-100%); /* Défile vers la gauche */
+        transform: translateX(-100%); 
         font-size:1.5vw;
     }
 
     100% {
-        transform: translateX(0); /* Reviens à la position de départ */
+        transform: translateX(0); 
         font-size:1.5vw;
     }
 }
@@ -263,14 +263,12 @@ button{
     transition: transform 5s ease;
 }
 
-/* Effet de rotation sur hover */
 #openModalBtn:hover i {
-    transform: rotate(10rad); /* Fait tourner l'icône de 360° */
+    transform: rotate(10rad); 
 }
 
-/* Style pour la surpage modale */
 .modal {
-    display: none; /* Cachée par défaut */
+    display: none; 
     position: fixed;
     z-index: 1; 
     left: 0;
@@ -283,7 +281,6 @@ button{
     transition: opacity 0.6s ease; 
 }
 
-/* Contenu de la modale */
 .modal-content {
     background-color: #000000;
     margin: 15% auto;
@@ -301,7 +298,6 @@ button{
 }
 
 
-/* Bouton pour fermer la modale */
 .close-btn {
     z-index: 1; 
     color: #8a8a8a;
@@ -397,9 +393,8 @@ input[type="checkbox"]:checked {
     border-color: #8c1c96;
 }
 
-/* Ajout d'un "checkmark" personnalisé */
 #musique-parametre input[type="checkbox"]:checked::before {
-    content: '✔';  /* Ajouter un checkmark */
+    content: '✔';  
     position: absolute;
     text-align: center;
     top: -0.75vh;
@@ -590,6 +585,156 @@ option:checked,option:hover {
     
 }
 
+#parametre_music_chrono{
+    position: absolute;
+    top: 10vh;
+    margin-left: 1vw;
+    margin-right: 2vw;
+    display: flex;
+    align-items: flex-start;
+    font-size: 1.5vw;
+    
+}
+
+#parametre_music_chrono input{
+    width: 3.2vw;
+    height: 4vh;
+    
+}
+#parametre_music_chrono input[type="checkbox"]:checked::before {
+    content: '✔';  
+    text-align: center;
+    font-size: 1.5vw;
+    color: white;
+    position: relative;
+    margin: 0;
+    top: -0.5vh;
+    left: 0.20vw;
+}
+.parametre_music_chrono_text{
+    display: block; 
+    margin-left: 0.7vw; 
+    white-space: normal;
+    word-wrap: break-word; 
+    text-align: left; 
+    
+}
+
+#progressBarSound {
+    width: 20vw;
+    position: absolute;
+    top: 32vh;
+    left: 1.5vw;
+    appearance: none;
+    border-radius: 0.5vw;
+    height: 1.5vh;
+    background-color: #c29292;
+}
+
+
+
+#progressBarSound::-webkit-slider-thumb {
+    appearance: none; 
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background: #ba00f3;
+    cursor: pointer;
+}
+
+#progressBarSound::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}
+
+.progressBarSound_text{
+    position: absolute;
+    font-size: 1.25vw;
+    left: 3vw;
+    top: 13vw;
+}
+
+#bell-select{
+    appearance: none;
+    background: url('../images/chevron-down-medium.png') no-repeat right center;
+    background-size: 2vw;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
+    font-family:'Nuku Nuku',sans-serif;
+    height: 5vh;
+    position: relative;
+    text-align: left;
+    top: 40vh;
+    left: 0vw;
+    background-color: #f6c9fc;
+    cursor: pointer;
+    padding: 0.2vw;
+    padding-right: 2.4vw;
+}
+
+#bell-select select, option{
+    font: -moz-pull-down-menu;
+}
+#bell-select option:checked,option:hover {
+    background-color: #f6c9fc;
+}
+
+#progressBarbell {
+    width: 12vw;
+    position: absolute;
+    top: 48vh;
+    left: 9vw;
+    appearance: none;
+    border-radius: 0.5vw;
+    height: 1.5vh;
+    background-color: #c29292;
+}
+
+#progressBarbell::-webkit-slider-thumb {
+    appearance: none; 
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background: #ba00f3;
+    cursor: pointer;
+}
+
+#progressBarbell::-moz-range-thumb {
+    -moz-appearance: none;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;
+    background: #ccb7b1;
+    cursor: pointer;
+}
+
+#SoundBell{
+    top: 46.5vh;
+    left: 3vw;
+    color: #978d8d;
+    font-size: 2vw;
+}
+
+#SoundBell:hover{
+    color: #978d8d;
+    
+}
+
+#SoundBell:active{
+    transform: scale(0.9);
+}
+
+.bells p{
+    color: #302f2f;
+    font-size: 0.7vw;
+    position: absolute;
+    bottom: 1vw;
+    margin: 0.5vw;
+}
 
 @media (max-width: 600px){
     header .wrapper{
@@ -759,7 +904,7 @@ option:checked,option:hover {
         top: 10.5vh;
         right: 1vw;
         appearance: none;
-        border-radius: 0.5vw;
+        border-radius: 1vw;
         height: 1.5vh;
         background-color: #381717;
     }
