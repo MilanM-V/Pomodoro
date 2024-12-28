@@ -272,6 +272,14 @@ if (!localStorage.getItem('playlist_select')) {
 // Récupérer les données de localStorage au chargement
 var playlist_select = JSON.parse(localStorage.getItem('playlist_select')) || [];
 
+if(localStorage.getItem('AllMusic')=='true'){
+    document.querySelectorAll('#playlist input').forEach(input =>{
+        if(input.name!=='All' && input.name!=='Nothing'){
+            input.checked=true
+        }
+    })
+}
+
 // Appliquer l'état initial des cases à cocher
 document.querySelectorAll('#playlist input').forEach(input => {
     if (playlist_select.includes(input.name)) {
@@ -305,13 +313,17 @@ var currentTrackIndex = 0;
 const audioPlayer = document.getElementById('music-player');
 
 const audioSource = document.getElementById('audio-source');
+
 audioSource.src = playlist[currentTrackIndex];
 var progressBar=document.getElementById('progressBar');
 
-audioPlayer.load();
-audioPlayer.addEventListener('loadedmetadata', () => {
-    progressBar.max = audioPlayer.duration;
-});
+if(playlist.length!==0){
+    audioPlayer.load();
+    audioPlayer.addEventListener('loadedmetadata', () => {
+        progressBar.max = audioPlayer.duration;
+    });
+}
+
 
 audioPlayer.addEventListener('timeupdate', () => {
     if  (inputProgressBar==false){
@@ -334,41 +346,57 @@ progressBar.addEventListener('mouseup', () => {
     inputProgressBar=false
 });
 
+
 // Lecture de la musique
 function playMusic() {
-    const audioSource = document.getElementById('audio-source');
-    audioSource.src = playlist[currentTrackIndex];
-    audioPlayer.load();
-    audioPlayer.play();
-    audioPlayer.currentTime=progressBar.value
-    cover()
-    title()
+    if(playlist.length==0){
+        alert("Aucune musique selectionner");
+    }else{
+        const audioSource = document.getElementById('audio-source');
+        audioSource.src = playlist[currentTrackIndex];
+        audioPlayer.load();
+        audioPlayer.play();
+        audioPlayer.currentTime=progressBar.value
+        cover()
+        title()
+    }
+    
         
 }
 
 // Mettre en pause la musique
 function pauseMusic() {
-    audioPlayer.pause();
+    if(playlist.length==0){
+        alert("Aucune musique selectionner");
+    }else{
+        audioPlayer.pause();
+    }
+    
 }
 
 // Passer à la musique suivante
 function playNext() {
-    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    progressBar.value=0
-    
-    const audioSource = document.getElementById('audio-source');
-    audioSource.src = playlist[currentTrackIndex];
-    audioPlayer.load();
-    audioPlayer.addEventListener('loadedmetadata', () => {
-        progressBar.max = audioPlayer.duration;
-    });
-    if(!audioPlayer.paused){
+    if(playlist.length==0){
+        alert("Aucune musique selectionner");
+    }else{
+        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+        progressBar.value=0
+        
+        const audioSource = document.getElementById('audio-source');
+        audioSource.src = playlist[currentTrackIndex];
         audioPlayer.load();
-        audioPlayer.play();
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            progressBar.max = audioPlayer.duration;
+        });
+        if(!audioPlayer.paused){
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+        cover()
+        title()
+        duree()
     }
-    cover()
-    title()
-    duree()
+    
     
 
     
@@ -378,139 +406,153 @@ function playNext() {
 }
 
 function playPrevious(){
-    if (currentTrackIndex==0){
-        currentTrackIndex=playlist.length-1
+    if(playlist.length==0){
+        alert("Aucune musique selectionner");
     }else{
-        currentTrackIndex=currentTrackIndex-1
-    }
-    progressBar.value=0
-    const audioSource = document.getElementById('audio-source');
-    audioSource.src = playlist[currentTrackIndex];
-    if(!audioPlayer.paused){
+        if (currentTrackIndex==0){
+            currentTrackIndex=playlist.length-1
+        }else{
+            currentTrackIndex=currentTrackIndex-1
+        }
+        progressBar.value=0
+        const audioSource = document.getElementById('audio-source');
+        audioSource.src = playlist[currentTrackIndex];
+        if(!audioPlayer.paused){
+            audioPlayer.load();
+            audioPlayer.play();
+        }
+        cover()
+        title()
+        duree()
         audioPlayer.load();
-        audioPlayer.play();
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            progressBar.max = audioPlayer.duration;
+        });
     }
-    cover()
-    title()
-    duree()
-    audioPlayer.load();
-    audioPlayer.addEventListener('loadedmetadata', () => {
-        progressBar.max = audioPlayer.duration;
-    });
+    
 
 }
 
 
 
 function cover(){
-    fetch(playlist[currentTrackIndex])
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => {
-            jsmediatags.read(new Blob([arrayBuffer]), {
-                onSuccess: function(tag) {
-                    const picture = tag.tags.picture;
-                    if (picture) {
-                        const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), "");
-                        const base64 = "data:" + picture.format + ";base64," + btoa(base64String);
-                        coverImage.src = base64;
-                        const img = document.getElementById("coverImage");
-                        img.src = base64;
-                        img.style.display = "block";
-                    } else {
-                        coverImage.src = ""; // Aucune cover trouvée
-                    }
-                },
-            });
-        })
+    if(playlist.length!==0){
+        fetch(playlist[currentTrackIndex])
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => {
+                    jsmediatags.read(new Blob([arrayBuffer]), {
+                        onSuccess: function(tag) {
+                            const picture = tag.tags.picture;
+                            if (picture) {
+                                const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), "");
+                                const base64 = "data:" + picture.format + ";base64," + btoa(base64String);
+                                coverImage.src = base64;
+                                const img = document.getElementById("coverImage");
+                                img.src = base64;
+                                img.style.display = "block";
+                            } else {
+                                coverImage.src = ""; // Aucune cover trouvée
+                            }
+                        },
+                    });
+                })
+    }
+    
 }
 cover()
 
 function title(){
-    fetch(playlist[currentTrackIndex])
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => {
-            jsmediatags.read(new Blob([arrayBuffer]), {
-                onSuccess: function(tag) {
-                    const titre = tag.tags.title;
-                    if (titre) {
-                        document.getElementById("titreMusique").innerHTML=titre
-                    }
-                },
-            });
-        })
+    if(playlist.length!==0){
+        fetch(playlist[currentTrackIndex])
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => {
+                jsmediatags.read(new Blob([arrayBuffer]), {
+                    onSuccess: function(tag) {
+                        const titre = tag.tags.title;
+                        if (titre) {
+                            document.getElementById("titreMusique").innerHTML=titre
+                        }
+                    },
+                });
+            })
+    }
+    
 }
 title()
 
 function duree(){
+    if (playlist.length!==0){
     var audio= new Audio(playlist[currentTrackIndex])
-        audio.onloadedmetadata=function(){
-            const temps_musique=audio.duration
-            if (temps_musique) {
-                var heure = Math.floor(temps_musique / 3600);
-                var minutes = Math.floor((temps_musique % 3600) / 60);
-                var seconds = Math.floor(temps_musique % 60);
-                if (heure>0){
-                    if(minutes<10 && seconds>9){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + seconds;
-                    }else if(minutes<10 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + "0"+seconds;
-                    }else if(minutes>9 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + "0"+seconds;
+            audio.onloadedmetadata=function(){
+                const temps_musique=audio.duration
+                if (temps_musique) {
+                    var heure = Math.floor(temps_musique / 3600);
+                    var minutes = Math.floor((temps_musique % 3600) / 60);
+                    var seconds = Math.floor(temps_musique % 60);
+                    if (heure>0){
+                        if(minutes<10 && seconds>9){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + seconds;
+                        }else if(minutes<10 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + "0"+seconds;
+                        }else if(minutes>9 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + "0"+seconds;
+                        }else{
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + seconds;
+                        }
                     }else{
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + seconds;
+                        if(minutes<10 && seconds>9){
+                            document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + seconds;
+                        }else if(minutes<10 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + "0"+seconds;
+                        }else if(minutes>9 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+minutes + ":" + "0"+seconds;
+                        }else{
+                            document.getElementById("duree").innerHTML ="-"+minutes + ":" + seconds;
+                        }
                     }
-                }else{
-                    if(minutes<10 && seconds>9){
-                        document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + seconds;
-                    }else if(minutes<10 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + "0"+seconds;
-                    }else if(minutes>9 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+minutes + ":" + "0"+seconds;
-                    }else{
-                        document.getElementById("duree").innerHTML ="-"+minutes + ":" + seconds;
-                    }
+                    
                 }
-                
-            }
-        }    
-    audioPlayer.ontimeupdate = function(){
-        var playbackTime = audioPlayer.currentTime;
-        var audio= new Audio(playlist[currentTrackIndex])
-        audio.onloadedmetadata=function(){
-            const temps_musique=audio.duration-Math.floor(playbackTime.toFixed(2))
-            if (Math.floor(temps_musique)==0){
-                playNext()
-                playMusic()
-            }
-            if (temps_musique) {
-                var heure = Math.floor(temps_musique / 3600);
-                var minutes = Math.floor((temps_musique % 3600) / 60);
-                var seconds = Math.floor(temps_musique % 60);
-                if (heure>0){
-                    if(minutes<10 && seconds>9){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + seconds;
-                    }else if(minutes<10 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + "0"+seconds;
-                    }else if(minutes>9 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + "0"+seconds;
-                    }else{
-                        document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + seconds;
-                    }
-                }else{
-                    if(minutes<10 && seconds>9){
-                        document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + seconds;
-                    }else if(minutes<10 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + "0"+seconds;
-                    }else if(minutes>9 && seconds<10){
-                        document.getElementById("duree").innerHTML ="-"+minutes + ":" + "0"+seconds;
-                    }else{
-                        document.getElementById("duree").innerHTML ="-"+minutes + ":" + seconds;
-                    }
+            }    
+        audioPlayer.ontimeupdate = function(){
+            var playbackTime = audioPlayer.currentTime;
+            var audio= new Audio(playlist[currentTrackIndex])
+            audio.onloadedmetadata=function(){
+                const temps_musique=audio.duration-Math.floor(playbackTime.toFixed(2))
+                if (Math.floor(temps_musique)==0){
+                    playNext()
+                    playMusic()
                 }
-                
+                if (temps_musique) {
+                    var heure = Math.floor(temps_musique / 3600);
+                    var minutes = Math.floor((temps_musique % 3600) / 60);
+                    var seconds = Math.floor(temps_musique % 60);
+                    if (heure>0){
+                        if(minutes<10 && seconds>9){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + seconds;
+                        }else if(minutes<10 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+'0'+minutes + ":" + "0"+seconds;
+                        }else if(minutes>9 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + "0"+seconds;
+                        }else{
+                            document.getElementById("duree").innerHTML ="-"+heure+':'+minutes + ":" + seconds;
+                        }
+                    }else{
+                        if(minutes<10 && seconds>9){
+                            document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + seconds;
+                        }else if(minutes<10 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+'0'+minutes + ":" + "0"+seconds;
+                        }else if(minutes>9 && seconds<10){
+                            document.getElementById("duree").innerHTML ="-"+minutes + ":" + "0"+seconds;
+                        }else{
+                            document.getElementById("duree").innerHTML ="-"+minutes + ":" + seconds;
+                        }
+                    }
+                    
+                }
             }
         }
     }
+    
 }
 duree()
 
@@ -570,11 +612,29 @@ if (!localStorage.getItem('playlist_select')) {
 }
 
 document.querySelectorAll('#playlist input').forEach(input =>{
+    if(localStorage.getItem('NothingMusic')=='true'){
+        if(input.name=='Nothing'){
+            input.checked=true
+        }
+    }
+    if(localStorage.getItem('AllMusic')=='true'){
+        if(input.name!=='Nothing'){
+            input.checked=true
+        }
+    }
     input.addEventListener('change',()=>{
         In=true
         for (let i=0;i<playlist_select.length;i++){
             if (playlist_select[i]==input.name)
                 In=false
+        }
+        if (input.name!=='All'){
+            document.querySelectorAll('#playlist input').forEach(input =>{
+                if (input.name=='All'){
+                    input.checked=false
+                    
+                }
+            })
         }
         if (input.checked){
             if (In==true){
@@ -588,6 +648,42 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     playlist_select.push('Chill')
                 }
             }
+            if (input.name!=='Nothing'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Nothing'){
+                        input.checked=false
+                        
+                    }
+                })
+            }
+            localStorage.setItem('NothingMusic', 'false');
+            localStorage.setItem('AllMusic', 'false');
+            if (input.name=='Nothing'){
+                localStorage.setItem('NothingMusic', 'true');
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    playlist_select=[]
+                    input.checked=true
+                    if (input.name!=='Nothing'){
+                        input.checked=false
+                    }
+                })
+            }else if (input.name=='All'){
+                localStorage.setItem('AllMusic', 'true');
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name!=='Nothing'){
+                        input.checked=true
+                    }else{
+                        input.checked=false
+                    }
+                    playlist_select=[]
+                    if (input.name!=='All' && input.name!=='Nothing'){
+                        playlist_select.push(input.name)
+
+                    }
+                    
+                })
+            }
+
         }else{
             playlist_select=playlist_select.filter(item => item !==input.name)
         }
@@ -621,14 +717,14 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         playlist=shuffle(playlist)
         if (taille_playlist>playlist.length && audioPlayer.paused){
             currentTrackIndex=currentTrackIndex
-            playMusic()
-            setTimeout(() => {
-            }, 500);
-            pauseMusic()
+            audioPlayer.load()
         }else if (taille_playlist>playlist.length){
             currentTrackIndex=currentTrackIndex
             playMusic()
         }
+        cover()
+        title()
+        duree()
         
     })
 })
