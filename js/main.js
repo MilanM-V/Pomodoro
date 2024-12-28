@@ -170,15 +170,30 @@ button_restart.addEventListener('click',function(){
     if (x!==null ){
         clearInterval(x)
         if(chronos=='chrono25'){
-            distance=localStorage.getItem('timerPomodoro') || [];
+            distance=Number(localStorage.getItem('timerPomodoro'))+1;
+            if(distance==1){
+                distance=25*60-1
+            }
+            minutes = Math.floor((distance+1) /60);
+            seconds = Math.floor((distance+1)-minutes*60);
             actChrono()
             chrono25()
         }else if(chronos=='chrono5'){
-            distanceShort =localStorage.getItem('timerShort') || [];
+            distanceShort =Number(localStorage.getItem('timerShort'))+1;
+            if(distanceShort==1){
+                distanceShort=5*60-1
+            }
+            minutes = Math.floor((distanceShort+1) /60);
+            seconds = Math.floor((distanceShort+1)-minutes*60);
             actChrono()
             chrono5()
         }else{
-            distanceLong =localStorage.getItem('timerLong') || [];
+            distanceLong =Number(localStorage.getItem('timerLong'))+1;
+            if(distanceLong==1){
+                distanceLong=10*60-1
+            }
+            minutes = Math.floor((distanceLong+1) /60);
+            seconds = Math.floor((distanceLong+1)-minutes*60);
             actChrono()
             chrono10()
         }
@@ -187,17 +202,26 @@ button_restart.addEventListener('click',function(){
     }else{
         clearInterval(x)
         if(chronos=='chrono25'){
-            distance=localStorage.getItem('timerPomodoro') || [];
+            distance=Number(localStorage.getItem('timerPomodoro'));
+            if(!distance){
+                distance=25*60-1
+            }
             minutes = Math.floor((distance+1) /60);
             seconds = Math.floor((distance+1)-minutes*60);
             actChrono()
         }else if(chronos=='chrono5'){
-            distanceShort =localStorage.getItem('timerShort') || [];
+            distanceShort =Number(localStorage.getItem('timerShort'));
+            if(!distanceShort){
+                distanceShort=5*60-1
+            }
             minutes = Math.floor((distanceShort+1) /60);
             seconds = Math.floor((distanceShort+1)-minutes*60);
             actChrono()
         }else{
-            distanceLong =localStorage.getItem('timerLong') || [];
+            distanceLong =Number(localStorage.getItem('timerLong'));
+            if(!distanceLong){
+                distanceLong=10*60-1
+            }
             minutes = Math.floor((distanceLong+1) /60);
             seconds = Math.floor((distanceLong+1)-minutes*60);
             actChrono()
