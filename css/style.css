@@ -654,8 +654,8 @@ option:checked,option:hover {
 .progressBarSound_text{
     position: absolute;
     font-size: 1.25vw;
-    left: 3vw;
-    top: 13vw;
+    left: 2.5vw;
+    top: 25vh;
 }
 
 #bell-select{
@@ -1222,10 +1222,9 @@ option:checked,option:hover {
     }
     
     .progressBarSound_text{
-        position: relative;
         font-size: 3vw;
-        left: 0.5vw;
-        top: 49vw;
+        left: 1.5vw;
+        top: 21vh;
     }
     
     #bell-select{
@@ -1288,7 +1287,7 @@ option:checked,option:hover {
         color: #302f2f;
         font-size: 3vw;
         position: absolute;
-        bottom: 1vw;
+        bottom: 1vh;
         margin: 0.5vw;
     }
      
