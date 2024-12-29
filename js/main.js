@@ -150,7 +150,7 @@ function chrono10(){
 const button_start=document.getElementById('start');
 button_start.addEventListener('click',function(){
     if (run==false){
-        if (MusicChrono=='true'){
+        if (MusicChrono=='true' && playlist.length>0){
             audioPlayer.play();  
         }
         
@@ -257,20 +257,32 @@ window.addEventListener("wheel", function(e) {
     }
 }, { passive: false });
 
-var playlist = [];
+
+var playlist = JSON.parse(localStorage.getItem('playlist')) || ["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3","./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+    "./musique/snk/進撃pf-medley20130629巨人.mp3","./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+        "./musique/chill/Dinner In Paris.mp3",
+        "./musique/chill/Lofitopía - Day Dream.mp3",
+        "./musique/chill/purpose_not_found.mp3"];
 
 
 // Initialiser les cases cochées par défaut au premier lancement
-if (!localStorage.getItem('playlist_select')) {
+if (!localStorage.getItem('music_select')) {
     // Récupérer tous les noms des cases
-    const defaultChecked = Array.from(document.querySelectorAll('#playlist input')).map(input => input.name);
-    
+    var music_select = Array.from(document.querySelectorAll('#playlist input'))
+    .filter(input => input.name !== 'Nothing')
+    .map(input => input.name);
     // Sauvegarder dans localStorage
-    localStorage.setItem('playlist_select', JSON.stringify(defaultChecked));
+    localStorage.setItem('music_select', JSON.stringify(music_select));
+    
+}else{
+    var music_select=JSON.parse(localStorage.getItem('music_select'))
 }
 
-// Récupérer les données de localStorage au chargement
-var playlist_select = JSON.parse(localStorage.getItem('playlist_select')) || [];
 
 if(localStorage.getItem('AllMusic')=='true'){
     document.querySelectorAll('#playlist input').forEach(input =>{
@@ -282,31 +294,62 @@ if(localStorage.getItem('AllMusic')=='true'){
 
 // Appliquer l'état initial des cases à cocher
 document.querySelectorAll('#playlist input').forEach(input => {
-    if (playlist_select.includes(input.name)) {
+    if (music_select.includes(input.name)) {
         input.checked = true;
-        if (input.name=='Arcane'){
-            playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
-                "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3",
-                "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version) [Us1IwcpRE1Y].mp3",
-                "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
-            )
+        if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' || input.name=='Arcane-Music-3' || input.name=='Arcane-Music-4'){
+            let complete=true
+            document.querySelectorAll('#playlist input').forEach(input =>{
+                if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' || input.name=='Arcane-Music-3' || input.name=='Arcane-Music-4'){
+                    if (input.checked==false){
+                        complete=false
+                    }
+                }
+            })
+            if (complete==true){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Arcane'){
+                        input.checked=true
+                    }
+                })
+            }
         }
-        if(input.name=='Snk'){
-            playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending) [IOZd-HarjZw].mp3",
-                "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme) [buZcLljh9eI].mp3",
-                "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop [AU-JN4bWI44].mp3",
-                "./musique/snk/進撃pf-medley20130629巨人 [IPWiiR5MVv4].mp3"
-            )
+        if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' || input.name=='Snk-Music-3' || input.name=='Snk-Music-4'){
+            let complete=true
+            document.querySelectorAll('#playlist input').forEach(input =>{
+                if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' || input.name=='Snk-Music-3' || input.name=='Snk-Music-4'){
+                    if (input.checked==false){
+                        complete=false
+                    }
+                }
+            })
+            if (complete==true){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Snk'){
+                        input.checked=true
+                    }
+                })
+            }
         }
-        if(input.name=='Chill'){
-            playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha [aBkTkxKDduc].mp3",
-                "./musique/chill/Dinner In Paris [cfCKtt7OwdI].mp3",
-                "./musique/chill/Lofitopía - Day Dream [Ft2wWaP8avI].mp3",
-                "./musique/chill/purpose_not_found.mp3 [sinlicB1WyU].mp3"
-            )
+        if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' || input.name=='Chill-Music-3' || input.name=='Chill-Music-4'){
+            let complete=true
+            document.querySelectorAll('#playlist input').forEach(input =>{
+                if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' || input.name=='Chill-Music-3' || input.name=='Chill-Music-4'){
+                    if (input.checked==false){
+                        complete=false
+                    }
+                }
+            })
+            if (complete==true){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Chill'){
+                        input.checked=true
+                    }
+                })
+            }
         }
     }
 });
+
 playlist=shuffle(playlist)
 var currentTrackIndex = 0;
 
@@ -602,14 +645,6 @@ window.onclick = function(event) {
 
 var In=true
 
-// Initialiser les cases cochées par défaut au premier lancement
-if (!localStorage.getItem('playlist_select')) {
-    // Récupérer tous les noms des cases
-    const defaultChecked = Array.from(document.querySelectorAll('#playlist input')).map(input => input.name);
-    
-    // Sauvegarder dans localStorage
-    localStorage.setItem('playlist_select', JSON.stringify(defaultChecked));
-}
 
 document.querySelectorAll('#playlist input').forEach(input =>{
     if(localStorage.getItem('NothingMusic')=='true'){
@@ -624,8 +659,8 @@ document.querySelectorAll('#playlist input').forEach(input =>{
     }
     input.addEventListener('change',()=>{
         In=true
-        for (let i=0;i<playlist_select.length;i++){
-            if (playlist_select[i]==input.name)
+        for (let i=0;i<playlist.length;i++){
+            if (playlist[i]==input.name)
                 In=false
         }
         if (input.name!=='All'){
@@ -636,16 +671,252 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 }
             })
         }
+        if (input.checked==false){
+            if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Arcane'){
+                        input.checked=false
+                    }
+                })
+                if (input.name=='Arcane-Music-1'){
+                    playlist=playlist.filter(item => item !=="./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3")
+                    music_select=music_select.filter(item => item !=="Arcane-Music-1")
+                }else if (input.name=='Arcane-Music-2'){
+                    playlist=playlist.filter(item => item !=="./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3")
+                    music_select=music_select.filter(item => item !=="Arcane-Music-2")
+                }else if (input.name=='Arcane-Music-3'){
+                    playlist=playlist.filter(item => item !=="./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3")
+                    music_select=music_select.filter(item => item !=="Arcane-Music-3")
+                }else if (input.name=='Arcane-Music-4'){
+                    playlist=playlist.filter(item => item !=="./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3")
+                    music_select=music_select.filter(item => item !=="Arcane-Music-4")
+                }
+            }else if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' ||input.name=='Snk-Music-3' ||input.name=='Snk-Music-4'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Snk'){
+                        input.checked=false
+                    }
+                })
+                if (input.name=='Snk-Music-1'){
+                    playlist=playlist.filter(item => item !=="./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3")
+                    music_select=music_select.filter(item => item !=="Snk-Music-1")
+                }else if (input.name=='Snk-Music-2'){
+                    playlist=playlist.filter(item => item !=="./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3")
+                    music_select=music_select.filter(item => item !=="Snk-Music-2")
+                }else if (input.name=='Snk-Music-3'){
+                    playlist=playlist.Snk(item => item !=="./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3")
+                    music_select=music_select.filter(item => item !=="Snk-Music-3")
+                }else if (input.name=='Snk-Music-4'){
+                    playlist=playlist.filter(item => item !=="./musique/snk/進撃pf-medley20130629巨人.mp3")
+                    music_select=music_select.filter(item => item !=="Snk-Music-4")
+                }
+            }else if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' ||input.name=='Chill-Music-3' ||input.name=='Chill-Music-4'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if(input.name=='Chill'){
+                        input.checked=false
+                    }
+                })
+                if (input.name=='Chill-Music-1'){
+                    playlist=playlist.filter(item => item !=="./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3")
+                    music_select=music_select.filter(item => item !=="Chill-Music-1")
+                }else if (input.name=='Chill-Music-2'){
+                    playlist=playlist.filter(item => item !=="./musique/chill/Dinner In Paris.mp3")
+                    music_select=music_select.filter(item => item !=="Chill-Music-2")
+                }else if (input.name=='Chill-Music-3'){
+                    playlist=playlist.Snk(item => item !=="./musique/chill/Lofitopía - Day Dream.mp3")
+                    music_select=music_select.filter(item => item !=="Chill-Music-3")
+                }else if (input.name=='Chill-Music-4'){
+                    playlist=playlist.filter(item => item !=="./musique/chill/purpose_not_found.mp3")
+                    music_select=music_select.filter(item => item !=="Chill-Music-4")
+                }
+            }
+            if(input.name=='Arcane'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
+                        input.checked=false
+                    }
+                })
+                let suppr=["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+                    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+                    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+                    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3"]
+                playlist=playlist.filter(item =>!suppr.includes(item))
+                suppr=['Arcane-Music-1','Arcane-Music-2','Arcane-Music-3','Arcane-Music-4']
+                music_select=music_select.filter(item=>!suppr.includes(item))
+            }
+            if(input.name=='Snk'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' ||input.name=='Snk-Music-3' ||input.name=='Snk-Music-4'){
+                        input.checked=false
+                    }
+                })
+                let suppr=["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+                    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+                    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+                    "./musique/snk/進撃pf-medley20130629巨人.mp3"]
+                playlist=playlist.filter(item =>!suppr.includes(item))
+                suppr=['Snk-Music-1','Snk-Music-2','Snk-Music-3','Snk-Music-4']
+                music_select=music_select.filter(item=>!suppr.includes(item))
+            }
+            if(input.name=='Chill'){
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' ||input.name=='Chill-Music-3' ||input.name=='Chill-Music-4'){
+                        input.checked=false
+                    }
+                })
+                let suppr=["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+                        "./musique/chill/Dinner In Paris.mp3",
+                        "./musique/chill/Lofitopía - Day Dream.mp3",
+                        "./musique/chill/purpose_not_found.mp3"]
+                playlist=playlist.filter(item =>!suppr.includes(item))
+                suppr=['Chill-Music-1','Chill-Music-2','Chill-Music-3','Chill-Music-4']
+                music_select=music_select.filter(item=>!suppr.includes(item))
+            }
+        }
+
         if (input.checked){
+            if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' || input.name=='Arcane-Music-3' || input.name=='Arcane-Music-4'){
+                let complete=true
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' || input.name=='Arcane-Music-3' || input.name=='Arcane-Music-4'){
+                        if (input.checked==false){
+                            complete=false
+                        }
+                    }
+                })
+                if (complete==true){
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if(input.name=='Arcane'){
+                            input.checked=true
+                        }
+                    })
+                }
+            }else if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' || input.name=='Snk-Music-3' || input.name=='Snk-Music-4'){
+                let complete=true
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' || input.name=='Snk-Music-3' || input.name=='Snk-Music-4'){
+                        if (input.checked==false){
+                            complete=false
+                        }
+                    }
+                })
+                if (complete==true){
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if(input.name=='Snk'){
+                            input.checked=true
+                        }
+                    })
+                }
+            }else if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' || input.name=='Chill-Music-3' || input.name=='Chill-Music-4'){
+                let complete=true
+                document.querySelectorAll('#playlist input').forEach(input =>{
+                    if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' || input.name=='Chill-Music-3' || input.name=='Chill-Music-4'){
+                        if (input.checked==false){
+                            complete=false
+                        }
+                    }
+                })
+                if (complete==true){
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if(input.name=='Chill'){
+                            input.checked=true
+                        }
+                    })
+                }
+            }
+            
             if (In==true){
                 if (input.name=='Arcane'){
-                    playlist_select.push('Arcane')
+                    let suppr=["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+                        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+                        "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+                        "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3"]
+                    playlist=playlist.filter(item =>!suppr.includes(item))
+                    playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+                    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+                    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+                    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3")
+                    music_select.push("Arcane-Music-1","Arcane-Music-2","Arcane-Music-3","Arcane-Music-4")
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
+                            input.checked=true
+                        }
+                    })
+
+                }else if (input.name=="Arcane-Music-1"){
+                    playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3")
+                    music_select.push("Arcane-Music-1")
+                }else if (input.name=="Arcane-Music-2"){
+                    playlist.push('./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3')
+                    music_select.push("Arcane-Music-2")
+                }else if (input.name=="Arcane-Music-3"){
+                    playlist.push("./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3")
+                    music_select.push("Arcane-Music-3")
+                }else if (input.name=="Arcane-Music-4"){
+                    playlist.push('./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3')
+                    music_select.push("Arcane-Music-4")
                 }
+
                 if(input.name=='Snk'){
-                    playlist_select.push('Snk')
+                    let suppr=["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+                        "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+                        "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+                        "./musique/snk/進撃pf-medley20130629巨人.mp3"]
+                    playlist=playlist.filter(item =>!suppr.includes(item))
+                    playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+                    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+                    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+                    "./musique/snk/進撃pf-medley20130629巨人.mp3"
+                    )
+                    music_select.push("Snk-Music-1","Snk-Music-2","Snk-Music-3","Snk-Music-4")
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' ||input.name=='Snk-Music-3' ||input.name=='Snk-Music-4'){
+                            input.checked=true
+                        }
+                    })
+                }else if(input.name=="Snk-Music-1"){
+                    playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3")
+                    music_select.push("Snk-Music-1")
+                }else if(input.name=="Snk-Music-2"){
+                    playlist.push("./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3")
+                    music_select.push("Snk-Music-2")
+                }else if(input.name=="Snk-Music-3"){
+                    playlist.push("./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3")
+                    music_select.push("Snk-Music-3")
+                }else if(input.name=="Snk-Music-4"){
+                    playlist.push("./musique/snk/進撃pf-medley20130629巨人.mp3")
+                    music_select.push("Snk-Music-4")
                 }
+                
                 if(input.name=='Chill'){
-                    playlist_select.push('Chill')
+                    let suppr=["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+                        "./musique/chill/Dinner In Paris.mp3",
+                        "./musique/chill/Lofitopía - Day Dream.mp3",
+                        "./musique/chill/purpose_not_found.mp3"]
+                    playlist=playlist.filter(item =>!suppr.includes(item))
+                    playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+                        "./musique/chill/Dinner In Paris.mp3",
+                        "./musique/chill/Lofitopía - Day Dream.mp3",
+                        "./musique/chill/purpose_not_found.mp3"
+                    )
+                    music_select.push("Chill-Music-1","Chill-Music-2","Chill-Music-3","Chill-Music-4")
+                    document.querySelectorAll('#playlist input').forEach(input =>{
+                        if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' ||input.name=='Chill-Music-3' ||input.name=='Chill-Music-4'){
+                            input.checked=true
+                        }
+                    })
+                }else if(input.name=="Chill-Music-1"){
+                    playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3")
+                    music_select.push("Chill-Music-1")
+                }else if(input.name=="Chill-Music-2"){
+                    playlist.push("./musique/chill/Dinner In Paris.mp3")
+                    music_select.push("Chill-Music-2")
+                }else if(input.name=="Chill-Music-3"){
+                    playlist.push("./musique/chill/Lofitopía - Day Dream.mp3")
+                    music_select.push("Chill-Music-3")
+                }else if(input.name=="Chill-Music-4"){
+                    playlist.push("./musique/chill/purpose_not_found.mp3")
+                    music_select.push("Chill-Music-4")
                 }
             }
             if (input.name!=='Nothing'){
@@ -661,7 +932,8 @@ document.querySelectorAll('#playlist input').forEach(input =>{
             if (input.name=='Nothing'){
                 localStorage.setItem('NothingMusic', 'true');
                 document.querySelectorAll('#playlist input').forEach(input =>{
-                    playlist_select=[]
+                    playlist=[]
+                    music_select=[]
                     input.checked=true
                     if (input.name!=='Nothing'){
                         input.checked=false
@@ -675,46 +947,34 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     }else{
                         input.checked=false
                     }
-                    playlist_select=[]
+                    music_select=[]
+                    playlist=[]
                     if (input.name!=='All' && input.name!=='Nothing'){
-                        playlist_select.push(input.name)
+                        playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+                            "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+                            "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+                            "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3","./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+                            "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+                            "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+                            "./musique/snk/進撃pf-medley20130629巨人.mp3","./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+                                "./musique/chill/Dinner In Paris.mp3",
+                                "./musique/chill/Lofitopía - Day Dream.mp3",
+                                "./musique/chill/purpose_not_found.mp3")
+                        music_select.push("Arcane","Arcane-Music-1","Arcane-Music-2","Arcane-Music-3","Arcane-Music-4","Snk","Snk-Music-1","Snk-Music-2","Snk-Music-3","Snk-Music-4","Chill","Chill-Music-1","Chill-Music-2","Chill-Music-3","Chill-Music-4")
 
                     }
                     
                 })
             }
 
-        }else{
-            playlist_select=playlist_select.filter(item => item !==input.name)
         }
         var taille_playlist=playlist.length
-        playlist=[]
-        for (let i=0;i<playlist_select.length;i++){
-            if (playlist_select[i]=='Arcane'){
-                playlist.push("./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3",
-                    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version [0Z7jXlBV_nU].mp3",
-                    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version) [Us1IwcpRE1Y].mp3",
-                    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele) [Vva-uRgATZ0].mp3"
-                )
-            }
-            if(playlist_select[i]=='Snk'){
-                playlist.push("./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending) [IOZd-HarjZw].mp3",
-                    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme) [buZcLljh9eI].mp3",
-                    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop [AU-JN4bWI44].mp3",
-                    "./musique/snk/進撃pf-medley20130629巨人 [IPWiiR5MVv4].mp3"
-                )
-            }
-            if(playlist_select[i]=='Chill'){
-                playlist.push("./musique/chill/C418  - Sweden - Minecraft Volume Alpha [aBkTkxKDduc].mp3",
-                    "./musique/chill/Dinner In Paris [cfCKtt7OwdI].mp3",
-                    "./musique/chill/Lofitopía - Day Dream [Ft2wWaP8avI].mp3",
-                    "./musique/chill/purpose_not_found.mp3 [sinlicB1WyU].mp3"
-                )
-            }
-        }
+        
+        localStorage.setItem('playlist', JSON.stringify(playlist));
+        localStorage.setItem('music_select', JSON.stringify(music_select));
 
-        localStorage.setItem('playlist_select', JSON.stringify(playlist_select));
         playlist=shuffle(playlist)
+        audioPlayer.load()
         if (taille_playlist>playlist.length && audioPlayer.paused){
             currentTrackIndex=currentTrackIndex
             audioPlayer.load()
@@ -1028,3 +1288,19 @@ progressBarbell.addEventListener('input',()=>{
 progressBarbell.addEventListener('mouseup',()=>{
     localStorage.setItem('VolumeBell', volumeBell);
 })
+
+document.querySelectorAll('.dropdown .arrow').forEach(arrow => {
+    arrow.addEventListener('click', (e) => {
+        e.stopPropagation(); 
+        const dropdown = arrow.closest('.dropdown');
+        dropdown.classList.toggle('open');
+        arrow.classList.toggle('rotate');
+    });
+});
+
+document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(subCheckbox => {
+    subCheckbox.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+});
+

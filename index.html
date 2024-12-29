@@ -50,7 +50,7 @@
                 <button id="openModalBtn"><i class="fa-solid fa-gear"></i></button>
             </div>
             <audio id="music-player">
-                <source id="audio-source" src="./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano [+ Sheet Music] [8YFFXHfKP1o].mp3" type="audio/mpeg">
+                <source id="audio-source" src="./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3" type="audio/mpeg">
             </audio>
         </div>
         
@@ -111,21 +111,92 @@
                     </div>
                     <div class="tab-content" id="tab3">
                         <div id="musique-parametre">
-                            <form id='playlist'>
-                                    <input type="checkbox" name="All" value="1">
-                                    Tout selectionner
-                                <br>
-                                    <input type="checkbox" name="Nothing" value="2">
-                                    Tout deselectionner
-                                <br>
-                                    <input type="checkbox" name="Arcane" value="3">
-                                    Arcane
-                                <br>
-                                    <input type="checkbox" name="Snk" value="4">
-                                    Attaque des Titans
-                                <br>
-                                    <input type="checkbox" name="Chill" value="5">
-                                    Chill
+                            <form id="playlist">
+                                <div class="main-checkbox">
+                                    <input type="checkbox" id="all" name="All" value="1">
+                                    <label for="all">Tout selectionner</label>
+                                </div>
+                                <div class="main-checkbox">
+                                    <input type="checkbox" id="nothing" name="Nothing" value="2">
+                                    <label for="nothing">Tout deselectionner</label>
+                                </div>
+                        
+                                <div class="dropdown">
+                                    <div class="main-checkbox">
+                                        <input type="checkbox" id="arcane" name="Arcane" value="3">
+                                        <label for="arcane">Arcane</label>
+                                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="arcane-mus1" name="Arcane-Music-1" value="3.1">
+                                            <label for="arcane-mus1">I Can't Hear It Now </label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="arcane-mus2" name="Arcane-Music-2" value="3.2">
+                                            <label for="arcane-mus2">What Could Have Been</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="arcane-mus3" name="Arcane-Music-3" value="3.3">
+                                            <label for="arcane-mus3">Isha's Song</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="arcane-mus4" name="Arcane-Music-4" value="3.4">
+                                            <label for="arcane-mus4">Ma Meilleure Ennemie</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="dropdown">
+                                    <div class="main-checkbox">
+                                        <input type="checkbox" id="snk" name="Snk" value="4">
+                                        <label for="snk">Attaque des Titans</label>
+                                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="snk-mus1" name="Snk-Music-1" value="4.1">
+                                            <label for="snk-mus1">akuma no ko</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="snk-mus2" name="Snk-Music-2" value="4.2">
+                                            <label for="snk-mus2">Call of Silence</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="snk-mus3" name="Snk-Music-3" value="4.3">
+                                            <label for="snk-mus3">red swan</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="snk-mus4" name="Snk-Music-4" value="4.4">
+                                            <label for="snk-mus4">進撃</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <div class="main-checkbox">
+                                        <input type="checkbox" id="chill" name="Chill" value="5">
+                                        <label for="chill">Chill</label>
+                                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="chill-mus1" name="Chill-Music-1" value="4.1">
+                                            <label for="chill-mus1">C418</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="chill-mus2" name="Chill-Music-2" value="4.2">
+                                            <label for="chill-mus2">Dinner In Paris</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="chill-mus3" name="Chill-Music-3" value="4.3">
+                                            <label for="chill-mus3">Lofitopía</label>
+                                        </div>
+                                        <div class="sub-checkbox">
+                                            <input type="checkbox" id="chill-mus4" name="Chill-Music-4" value="4.4">
+                                            <label for="chill-mus4">purpose_not_found</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -144,7 +215,6 @@
                                 <option id="option" value="Coffee shop">Coffee shop</option>
                             </select>
                             <img id="extrait" src="./images/fond1.gif">
-
                         </div>
                     </div>    
                 </div>
