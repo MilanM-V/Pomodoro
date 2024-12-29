@@ -1032,9 +1032,15 @@ option:checked,option:hover {
     #musique-parametre form{
         font-size: 4vw;
         top: 5vh;
-        line-height: 8vh;
+        line-height: 5vh;
         left: 2vw;
         
+    }
+
+    #tab3{
+        background-color: #381717;
+        height: 100%;
+        max-height: 173vw;
     }
     
      input[type="checkbox"] {
@@ -1348,6 +1354,56 @@ option:checked,option:hover {
         margin: 0.5vw;
     }
      
+    label {
+        cursor: pointer;
+        flex-grow: 1;
+        font-size: 3vw;
+    }
+    
+    .arrow {
+        margin-left: auto;
+        font-size: 1.5vw;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown .arrow.rotate i{
+        transform: rotate(90deg);
+    }
+    
+    .dropdown-content {
+        display: none;
+        margin-left:2.5vw;
+        overflow-y: auto; 
+        max-height: 20vh;
+    }
+    
+    .dropdown.open .dropdown-content {
+        display: block;
+    }
+    
+    .dropdown-content label {
+        cursor: pointer;
+        font-size: 3vw;
+        margin: 0px;
+    }
+    
+    .dropdown-content input{
+        width: 4vw;
+        height: 2vh;
+        
+    }
+    
+    #musique-parametre .dropdown-content input[type="checkbox"]:checked::before {
+        content: '✔';  
+        position: absolute;
+        text-align: center;
+        top: -0vh;
+        left: 0.3vw;
+        font-size: 3vw;
+        color: white;
+    }
 
 }
 
