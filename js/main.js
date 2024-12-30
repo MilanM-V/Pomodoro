@@ -241,6 +241,7 @@ button_restart.addEventListener('click',function(){
 })
 
 
+
 // Désactiver les raccourcis clavier pour zoomer
 window.addEventListener("keydown", function(e) {
     if ((e.ctrlKey && e.key === '+') || (e.ctrlKey && e.key === '-') || (e.ctrlKey && e.key === '0')) {
@@ -256,6 +257,23 @@ window.addEventListener("wheel", function(e) {
         e.preventDefault();
     }
 }, { passive: false });
+
+
+const Music={
+    Arcane:["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+        "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3",
+        "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",],
+    Chill:["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+        "./musique/chill/Dinner In Paris.mp3",
+        "./musique/chill/Lofitopia - Day Dream.mp3",
+        "./musique/chill/purpose_not_found.mp3"],
+    Snk:["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+        "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+        "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+        "./musique/snk/進撃pf-medley20130629巨人.mp3"]
+
+}
 
 
 var playlist = JSON.parse(localStorage.getItem('playlist')) || Object.values(Music).flat();
@@ -583,24 +601,6 @@ window.onclick = function(event) {
         }, 500);
     }
 }
-
-
-const Music={
-    Arcane:["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
-        "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3",
-        "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
-        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",],
-    Chill:["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
-        "./musique/chill/Dinner In Paris.mp3",
-        "./musique/chill/Lofitopia - Day Dream.mp3",
-        "./musique/chill/purpose_not_found.mp3"],
-    Snk:["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
-        "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
-        "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
-        "./musique/snk/進撃pf-medley20130629巨人.mp3"]
-
-}
-
 
 function getParentClasses(element) {
     let classes = [];
