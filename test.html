@@ -3,207 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Playlist</title>
-    <script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
+    <title>Gestionnaire de Playlists</title>
     <style>
-        /* Style général du formulaire */
-        #playlist {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
+        body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
         }
-
-        /* Style des éléments principaux */
-        .main-checkbox {
+        .container {
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #playlist {
             display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            position: relative;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 20px;
         }
-
-        /* Style des labels */
+        .playlist-item {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
         label {
-            margin-left: 8px;
-            cursor: pointer;
-            flex-grow: 1;
+            font-size: 18px;
+            margin: 5px 0;
         }
-
-        /* Style des flèches */
-        .arrow {
-            margin-left: auto;
-            font-size: 12px;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.3s ease;
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
-
-        /* Rotation de la flèche lorsqu'elle est active */
-        .arrow.rotate {
-            transform: rotate(90deg);
+        .subitems {
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
         }
-
-        /* Contenu déroulant (caché par défaut) */
-        .dropdown-content {
-            display: none;
-            margin-left: 25px;
-            margin-top: 5px;
-        }
-
-        /* Affichage du contenu déroulant lorsqu'actif */
-        .dropdown.open .dropdown-content {
-            display: block;
-        }
-
-        /* Style des sous-checkboxes */
-        .dropdown-content label {
-            margin-left: 5px;
-            cursor: pointer;
-        }
-
-        /* Animation pour rétrécir le bouton */
-        .shrink-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .shrink-button:hover {
-            transform: scale(0.95);
-        }
-
-        /* Style responsive pour les téléphones */
-        @media (max-width: 600px) {
-            #playlist {
-                padding: 15px;
-            }
-
-            .shrink-button {
-                width: 100%;
-                font-size: 18px;
-            }
-
-            .arrow {
-                font-size: 14px;
-            }
+        .subitems input {
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
-    <form id="playlist">
-        <div class="main-checkbox">
-            <input type="checkbox" id="all" name="All" value="1">
-            <label for="all">Tout sélectionner</label>
-        </div>
-        <div class="main-checkbox">
-            <input type="checkbox" id="nothing" name="Nothing" value="2">
-            <label for="nothing">Tout désélectionner</label>
-        </div>
-
-        <div class="dropdown">
-            <div class="main-checkbox">
-                <input type="checkbox" id="arcane" name="Arcane" value="3">
-                <label for="arcane">Arcane</label>
-                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <div class="dropdown-content">
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="arcane-mus1" name="Arcane-Music-1" value="3.1">
-                    <label for="arcane-mus1">I Can't Hear It Now </label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="arcane-mus2" name="Arcane-Music-2" value="3.2">
-                    <label for="arcane-mus2">What Could Have Been</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="arcane-mus3" name="Arcane-Music-3" value="3.3">
-                    <label for="arcane-mus3">Isha's Song</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="arcane-mus4" name="Arcane-Music-4" value="3.4">
-                    <label for="arcane-mus4">Ma Meilleure Ennemie</label>
-                </div>
+<div class="container">
+    <h1>Gestionnaire de Playlists</h1>
+    <div id="playlist">
+        <div class="playlist-item">
+            <label>
+                <input type="checkbox" name="Arcane">
+                Arcane
+            </label>
+            <div class="subitems">
+                <label>
+                    <input type="checkbox" name="Arcane-0">
+                    I Can't Hear It Now - Solo Piano
+                </label>
+                <label>
+                    <input type="checkbox" name="Arcane-1">
+                    Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover
+                </label>
+                <label>
+                    <input type="checkbox" name="Arcane-2">
+                    Isha's Song by Eason Chan - Piano Cover
+                </label>
+                <label>
+                    <input type="checkbox" name="Arcane-3">
+                    What Could Have Been ｜ EPIC FEMALE COVER
+                </label>
             </div>
         </div>
 
-        <div class="dropdown">
-            <div class="main-checkbox">
-                <input type="checkbox" id="snk" name="Snk" value="4">
-                <label for="snk">Attaque des Titans</label>
-                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <div class="dropdown-content">
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="snk-mus1" name="Snk-Music-1" value="4.1">
-                    <label for="snk-mus1">akuma no ko</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="snk-mus2" name="Snk-Music-2" value="4.2">
-                    <label for="snk-mus2">Call of Silence</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="snk-mus3" name="Snk-Music-3" value="4.3">
-                    <label for="snk-mus3">red swan</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="snk-mus4" name="Snk-Music-4" value="4.4">
-                    <label for="snk-mus4">進撃</label>
-                </div>
+        <div class="playlist-item">
+            <label>
+                <input type="checkbox" name="Snk">
+                Snk (Attack on Titan)
+            </label>
+            <div class="subitems">
+                <label>
+                    <input type="checkbox" name="Snk-0">
+                    Akuma no Ko (AOT Season 4 Part 2 Ending)
+                </label>
+                <label>
+                    <input type="checkbox" name="Snk-1">
+                    Call of Silence (Ymir's Theme)
+                </label>
+                <label>
+                    <input type="checkbox" name="Snk-2">
+                    Red Swan - Attack on Titan Opening (Lofi)
+                </label>
+                <label>
+                    <input type="checkbox" name="Snk-3">
+                    進撃pf-medley20130629巨人
+                </label>
             </div>
         </div>
-        <div class="dropdown">
-            <div class="main-checkbox">
-                <input type="checkbox" id="chill" name="Chill" value="5">
-                <label for="chill">Chill</label>
-                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <div class="dropdown-content">
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="chill-mus1" name="Chill-Music-1" value="4.1">
-                    <label for="chill-mus1">C418</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="chill-mus2" name="Chill-Music-2" value="4.2">
-                    <label for="chill-mus2">Dinner In Paris</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="chill-mus3" name="Chill-Music-3" value="4.3">
-                    <label for="chill-mus3">Lofitopía</label>
-                </div>
-                <div class="sub-checkbox">
-                    <input type="checkbox" id="chill-mus4" name="Chill-Music-4" value="4.4">
-                    <label for="chill-mus4">purpose_not_found</label>
-                </div>
-        </div>
-    </form>
 
-    <script>
-        // Fonction pour basculer le menu déroulant
-        document.querySelectorAll('.dropdown .arrow').forEach(arrow => {
-            arrow.addEventListener('click', (e) => {
-                e.stopPropagation(); // Empêche le déclenchement du clic sur la checkbox
-                const dropdown = arrow.closest('.dropdown');
-                dropdown.classList.toggle('open');
-                arrow.classList.toggle('rotate');
-            });
+        <div class="playlist-item">
+            <label>
+                <input type="checkbox" name="Chill">
+                Chill
+            </label>
+            <div class="subitems">
+                <label>
+                    <input type="checkbox" name="Chill-0">
+                    Sweden - Minecraft Volume Alpha
+                </label>
+                <label>
+                    <input type="checkbox" name="Chill-1">
+                    Dinner In Paris
+                </label>
+                <label>
+                    <input type="checkbox" name="Chill-2">
+                    Lofitopía - Day Dream
+                </label>
+                <label>
+                    <input type="checkbox" name="Chill-3">
+                    Purpose Not Found
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const playlists = {
+        Arcane: [
+            "./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+            "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+            "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+            "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3"
+        ],
+        Snk: [
+            "./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+            "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+            "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+            "./musique/snk/進撃pf-medley20130629巨人.mp3"
+        ],
+        Chill: [
+            "./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+            "./musique/chill/Dinner In Paris.mp3",
+            "./musique/chill/Lofitopía - Day Dream.mp3",
+            "./musique/chill/purpose_not_found.mp3"
+        ]
+    };
+
+    let playlist = [];
+    let music_select = [];
+
+    // Initialisation des cases à cocher
+    document.querySelectorAll('#playlist input').forEach(input => {
+        const playlistName = input.name;
+        
+        // Charger l'état depuis localStorage
+        const isChecked = localStorage.getItem(playlistName) === 'true';
+        input.checked = isChecked;
+
+        if (isChecked) {
+            if (playlists[playlistName]) {
+                playlist.push(...playlists[playlistName]);
+                music_select.push(playlistName);
+            } else {
+                playlist.push(`./musique/${playlistName}.mp3`);
+                music_select.push(playlistName);
+            }
+        }
+
+        // Gestion des événements de changement
+        input.addEventListener('change', () => {
+            if (input.checked) {
+                // Ajouter à la playlist
+                if (playlists[playlistName]) {
+                    playlist.push(...playlists[playlistName]);
+                    music_select.push(playlistName);
+                    checkAllSubitems(playlistName, true);
+                } else {
+                    playlist.push(`./musique/${playlistName}.mp3`);
+                    music_select.push(playlistName);
+                }
+                localStorage.setItem(playlistName, 'true');
+            } else {
+                // Supprimer de la playlist
+                if (playlists[playlistName]) {
+                    playlist = playlist.filter(item => !playlists[playlistName].includes(item));
+                    music_select = music_select.filter(item => item !== playlistName);
+                    checkAllSubitems(playlistName, false);
+                } else {
+                    playlist = playlist.filter(item => item !== `./musique/${playlistName}.mp3`);
+                    music_select = music_select.filter(item => item !== playlistName);
+                }
+                localStorage.setItem(playlistName, 'false');
+            }
         });
+    });
 
-        // Optionnel : Empêche les sous-checkboxes de fermer le menu lorsqu'elles sont cliquées
-        document.querySelectorAll('.dropdown-content input[type="checkbox"]').forEach(subCheckbox => {
-            subCheckbox.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+    // Vérifie ou décoche les sous-items d'une playlist
+    function checkAllSubitems(playlistName, isChecked) {
+        const subitems = document.querySelectorAll(`#playlist input[name^="${playlistName}-"]`);
+        subitems.forEach(subitem => {
+            subitem.checked = isChecked;
+            const subitemPath = `./musique/${playlistName}/${subitem.name}.mp3`;
+            if (isChecked) {
+                if (!playlist.includes(subitemPath)) playlist.push(subitemPath);
+            } else {
+                playlist = playlist.filter(item => item !== subitemPath);
+            }
         });
-
-    </script>
+    }
+</script>
 
 </body>
 </html>
