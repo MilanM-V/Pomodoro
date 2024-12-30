@@ -1362,7 +1362,7 @@ option:checked,option:hover {
     
     .arrow {
         margin-left: auto;
-        font-size: 1.5vw;
+        font-size:4vw;
         cursor: pointer;
         user-select: none;
         transition: transform 0.3s ease;
@@ -1374,9 +1374,10 @@ option:checked,option:hover {
     
     .dropdown-content {
         display: none;
-        margin-left:2.5vw;
+        margin-left:8.5vw;
         overflow-y: auto; 
         max-height: 20vh;
+        line-height: 3vh;
     }
     
     .dropdown.open .dropdown-content {
@@ -1391,7 +1392,7 @@ option:checked,option:hover {
     
     .dropdown-content input{
         width: 4vw;
-        height: 2vh;
+        height: 1.8vh;
         
     }
     
