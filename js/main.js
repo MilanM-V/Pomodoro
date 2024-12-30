@@ -274,7 +274,7 @@ var playlist = JSON.parse(localStorage.getItem('playlist')) || ["./musique/arcan
 if (!localStorage.getItem('music_select')) {
     // Récupérer tous les noms des cases
     var music_select = Array.from(document.querySelectorAll('#playlist input'))
-    .filter(input => input.name !== 'Nothing')
+    .filter(input => input.name !== 'Nothing' && input.name!=='All')
     .map(input => input.name);
     // Sauvegarder dans localStorage
     localStorage.setItem('music_select', JSON.stringify(music_select));
@@ -671,11 +671,17 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 }
             })
         }
+        /* Gestion music quand case decocher */
         if (input.checked==false){
+            /*gestion music Arcane*/
+            if (input.name!=='Nothing'){
+                localStorage.setItem('AllMusic', 'false');
+            }
             if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if(input.name=='Arcane'){
                         input.checked=false
+                        music_select=music_select.filter(item=>item!=='Arcane')
                     }
                 })
                 if (input.name=='Arcane-Music-1'){
@@ -695,6 +701,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if(input.name=='Snk'){
                         input.checked=false
+                        music_select=music_select.filter(item=>item!=='Snk')
                     }
                 })
                 if (input.name=='Snk-Music-1'){
@@ -714,6 +721,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if(input.name=='Chill'){
                         input.checked=false
+                        music_select=music_select.filter(item=>item!=='Chill')
                     }
                 })
                 if (input.name=='Chill-Music-1'){
@@ -730,6 +738,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     music_select=music_select.filter(item => item !=="Chill-Music-4")
                 }
             }
+            /**gestion des playlist */
             if(input.name=='Arcane'){
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
@@ -741,10 +750,9 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
                     "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3"]
                 playlist=playlist.filter(item =>!suppr.includes(item))
-                suppr=['Arcane-Music-1','Arcane-Music-2','Arcane-Music-3','Arcane-Music-4']
+                suppr=['Arcane','Arcane-Music-1','Arcane-Music-2','Arcane-Music-3','Arcane-Music-4']
                 music_select=music_select.filter(item=>!suppr.includes(item))
-            }
-            if(input.name=='Snk'){
+            }else if(input.name=='Snk'){
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' ||input.name=='Snk-Music-3' ||input.name=='Snk-Music-4'){
                         input.checked=false
@@ -755,10 +763,9 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
                     "./musique/snk/進撃pf-medley20130629巨人.mp3"]
                 playlist=playlist.filter(item =>!suppr.includes(item))
-                suppr=['Snk-Music-1','Snk-Music-2','Snk-Music-3','Snk-Music-4']
+                suppr=['Snk','Snk-Music-1','Snk-Music-2','Snk-Music-3','Snk-Music-4']
                 music_select=music_select.filter(item=>!suppr.includes(item))
-            }
-            if(input.name=='Chill'){
+            }else if(input.name=='Chill'){
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' ||input.name=='Chill-Music-3' ||input.name=='Chill-Music-4'){
                         input.checked=false
@@ -769,12 +776,13 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                         "./musique/chill/Lofitopía - Day Dream.mp3",
                         "./musique/chill/purpose_not_found.mp3"]
                 playlist=playlist.filter(item =>!suppr.includes(item))
-                suppr=['Chill-Music-1','Chill-Music-2','Chill-Music-3','Chill-Music-4']
+                suppr=['Chill','Chill-Music-1','Chill-Music-2','Chill-Music-3','Chill-Music-4']
                 music_select=music_select.filter(item=>!suppr.includes(item))
             }
         }
-
+        /**gestion case cocher */
         if (input.checked){
+            /**coher les playlist si toutes les msuic sont select */
             if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' || input.name=='Arcane-Music-3' || input.name=='Arcane-Music-4'){
                 let complete=true
                 document.querySelectorAll('#playlist input').forEach(input =>{
@@ -788,6 +796,8 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if(input.name=='Arcane'){
                             input.checked=true
+                            music_select.push("Arcane")
+                            
                         }
                     })
                 }
@@ -804,6 +814,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if(input.name=='Snk'){
                             input.checked=true
+                            music_select.push("Snk")
                         }
                     })
                 }
@@ -820,11 +831,12 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if(input.name=='Chill'){
                             input.checked=true
+                            music_select.push("Chill")
                         }
                     })
                 }
             }
-            
+            /**add music in playlist */
             if (In==true){
                 if (input.name=='Arcane'){
                     let suppr=["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
@@ -836,7 +848,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
                     "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
                     "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3")
-                    music_select.push("Arcane-Music-1","Arcane-Music-2","Arcane-Music-3","Arcane-Music-4")
+                    music_select.push("Arcane","Arcane-Music-1","Arcane-Music-2","Arcane-Music-3","Arcane-Music-4")
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if (input.name=='Arcane-Music-1' || input.name=='Arcane-Music-2' ||input.name=='Arcane-Music-3' ||input.name=='Arcane-Music-4'){
                             input.checked=true
@@ -868,7 +880,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
                     "./musique/snk/進撃pf-medley20130629巨人.mp3"
                     )
-                    music_select.push("Snk-Music-1","Snk-Music-2","Snk-Music-3","Snk-Music-4")
+                    music_select.push("Snk","Snk-Music-1","Snk-Music-2","Snk-Music-3","Snk-Music-4")
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if (input.name=='Snk-Music-1' || input.name=='Snk-Music-2' ||input.name=='Snk-Music-3' ||input.name=='Snk-Music-4'){
                             input.checked=true
@@ -899,7 +911,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                         "./musique/chill/Lofitopía - Day Dream.mp3",
                         "./musique/chill/purpose_not_found.mp3"
                     )
-                    music_select.push("Chill-Music-1","Chill-Music-2","Chill-Music-3","Chill-Music-4")
+                    music_select.push("Chill","Chill-Music-1","Chill-Music-2","Chill-Music-3","Chill-Music-4")
                     document.querySelectorAll('#playlist input').forEach(input =>{
                         if (input.name=='Chill-Music-1' || input.name=='Chill-Music-2' ||input.name=='Chill-Music-3' ||input.name=='Chill-Music-4'){
                             input.checked=true
@@ -920,6 +932,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 }
             }
             if (input.name!=='Nothing'){
+                localStorage.setItem('NothingMusic', 'false');
                 document.querySelectorAll('#playlist input').forEach(input =>{
                     if (input.name=='Nothing'){
                         input.checked=false
@@ -927,14 +940,15 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                     }
                 })
             }
-            localStorage.setItem('NothingMusic', 'false');
-            localStorage.setItem('AllMusic', 'false');
+
+            
             if (input.name=='Nothing'){
                 localStorage.setItem('NothingMusic', 'true');
+                localStorage.setItem('AllMusic', 'false');
+                playlist=[]
+                music_select=[]
+                input.checked=true
                 document.querySelectorAll('#playlist input').forEach(input =>{
-                    playlist=[]
-                    music_select=[]
-                    input.checked=true
                     if (input.name!=='Nothing'){
                         input.checked=false
                     }
