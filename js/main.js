@@ -258,14 +258,14 @@ window.addEventListener("wheel", function(e) {
 }, { passive: false });
 
 
-var playlist = JSON.parse(localStorage.getItem('playlist')) || [...Arcane,...Chill,...Snk];
+var playlist = JSON.parse(localStorage.getItem('playlist')) || Object.values(Music).flat();
 
 
 // Initialiser les cases cochées par défaut au premier lancement
 if (!localStorage.getItem('music_select')) {
     // Récupérer tous les noms des cases
     var music_select = Array.from(document.querySelectorAll('#playlist input'))
-    .filter(input => input.name !== 'Nothing' && input.name!=='All')
+    .filter(input => input.name !== 'NoMusic' && input.name!=='All')
     .map(input => input.name);
     // Sauvegarder dans localStorage
     localStorage.setItem('music_select', JSON.stringify(music_select));
@@ -277,7 +277,7 @@ if (!localStorage.getItem('music_select')) {
 
 if(localStorage.getItem('AllMusic')=='true'){
     document.querySelectorAll('#playlist input').forEach(input =>{
-        if(input.name!=='Nothing'){
+        if(input.name!=='NoMusic'){
             input.checked=true
         }
     })
@@ -288,14 +288,19 @@ for(let i=0;i<music_select.length;i++){
     document.getElementsByName(music_select[i])[0].checked=true
 }
 
-playlist=shuffle(playlist)
+if (playlist.length>0){
+    playlist=shuffle(playlist)
+}
+
 var currentTrackIndex = 0;
 
 const audioPlayer = document.getElementById('music-player');
 
 const audioSource = document.getElementById('audio-source');
+if (playlist.length>0){
+    audioSource.src = playlist[currentTrackIndex];
+}
 
-audioSource.src = playlist[currentTrackIndex];
 var progressBar=document.getElementById('progressBar');
 
 if(playlist.length!==0){
@@ -336,8 +341,8 @@ function playMusic() {
         const audioSource = document.getElementById('audio-source');
         audioSource.src = playlist[currentTrackIndex];
         audioPlayer.load();
-        audioPlayer.play();
         audioPlayer.currentTime=progressBar.value
+        audioPlayer.play();
         cover()
         title()
     }
@@ -463,7 +468,7 @@ title()
 
 function duree(){
     if (playlist.length!==0){
-    var audio= new Audio(playlist[currentTrackIndex])
+        var audio= new Audio(playlist[currentTrackIndex])
             audio.onloadedmetadata=function(){
                 const temps_musique=audio.duration
                 if (temps_musique) {
@@ -579,34 +584,49 @@ window.onclick = function(event) {
     }
 }
 
-const Arcane=["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
-    "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3",
-    "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
-    "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",]
 
-const Chill=["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
-    "./musique/chill/Dinner In Paris.mp3",
-    "./musique/chill/Lofitopia - Day Dream.mp3",
-    "./musique/chill/purpose_not_found.mp3"]
+const Music={
+    Arcane:["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
+        "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3",
+        "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
+        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",],
+    Chill:["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
+        "./musique/chill/Dinner In Paris.mp3",
+        "./musique/chill/Lofitopia - Day Dream.mp3",
+        "./musique/chill/purpose_not_found.mp3"],
+    Snk:["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+        "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
+        "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
+        "./musique/snk/進撃pf-medley20130629巨人.mp3"]
 
-const Snk=["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
-    "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
-    "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
-    "./musique/snk/進撃pf-medley20130629巨人.mp3"]
+}
 
 
+function getParentClasses(element) {
+    let classes = [];
+    let parent = element.parentElement;
+
+    while (parent) {
+        if (parent.classList.length > 0) {
+            classes.push(...parent.classList);
+        }
+        parent = parent.parentElement; // Passe au parent suivant
+    }
+
+    return classes;
+}
 
 
 document.querySelectorAll('#playlist input').forEach(input =>{
-    if(localStorage.getItem('NothingMusic')=='true'){
-        if(input.name=='Nothing'){
+    if(localStorage.getItem('NoMusic')=='true'){
+        if(input.name=='NoMusic'){
             input.checked=true
         }else{
             input.checked=false
         }
     }
     if(localStorage.getItem('AllMusic')=='true'){
-        if(input.name!=='Nothing'){
+        if(input.name!=='NoMusic'){
             input.checked=true
         }
     }
@@ -618,231 +638,121 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         /* Gestion music quand case decocher */
         if (input.checked==false){
             /*gestion No Music*/
-            if (input.name!=='Nothing'){
+            if (input.name!=='NoMusic'){
                 localStorage.setItem('AllMusic', 'false');
             }
 
-            /*Gestion de la playlist Arcane (remove)*/
-
-            document.querySelectorAll('#playlist .Arcane .dropdown-content input').forEach(inputTest =>{
+            /*Gestion des playlist (remove)*/
+            document.querySelectorAll('#playlist .dropdown-content input').forEach(inputTest =>{
+                let nameInput=getParentClasses(inputTest)[4]
                 if(input.name==inputTest.name){
-                    document.getElementById('arcane').checked=false
-                    music_select=music_select.filter(item=>item!=='Arcane')
-                    playlist=playlist.filter(item => item !==Arcane[inputTest.value])
+                    document.getElementsByName(nameInput)[0].checked=false
+                    music_select=music_select.filter(item=>item!==nameInput)
+                    playlist=playlist.filter(item => item !==Music[nameInput][inputTest.value])
                     music_select=music_select.filter(item => item !==inputTest.name)
                 }
             })
-
-            if(input.name=='Arcane'){
-                document.querySelectorAll('#playlist .Arcane .dropdown-content input').forEach(input =>{
-                    input.checked=false
-                })
-                for(let i=0;i<Arcane.length;i++){
-                    playlist=playlist.filter(item =>item!==Arcane[i])
-                    music_select=music_select.filter(item=>item!==input.name)
-                }
-            }
-
-
-            /*Gestion de la playlist Snk (remove)*/
-
-            document.querySelectorAll('#playlist .Snk .dropdown-content input').forEach(inputTest =>{
-                if(input.name==inputTest.name){
-                    document.getElementById('snk').checked=false
-                    music_select=music_select.filter(item=>item!=='Snk')
-                    playlist=playlist.filter(item => item !==Snk[inputTest.value])
-                    music_select=music_select.filter(item => item !==inputTest.name)
+            document.querySelectorAll('#playlist .main-checkbox input').forEach(inputTest =>{
+                if(inputTest.name==input.name){
+                    document.querySelectorAll(`#playlist .${inputTest.name} .dropdown-content input`).forEach(inputDel =>{
+                        inputDel.checked=false
+                        music_select=music_select.filter(item=>item!==input.name)
+                        let NameInput=inputTest.name
+                        for(let i=0;i<Music[NameInput].length;i++){
+                            playlist=playlist.filter(item =>item!==Music[NameInput][i])
+                            music_select=music_select.filter(item=>item!==inputDel.name)
+                        }
+                    })
                 }
             })
-
-            if(input.name=='Snk'){
-                document.querySelectorAll('#playlist .Snk .dropdown-content input').forEach(input =>{
-                    input.checked=false
-                })
-                for(let i=0;i<Snk.length;i++){
-                    playlist=playlist.filter(item =>item!==Snk[i])
-                    music_select=music_select.filter(item=>item!==input.name)
-                }
-            }
-
-
-            /*Gestion de la playlist Chill (remove)*/
-
-            document.querySelectorAll('#playlist .Chill .dropdown-content input').forEach(inputTest =>{
-                if(input.name==inputTest.name){
-                    document.getElementById('chill').checked=false
-                    music_select=music_select.filter(item=>item!=='Chill')
-                    playlist=playlist.filter(item => item !==Chill[inputTest.value])
-                    music_select=music_select.filter(item => item !==inputTest.name)
-                }
-            })
-
-            if(input.name=='Chill'){
-                document.querySelectorAll('#playlist .Chill .dropdown-content input').forEach(input =>{
-                    input.checked=false
-                })
-                for(let i=0;i<Chill.length;i++){
-                    playlist=playlist.filter(item =>item!==Chill[i])
-                    music_select=music_select.filter(item=>item!==input.name)
-                }
-            }
-
-
         }
         /**gestion case cocher */
         if (input.checked){
             /*gestion de la playlist Arcane (add)*/
 
-            let completeArcane=true
-            document.querySelectorAll('#playlist .Arcane .dropdown-content input').forEach(inputTest =>{
-                if(inputTest.checked==false){
-                    completeArcane=false
+
+            
+            let complete=true
+
+            document.querySelectorAll('#playlist .dropdown .dropdown-content input').forEach(inputTest =>{
+                if(input.name==inputTest.name){
+                    let nameInput=getParentClasses(inputTest)[4]
+                    document.querySelectorAll(`#playlist .${nameInput} .dropdown-content input`).forEach(inputTest =>{
+                        if(inputTest.checked==false){
+                            complete=false
+                        }
+                    })
+                    if(complete==true){
+                        document.getElementsByName(nameInput)[0].checked=true
+                        music_select.push(nameInput)
+                    }
                 }
             })
-            if(completeArcane==true){
-                document.getElementById('arcane').checked=true
-                music_select.push("Arcane")
-            }
-
-            if(input.name=='Arcane'){
-                playlist = playlist.filter(item => item !== null && item !== undefined);
-                for(let i=0;i<Arcane.length;i++){
-                    playlist=playlist.filter(item =>item!==Arcane[i])
-                    
-                }
-                playlist.push(...Arcane)
-                document.querySelectorAll('#playlist .Arcane input').forEach(input =>{
-                    input.checked=true
-                    if(input.name){
-                        music_select=music_select.filter(item=>item!==input.name)
-                        music_select.push(input.name)
+            let done=false
+            document.querySelectorAll('#playlist .dropdown .main-checkbox input').forEach(inputTest =>{
+                if(input.name==inputTest.name){
+                    done=true
+                    let nameInput=getParentClasses(input)[2]
+                    let NameInput=inputTest.name
+                    for(let i=0;i<Music[NameInput].length;i++){
+                        playlist=playlist.filter(item =>item!==Music[NameInput][i])
                     }
-                    
-                })
-            }else{
-                document.querySelectorAll('#playlist .Arcane input').forEach(inputTest =>{
-                    if(inputTest.name==input.name){
-                        playlist=playlist.filter(item =>item!==Arcane[input.value])
-                        playlist.push(Arcane[input.value])
+                    playlist.push(...Music[NameInput])
+                    document.querySelectorAll(`#playlist .${input.name} input`).forEach(input =>{
+                        input.checked=true
+                        if(input.name){
+                            music_select=music_select.filter(item=>item!==input.name)
+                            music_select.push(input.name)
+                        }
+                    })
+                }
+            })
+            if (done==false){
+                let nameInput=getParentClasses(input)[4]
+                document.querySelectorAll(`#playlist .${nameInput} .dropdown-content input`).forEach(inputTest =>{
+                    if(input.name==inputTest.name){
+                        playlist=playlist.filter(item =>item!==Music[nameInput][input.value])
+                        playlist.push(Music[nameInput][input.value])
                         music_select.push(input.name)
                     }
                 })
             }
             
-
-            /*Gestion de la playlist Snk (Add)*/
-
-            let completeSnk=true
-            document.querySelectorAll('#playlist .Snk .dropdown-content input').forEach(inputTest =>{
-                if(inputTest.checked==false){
-                    completeSnk=false
-                }
-            })
-            if(completeSnk==true){
-                document.getElementById('snk').checked=true
-                music_select.push("Snk")
-            }
-
-            if(input.name=='Snk'){
-                playlist = playlist.filter(item => item !== null && item !== undefined);
-                for(let i=0;i<Snk.length;i++){
-                    playlist=playlist.filter(item =>item!==Snk[i])
-                    
-                }
-                playlist.push(...Snk)
-                document.querySelectorAll('#playlist .Snk input').forEach(input =>{
-                    input.checked=true
-                    if(input.name){
-                        music_select=music_select.filter(item=>item!==input.name)
-                        music_select.push(input.name)
-                    }
-                    
-                })
-            }else{
-                document.querySelectorAll('#playlist .Snk input').forEach(inputTest =>{
-                    if(inputTest.name==input.name){
-                        playlist=playlist.filter(item =>item!==Snk[input.value])
-                        playlist.push(Snk[input.value])
-                        music_select.push(input.name)
-                    }
-                })
-            }
-
-            
-            /*gestion de la playlist Chill (add)*/
-
-            let completeChill=true
-            document.querySelectorAll('#playlist .Chill .dropdown-content input').forEach(inputTest =>{
-                if(inputTest.checked==false){
-                    completeChill=false
-                }
-            })
-            if(completeChill==true){
-                document.getElementById('chill').checked=true
-                music_select.push("Chill")
-            }
-
-            if(input.name=='Chill'){
-                playlist = playlist.filter(item => item !== null && item !== undefined);
-                for(let i=0;i<Chill.length;i++){
-                    playlist=playlist.filter(item =>item!==Chill[i])
-                    
-                }
-                playlist.push(...Chill)
-                document.querySelectorAll('#playlist .Chill input').forEach(input =>{
-                    input.checked=true
-                    if(input.name){
-                        music_select=music_select.filter(item=>item!==input.name)
-                        music_select.push(input.name)
-                    }
-                    
-                })
-            }else{
-                document.querySelectorAll('#playlist .Chill input').forEach(inputTest =>{
-                    if(inputTest.name==input.name){
-                        playlist=playlist.filter(item =>item!==Chill[input.value])
-                        playlist.push(Chill[input.value])
-                        music_select.push(input.name)
-                    }
-                })
-            }
-            
-
-            /*Gestion de Nothing ert All*/
-            if (input.name!=='Nothing'){
-                localStorage.setItem('NothingMusic', 'false');
+            /*Gestion de NoMusic et All*/
+            if (input.name!=='NoMusic'){
+                localStorage.setItem('NoMusic', 'false');
                 document.querySelectorAll('#playlist input').forEach(input =>{
-                    if (input.name=='Nothing'){
+                    if (input.name=='NoMusic'){
                         input.checked=false
                     }
                 })
             }
 
-            if (input.name=='Nothing'){
-                localStorage.setItem('NothingMusic', 'true');
+            if (input.name=='NoMusic'){
+                localStorage.setItem('NoMusic', 'true');
                 localStorage.setItem('AllMusic', 'false');
                 playlist=[]
                 music_select=[]
                 input.checked=true
                 document.querySelectorAll('#playlist input').forEach(input =>{
-                    if (input.name!=='Nothing'){
+                    if (input.name!=='NoMusic'){
                         input.checked=false
                     }
                 })
             }else if (input.name=='All'){
                 localStorage.setItem('AllMusic', 'true');
                 document.querySelectorAll('#playlist input').forEach(input =>{
-                    if (input.name!=='Nothing'){
+                    if (input.name!=='NoMusic'){
                         input.checked=true
                     }else{
                         input.checked=false
                     }
                     music_select=[]
                     playlist=[]
-                    if (input.name!=='All' && input.name!=='Nothing'){
-                        playlist.push(...Arcane,...Chill,...Snk)
+                    if (input.name!=='All' && input.name!=='NoMusic'){
+                        playlist.push(...Object.values(Music).flat())
                         document.querySelectorAll('#playlist input').forEach(input =>{
-                            if(input.name!=='Nothing'){
+                            if(input.name!=='NoMusic' && input.name!=="All"){
                                 music_select.push(input.name)
                             }
                         })
@@ -858,7 +768,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
 
         playlist=shuffle(playlist)
         audioPlayer.load()
-        if (taille_playlist>playlist.length && audioPlayer.paused){
+        if (audioPlayer.paused){
             currentTrackIndex=currentTrackIndex
             audioPlayer.load()
         }else if (taille_playlist>playlist.length){
