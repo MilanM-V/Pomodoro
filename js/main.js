@@ -283,7 +283,7 @@ var playlist = JSON.parse(localStorage.getItem('playlist')) || Object.values(Mus
 if (!localStorage.getItem('music_select')) {
     // Récupérer tous les noms des cases
     var music_select = Array.from(document.querySelectorAll('#playlist input'))
-    .filter(input => input.name !== 'NoMusic' && input.name!=='All')
+    .filter(input => input.name !== 'NoMusic')
     .map(input => input.name);
     // Sauvegarder dans localStorage
     localStorage.setItem('music_select', JSON.stringify(music_select));
@@ -760,8 +760,6 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                 })
             }
         }
-
-        var taille_playlist=playlist.length
         
         localStorage.setItem('playlist', JSON.stringify(playlist));
         localStorage.setItem('music_select', JSON.stringify(music_select));
@@ -812,28 +810,60 @@ window.onload = function() {
     }
     colori()
 };
+
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
 const fond_select=document.getElementById('fond-select')
+
+
+const optionsDesktop = [
+    { value: "Train in tokyo", text: "Train in Tokyo" },
+    { value: "Mont fuji", text: "Mont Fuji" },
+    { value: "Train with nature", text: "Train with nature" },
+    { value: "Chateau ambulant", text: "Chateau ambulant" },
+    { value: "Star Wars", text: "Star Wars" },
+    { value: "Chill with instruments", text: "Chill with instruments" },
+    { value: "Reflet nocturne", text: "Reflet nocturne" },
+    { value: "Coffee shop", text: "Coffee shop" },
+    { value: "Kiki la petite sorcière", text: "Kiki la petite sorciere"},
+    { value: "Kirby", text: "Kirby"},
+];
+
+const optionsMobile = [
+    { value: "Train in tokyo", text: "Train in Tokyo" },
+    { value: "Train with nature", text: "Train with nature" },
+    { value: "Chateau ambulant", text: "Chateau ambulant" },
+    { value: "Chill with instruments", text: "Chill with instruments" },
+    { value: "Reflet nocturne", text: "Reflet nocturne" },
+    { value: "Coffee shop", text: "Coffee shop" },
+    { value: "Marché de nuit", text: "Marché de nuit" },
+    { value: "Lily Pad Flowers", text: "Lily Pad Flowers" },
+    { value: "Tropical Horizons", text: "Tropical Horizons" },
+    { value: "Working studio", text: "Working studio" },
+];
+
+// Ajout des options dynamiquement
+const options = isMobile ? optionsMobile : optionsDesktop;
+options.forEach(option => {
+    const opt = document.createElement("option");
+    opt.value = option.value;
+    opt.textContent = option.text;
+    fond_select.appendChild(opt);
+});
+
+console.log(isMobile)
+
 let image=null
 let ext=null
 fond_select.addEventListener('change',(event)=>{
     if(event.target.value=='Train in tokyo'){
         image='url(./images/fond1.gif)'
         ext='../images/fond1.gif'
-    }else if(event.target.value=='Cyberpunk'){
-        image='url(./images/cyberpunk.gif)'
-        ext='./images/cyberpunk.gif'
     }else if(event.target.value=="Train with nature"){
         image='url(./images/natureWithTrain.gif)'
         ext='../images/natureWithTrain.gif'
     }else if(event.target.value=='Chateau ambulant'){
         image='url(./images/chateauAmbulant.gif)'
         ext='../images/chateauAmbulant.gif'
-    }else if(event.target.value=='Mont fuji'){
-        image='url(./images/Fuji.gif)'
-        ext='../images/Fuji.gif'
-    }else if(event.target.value=='Star Wars'){
-        image='url(./images/starWars.gif)'
-        ext='../images/starWars.gif'
     }else if(event.target.value=='Chill with instruments'){
         image='url(./images/instruments.gif)'
         ext='../images/instruments.gif'
@@ -844,6 +874,37 @@ fond_select.addEventListener('change',(event)=>{
         image='url(./images/cofeeShop.gif)'
         ext='../images/cofeeShop.gif'
     }
+    if(isMobile){
+        if(event.target.value=='Marché de nuit'){
+            image='url(./images/NightTokyo.gif)'
+            ext='../images/NightTokyo.gif'
+        }else if(event.target.value=='Lily Pad Flowers'){
+            image='url(./images/river.gif)'
+            ext='../images/river.gif'
+        }else if(event.target.value=='Tropical Horizons'){
+            image='url(./images/vacance.gif)'
+            ext='../images/vacance.gif'
+        }else if(event.target.value=='Working studio'){
+            image='url(./images/WorkStudio.gif)'
+            ext='../images/WorkStudio.gif'
+        }
+    }else{
+        if(event.target.value=='Kiki la petite sorcière'){
+            image='url(./images/KikiLaPetiteSorcière.gif)'
+            ext='../images/KikiLaPetiteSorcière.gif'
+        }else if(event.target.value=='Kirby'){
+            image='url(./images/Kirby.gif)'
+            ext='../images/Kirby.gif'
+        }else if(event.target.value=='Mont fuji'){
+            image='url(./images/Fuji.gif)'
+            ext='../images/Fuji.gif'
+        }else if(event.target.value=='Star Wars'){
+            image='url(./images/starWars.gif)'
+            ext='../images/starWars.gif'
+        }
+
+    }
+   
     document.body.style.backgroundImage =image
     extrait.src=ext
     localStorage.setItem('backgroundImage', image);
@@ -855,7 +916,8 @@ fond_select.addEventListener('change',(event)=>{
 
 function colori(){
     if (savedBackground=='url(./images/cyberpunk.gif)'||savedBackground=='url(./images/natureWithTrain.gif)'||savedBackground=='url(./images/chateauAmbulant.gif)'
-        ||savedBackground=='url(./images/Fuji.gif)'||savedBackground=='url(./images/cofeeShop.gif)'
+        ||savedBackground=='url(./images/Fuji.gif)'||savedBackground=='url(./images/cofeeShop.gif)'||savedBackground=='url(./images/NightTokyo.gif)'
+        ||savedBackground=='url(./images/vacance.gif)'||savedBackground=='url(./images/WorkStudio.gif)'
     ){
         let timer=document.getElementById('chrono')
         timer.style.color='#f8bfd7'
