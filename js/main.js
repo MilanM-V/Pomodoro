@@ -263,12 +263,19 @@ const Music={
     Arcane:["./musique/arcane/Arcane (League of Legends) - I Can't Hear It Now - Solo Piano.mp3",
         "./musique/arcane/ARCANE： What Could Have Been ｜ EPIC FEMALE COVER (feat. Aloma Steele).mp3",
         "./musique/arcane/OST Arcane (League of Legends) - Isha's Song by Eason Chan (Piano Cover ⧸ Version).mp3",
-        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",],
+        "./musique/arcane/Stromae, Pomme - Ma Meilleure Ennemie (from Arcane Season 2) - Piano Cover ⧸ Version.mp3",
+        "./musique/arcane/Twenty One Pilots - The Line (from Arcane Season 2) - Piano Version ⧸ Cover.mp3",
+        "./musique/arcane/OST Arcane (League of Legends) - Ramsey - Goodbye (Piano Version).mp3"],
     Chill:["./musique/chill/C418  - Sweden - Minecraft Volume Alpha.mp3",
         "./musique/chill/Dinner In Paris.mp3",
+        "./musique/chill/evergreens.mp3",
+        "./musique/chill/finally home.mp3",
         "./musique/chill/Lofitopia - Day Dream.mp3",
-        "./musique/chill/purpose_not_found.mp3"],
-    Snk:["./musique/snk/attack on titan lofi ~ akuma no ko (aot season 4 part 2 ending).mp3",
+        "./musique/chill/Make A Wish.mp3",
+        "./musique/chill/purpose_not_found.mp3",
+        "./musique/chill/reminiscence.mp3",
+        "./musique/chill/Waiting For You.mp3"],
+    Snk:["./musique/snk/Akuma no Ko - Attack on Titan Final Season Part 2 ED [Piano].mp3",
         "./musique/snk/Attack On Titan OST - Call of Silence (Ymir's Theme).mp3",
         "./musique/snk/red swan - attack on titan opening ｜ but it's lofi hip hop.mp3",
         "./musique/snk/進撃pf-medley20130629巨人.mp3"]
@@ -388,13 +395,15 @@ function playNext() {
         
         const audioSource = document.getElementById('audio-source');
         audioSource.src = playlist[currentTrackIndex];
-        audioPlayer.load();
+        
         audioPlayer.addEventListener('loadedmetadata', () => {
             progressBar.max = audioPlayer.duration;
         });
         if(!audioPlayer.paused){
             audioPlayer.load();
             audioPlayer.play();
+        }else{
+            audioPlayer.load();
         }
         cover()
         title()
@@ -835,7 +844,7 @@ const optionsMobile = [
     { value: "Chill with instruments", text: "Chill with instruments" },
     { value: "Reflet nocturne", text: "Reflet nocturne" },
     { value: "Coffee shop", text: "Coffee shop" },
-    { value: "Marché de nuit", text: "Marché de nuit" },
+    { value: "Marché de nuit", text: "Marche de nuit" },
     { value: "Lily Pad Flowers", text: "Lily Pad Flowers" },
     { value: "Tropical Horizons", text: "Tropical Horizons" },
     { value: "Working studio", text: "Working studio" },
@@ -850,7 +859,6 @@ options.forEach(option => {
     fond_select.appendChild(opt);
 });
 
-console.log(isMobile)
 
 let image=null
 let ext=null
