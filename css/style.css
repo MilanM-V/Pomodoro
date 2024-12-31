@@ -794,6 +794,17 @@ option:checked,option:hover {
     margin: 0.5vw;
 }
 
+.review p{
+    color: #3f3e3e;
+    position: absolute;
+    bottom:11vh;
+    font-size: 1vw;
+}
+
+.review a{
+    color: #a0a0a0;
+}
+
 @media (max-width: 600px){
     header .wrapper{
         font-size: 4vw;
@@ -1352,6 +1363,17 @@ option:checked,option:hover {
         position: absolute;
         bottom: 1vh;
         margin: 0.5vw;
+    }
+
+    .review p{
+        color: #3f3e3e;
+        position: absolute;
+        bottom:16vh;
+        font-size: 3vw;
+    }
+    
+    .review a{
+        color: #a0a0a0;
     }
      
     label {
