@@ -1,3 +1,20 @@
+var savedBackground = localStorage.getItem('backgroundImage');
+window.onload = function() {
+    var savedBackground = localStorage.getItem('backgroundImage');
+    var extraitSaved=localStorage.getItem('extraitImage')
+    if (savedBackground) {
+        document.body.style.backgroundImage = savedBackground;
+    }else{
+        document.body.style.backgroundImage = 'url(./images/fond1.gif)';
+    }
+    if(extraitSaved){
+        extrait.src=extraitSaved
+    }else{
+        extrait.src='../images/fond1.gif'
+    }
+    colori()
+};
+
 
 var x=null;
 var chronos='chrono25'
@@ -77,7 +94,7 @@ function chrono25(){
     //stop repetiton
     if (distance == 0) {
         audioSourceBell.play()
-        distance=localStorage.getItem('timerPomodoro') || [];
+        distance=localStorage.getItem('timerPomodoro') || 25;
         clearInterval(x);
         if (repetition>3 && sequence=='true'){
             repetition=0
@@ -112,7 +129,7 @@ function chrono5(){
     //stop repetiton
     if (distanceShort ==0) {
         audioSourceBell.play()
-        distanceShort=localStorage.getItem('timerShort') || [];
+        distanceShort=localStorage.getItem('timerShort') || 5;
         clearInterval(x);
         chrono25()
         repetition+=1
@@ -139,7 +156,7 @@ function chrono10(){
     //stop repetiton
     if (distanceLong ==0) {
         audioSourceBell.play()
-        distanceLong=localStorage.getItem('timerLong') || [];
+        distanceLong=localStorage.getItem('timerLong') || 10;
         clearInterval(x);
         chrono25()
     }
@@ -474,6 +491,9 @@ function playMusic() {
         const audioSource = document.getElementById('audio-source');
         audioSource.src = playlist[currentTrackIndex];
         audioPlayer.load();
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            progressBar.max = audioPlayer.duration;
+        });
         audioPlayer.currentTime=progressBar.value
         audioPlayer.play();
         cover()
@@ -748,7 +768,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         }
     }
     input.addEventListener('change',()=>{
-
+        var taille_playlist=playlist.length
         if (input.name!=='All'){
             document.getElementById('all').checked=false
         }
@@ -882,14 +902,20 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         localStorage.setItem('music_select', JSON.stringify(music_select));
 
         playlist=shuffle(playlist)
-        audioPlayer.load()
         if (audioPlayer.paused){
             currentTrackIndex=currentTrackIndex
+            audioSource.src = playlist[currentTrackIndex];
             audioPlayer.load()
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                progressBar.max = audioPlayer.duration;
+                console.log(audioPlayer.duration)
+            });
         }else if (taille_playlist>playlist.length){
             currentTrackIndex=currentTrackIndex
+            
             playMusic()
         }
+        
         cover()
         title()
         duree()
@@ -911,22 +937,7 @@ tabs.forEach(tab => {
 });
 
 
-var extrait=document.getElementById('extrait')
 
-
-var savedBackground = localStorage.getItem('backgroundImage');
-window.onload = function() {
-    var savedBackground = localStorage.getItem('backgroundImage');
-    var extraitSaved=localStorage.getItem('extraitImage')
-    if (savedBackground) {
-        document.body.style.backgroundImage = savedBackground;
-    }
-    if(extraitSaved){
-        extrait.src=extraitSaved
-
-    }
-    colori()
-};
 
 const isMobile = window.matchMedia("(max-width: 768px)").matches;
 const fond_select=document.getElementById('fond-select')
@@ -1033,7 +1044,7 @@ fond_select.addEventListener('change',(event)=>{
 function colori(){
     if (savedBackground=='url(./images/cyberpunk.gif)'||savedBackground=='url(./images/natureWithTrain.gif)'||savedBackground=='url(./images/chateauAmbulant.gif)'
         ||savedBackground=='url(./images/Fuji.gif)'||savedBackground=='url(./images/cofeeShop.gif)'||savedBackground=='url(./images/NightTokyo.gif)'
-        ||savedBackground=='url(./images/vacance.gif)'||savedBackground=='url(./images/WorkStudio.gif)'
+        ||savedBackground=='url(./images/vacance.gif)'||savedBackground=='url(./images/WorkStudio.gif)'||savedBackground=='url(./images/Kirby.gif)'
     ){
         let timer=document.getElementById('chrono')
         timer.style.color='#f8bfd7'

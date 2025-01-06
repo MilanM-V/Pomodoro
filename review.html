@@ -38,6 +38,16 @@
             margin: 10px 0;
             font-size: 1rem;
         }
+        
+        .email{
+            padding-top: 4vh;
+        }
+        .message{
+            padding-top: 4vh;
+        }
+        .feedback{
+            padding-top: 2vh;
+        }
         button {
             background-color: #4CAF50;
             color: white;
@@ -46,6 +56,18 @@
         }
         button:hover {
             background-color: #45a049;
+        }
+        .Back{
+            background-color: #6c6c6c;
+            width: 8vw;
+            font-size: 1.5vw;
+            border-radius: 0.5vw;
+            position: relative;
+            top: 10vh;
+            left: 1.5vw;
+        }
+        .Back:hover{
+            background-color:#504f4f ;
         }
         @media (max-width: 600px){
             .main{
@@ -75,6 +97,23 @@
             margin: 0.5 0;
             font-size: 1rem;
         }
+        .email{
+            padding-top: 6vh;
+        }
+        .message{
+            padding-top: 6vh;
+        }
+        .feedback{
+            padding-top: 6vh;
+        }
+        .Back{
+            height: 5vh;
+            width: 18vw;
+            font-size: 3vw;
+            top: 5vh;
+            left: 5vw;
+
+        }
         }
     </style>
 </head>
@@ -82,20 +121,24 @@
 <div class="main">
     <h1>Donnez-nous votre avis</h1>
     <form action="https://formspree.io/f/mlddwypz" method="POST">
-        <label for="feedbackType">Type de retour :</label>
-        <select id="feedbackType" name="type">
-            <option value="Review">Review</option>
-            <option value="Suggestion">Suggestion</option>
-        </select>
-
-        <label for="email">Email :</label>
-        <input type="email" id="email" name="email" placeholder="Votre email" required>
-
-        <label for="message">Message :</label>
-        <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
-
+        <div class="feedback">
+            <label for="feedbackType">Type de retour :</label>
+            <select id="feedbackType" name="type">
+                <option value="Review">Review</option>
+                <option value="Suggestion">Suggestion</option>
+            </select>
+        </div>
+        <div class="email">
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" placeholder="Votre email" required>
+        </div>
+        <div class="message">
+            <label for="message">Message :</label>
+            <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
+        </div>
         <button type="submit" onclick="window.location.href='./index.html';">Envoyer</button>
     </form>
+    <button class="Back" onclick="window.location.href='./index.html';">retour</button>
 </div>
 <script>
 </script>
