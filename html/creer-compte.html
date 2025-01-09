@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Créer son compte</title>
+    <script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/compte.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <form class="my-form" id="my-form-create">
+        <div class="connexion-bienvenue-row">
+            <h1>Creer votre compte</h1>
+        </div>
+        <div class="formulaire">
+        <div class="input__wrapper">
+            <input type="email" id="email" name="email" class="zone_entree" placeholder="Your Email" required>
+            <label for="email" class="input__label">Email</label>
+            <i class="fa-solid fa-at"></i>
+        </div>
+        <div class="mdp">
+        <div class="input__wrapper">
+            <input id="password" name="password" type="password" class="zone_entree" placeholder="Your Password" required>
+            <label for="password" class="input__label">
+                Mot de passe
+            </label>
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        </div>
+        <div class="input__wrapper">
+            <input id="password_comfirmation" name="password_comfirmation" type="password" class="zone_entree" placeholder="Your Password" required>
+            <label for="password_comfirmation" class="input__label">
+                Confirmer le Mot de passe
+            </label>
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        </div>
+
+        <button type="submit" class="my-form__button" id="my-form__button">
+            Creer son compte
+        </button>
+        <div class="my-form__actions">
+            <div class="my-form__row">
+                <span>Vous avez deja un compte ?</span>
+                <a href="./compte.html" title="Create Account">
+                    Connecter vous
+                </a>
+            </div>
+        </div>
+    </form>
+    <script src="../js/global.js"defer></script>
+    <script src="../js/create_compte.js"defer></script>
+    
+</body>
+
+</html>

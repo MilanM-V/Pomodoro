@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion</title>
+    <script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/compte.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <form class="my-form" id="my-form-compte">
+        <div class="connexion-bienvenue-row">
+            <h1>Connecter vous</h1>
+        </div>
+        <div class="input__wrapper">
+            <input type="email" id="email" name="email" class="zone_entree" placeholder="Your Email" required>
+            <label for="email" class="input__label">Email</label>
+            <i class="fa-solid fa-at"></i>
+        </div>
+        <div class="input__wrapper">
+            <input id="password" type="password" class="zone_entree" placeholder="Your Password">
+            <label for="password" class="input__label">Mot de passe</label>
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <button type="submit" class="my-form__button" id="my-form__button">
+            Connecter
+        </button>
+        
+        <div class="my-form__actions">
+            <div class="my-form__row">
+                <span>Vous n'avez pas de compte ?</span>
+                <a href="./creer-compte.html" title="Create Account">
+                    Creer un compte
+                </a>
+            </div>
+        </div>
+    </form>
+
+    <script src="../js/compte.js"defer></script>
+
+</body>
+</html>
