@@ -8,16 +8,14 @@ async function ConnectUser(mail,mdp) {
   const data=await response.json();
   if (data){
     localStorage.setItem("access_token", data.access_token);
-    document.cookie = `refresh_token=${data.refresh_token}; Secure; HttpOnly; SameSite=Strict`;
+    setCookie("refresh-token", data.refresh_token);
     window.location.href = "./music.html";
+
   }else{
     document.getElementById("email").value="";
     document.getElementById("password").value="";
     alert("La connection n'as pas réussi veuiller réessayer");
   }
-  
-  
-
 }
 
 
@@ -39,6 +37,10 @@ document.getElementById("my-form__button").addEventListener('keydown',(event)=>{
 }
 })
 
+
+function setCookie(name, value) {
+  document.cookie = `${name}=${value}; path=/`;
+}
 
 
 

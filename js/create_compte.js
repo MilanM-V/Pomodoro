@@ -41,8 +41,6 @@ loginFormCreate.addEventListener("submit", (e) => {
 
     // Vérifier les conditions avant de soumettre le formulaire
     if (password_autoriséee.test(password.value) && password.value === password_comfirmation.value && email_autorisée.test(email.value)) {
-        console.log(password.value)
-        console.log(email.value)
         SaveUser(email.value,password.value)
         
     }else {

@@ -22,7 +22,7 @@
         <div class="content">
             <div class="musique">
 
-                <img id="coverImage"  alt="Cover MP3">
+                <img id="coverImage"  alt="Cette Musique ne contient pas de cover">
 
                 <p id="duree">-00:00</p>
 
@@ -64,6 +64,7 @@
                         <div class="tab" data-tab="tab2">Timer</div>
                         <div class="tab" data-tab="tab3">Musique</div>
                         <div class="tab" data-tab="tab4">Fond</div>
+                        <div class="tab" data-tab="tab5">Music</div>
                     </div>
 
                 </div>
@@ -759,7 +760,30 @@
                             </select>
                             <img id="extrait" src="./images/fond1.gif">
                         </div>
-                    </div>    
+                    </div>   
+                    <div class="tab-content" id="tab5">
+                        <div class="list-choice-musique" id="list-choice-musique">
+                            <div class="tabsMusique">
+                                <div class="tabMusique active" data-tab="tabMusique1" id="tab5.1">Vos Musiques</div>
+                                <div class="tabMusique" data-tab="tabMusique2">Ajouter des musiques</div>
+        
+                            </div>
+                        </div>
+                        <div id="music_tabs">
+                            <div class="tab-content-Musique active" id ='tabMusique1'>
+                                
+                            </div>
+                            <div class="tab-content-Musique" id ='tabMusique2'>
+                                <div id="connect">
+                                    <input type="text" id="youtubeSearch" placeholder="Entrez un titre ou un artiste">
+                                    <button id="searchButton" for="youtubeSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <button id="downloadButton" >Telecharger</button>
+                                    <div class="loader" id="loader"></div> 
+                                    <div class="results" id="searchResults"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -770,8 +794,8 @@
 			&copy; Copyright <strong><span>Milan MARCHAND--VALAT</span></strong>. All Rights Reserved
         </div>
 	</footer>
-    
-<script src="./js/main.js"></script>
+<script src="./js/global.js"defer></script>
+<script src="./js/main.js"defer></script>
 
 </body>
 </html>
