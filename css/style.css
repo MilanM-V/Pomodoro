@@ -833,8 +833,8 @@ option:checked,option:hover {
     width: 2.8vw;
     font-size: 2vw;
     position: relative;
-    top: 1.9vh;
-    right: -14.3vw;
+    top: 1.85vh;
+    right: -14.2vw;
     border-top-right-radius: 0.8vw ;
     border-bottom-right-radius: 0.8vw ;
 
@@ -842,6 +842,10 @@ option:checked,option:hover {
 
 #searchButton:active{
     font-size: 1.8vw;
+    top: 1.7vh;
+    right: -14.2vw;
+    height: 6vh;
+    width: 2.8vw;
 }
 
 #tab5{
@@ -895,6 +899,10 @@ option:checked,option:hover {
 
 #downloadButton:hover{
     background-color: #3191ff;
+}
+
+#downloadButton:active{
+    transform: scale(95%);
 }
 
 .loader {
@@ -1022,6 +1030,28 @@ option:checked,option:hover {
     display: none;
 }
 .tab-content-Musique.active .result-music{
+    display: block;
+}
+
+.InputChooseMusic{
+    background-color: #3191ff00;
+}
+
+#searchInput{
+    appearance: none;
+    font-family:'Nuku Nuku',sans-serif;
+    border-radius: 0.5vw;
+    position: relative;
+    height: 8vh;
+    width: 20vw;
+    font-size: 1.5vw;
+    left: 1.5vw;
+}
+
+.tab-content-Musique .InputChooseMusic{
+    display: none;
+}
+.tab-content-Musique.active .InputChooseMusic{
     display: block;
 }
 

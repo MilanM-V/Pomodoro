@@ -409,7 +409,7 @@ const Music={
 
 
 var playlist = JSON.parse(localStorage.getItem('playlist')) || Object.values(Music).flat();
-
+localStorage.setItem('playlist',JSON.stringify(playlist))
 
 // Initialiser les cases cochées par défaut au premier lancement
 if (!localStorage.getItem('music_select')) {
@@ -580,26 +580,28 @@ function playPrevious(){
 function cover(){
     if(playlist.length!==0){
         fetch(playlist[currentTrackIndex])
-                .then(response => response.arrayBuffer())
-                .then(arrayBuffer => {
-                    jsmediatags.read(new Blob([arrayBuffer]), {
-                        onSuccess: function(tag) {
-                            const picture = tag.tags.picture;
-                            if (picture) {
-                                const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), "");
-                                const base64 = "data:" + picture.format + ";base64," + btoa(base64String);
-                                coverImage.src = base64;
-                                const img = document.getElementById("coverImage");
-                                img.src = base64;
-                                img.style.display = "block";
-                            } else {
-                                coverImage.src = ""; // Aucune cover trouvée
-                            }
-                        },
-                    });
-                })
-    }
-    
+            .then(response => response.arrayBuffer())
+            .then(arrayBuffer => {
+                jsmediatags.read(new Blob([arrayBuffer]), {
+                    onSuccess: function(tag) {
+                        const picture = tag.tags.picture;
+                        if (picture) {
+                            const base64String = picture.data.reduce((data, byte) => data + String.fromCharCode(byte), "");
+                            const base64 = "data:" + picture.format + ";base64," + btoa(base64String);
+                            coverImage.src = base64;
+                            const img = document.getElementById("coverImage");
+                            img.src = base64;
+                            img.style.display = "block";
+                        } else {
+                            coverImage.src = ""; // Aucune cover trouvée
+                        }
+                    },
+                    onError: function(error) {
+                        coverImage.src = ""; // Aucun cover trouvé ou problème de lecture des métadonnées
+                    }
+                });
+            })
+    }  
 }
 cover()
 
@@ -615,7 +617,8 @@ function title(){
                             document.getElementById("titreMusique").innerHTML=titre
                         }
                     },
-                    onerror:function(){
+                    onError: function(error) {
+                        document.getElementById("titreMusique").innerHTML=getMusicTitle(playlist[currentTrackIndex])
                     }
                 });
             })
@@ -821,7 +824,7 @@ document.querySelectorAll('#playlist input').forEach(input =>{
         }
         /**gestion case cocher */
         if (input.checked){
-            /*gestion de la playlist Arcane (add)*/
+            /*gestion des playlists (add)*/
 
 
             
@@ -884,7 +887,8 @@ document.querySelectorAll('#playlist input').forEach(input =>{
             if (input.name=='NoMusic'){
                 localStorage.setItem('NoMusic', 'true');
                 localStorage.setItem('AllMusic', 'false');
-                playlist=[]
+                let allMusic = new Set(Object.values(Music).flat());
+                playlist = playlist.filter(song => !allMusic.has(song));
                 music_select=[]
                 input.checked=true
                 document.querySelectorAll('#playlist input').forEach(input =>{
@@ -901,7 +905,8 @@ document.querySelectorAll('#playlist input').forEach(input =>{
                         input.checked=false
                     }
                     music_select=[]
-                    playlist=[]
+                    let allMusic = new Set(Object.values(Music).flat());
+                    playlist = playlist.filter(song => !allMusic.has(song));
                     if (input.name!=='All' && input.name!=='NoMusic'){
                         playlist.push(...Object.values(Music).flat())
                         document.querySelectorAll('#playlist input').forEach(input =>{
@@ -1436,8 +1441,9 @@ async function downloadVideo() {
         }else {
         alert('Erreur lors du téléchargement.');
         }
-        
-        
+    }else{
+        loadingSpinner.style.display = "none";
+        btnDl.style.left="-2vw";
     }
 }
 
@@ -1469,75 +1475,261 @@ async function Mymusique(){
             const tabMusique1=document.getElementById("tabMusique1")
             let list_music=data.music_dict.map(item => item.path)
 
+            
 
-            for(let i=0;i<list_music.length;i++){
+            window.search=function search() {
+                var AllMusicItem=[]
+                const inputMusicPerso=document.querySelectorAll('.inputMusicPerso') 
+                for(let i=0;i<inputMusicPerso.length;i++){
+                    AllMusicItem.push(inputMusicPerso[i].id)
+                }
+                const query = document.getElementById("searchInput").value.trim();
+                const resultDiv = document.getElementById("result");
+            
+                if (query === "") {
+                    try{
+                        document.querySelectorAll('.result-music').forEach(element => {
+                            element.remove();
+                        });
+                    }finally{
+                        let resultChoiceAllMusic = document.createElement('div');
+                        resultChoiceAllMusic.id = 'result-choice-all-music';
+                        resultChoiceAllMusic.className = 'result-music';
+
+                        const textAllMusicPerso = document.createElement('label');
+                        textAllMusicPerso.textContent = "Tout selectionner";
+
+                        const inputAllMusicPerso=document.createElement("input");
+                        inputAllMusicPerso.type="checkbox";
+                        inputAllMusicPerso.id='inputAllMusicPerso'
+
+                        resultChoiceAllMusic.appendChild(inputAllMusicPerso)
+                        resultChoiceAllMusic.appendChild(textAllMusicPerso)
+                        tabMusique1.appendChild(resultChoiceAllMusic);  
+
+                        let resultChoiceNoMusic = document.createElement('div');
+                        resultChoiceNoMusic.id = 'result-choice-no-music';
+                        resultChoiceNoMusic.className = 'result-music';
+
+                        const textNoMusicPerso = document.createElement('label');
+                        textNoMusicPerso.textContent = "Tout deselectionner";
+
+                        const inputNoMusicPerso=document.createElement("input");
+                        inputNoMusicPerso.type="checkbox";
+                        inputNoMusicPerso.id='inputNoMusicPerso'
+
+                        resultChoiceNoMusic.appendChild(inputNoMusicPerso)
+                        resultChoiceNoMusic.appendChild(textNoMusicPerso)
+                        tabMusique1.appendChild(resultChoiceNoMusic);   
+
+                        for(let i=0;i<list_music.length;i++){
+                            
+                            let resultMusic = document.createElement('div');
+                            resultMusic.className = 'result-music';
+                            resultMusic.id='result-music'
+
+                            const text = document.createElement('label');
+                            text.textContent = list_music[i];
+
+                            const input=document.createElement("input");
+                            input.type="checkbox";
+                            input.id=list_music[i];
+                            input.className="inputMusicPerso"
+
+                            resultMusic.appendChild(input)
+                            resultMusic.appendChild(text)
+                            tabMusique1.appendChild(resultMusic);  
+                            
+                        }
+                        }
+                    AllMusicPerso()
+                    addMusicPerso()
+                    NoMusicPerso()
+                    cochedMusicPerso()
+                }else{
+                    document.querySelectorAll('.result-music').forEach(element => {
+                        element.remove();
+                    });
+                    // Calculer les similarités pour chaque élément
+                const scoredItems = AllMusicItem.map(item => ({
+                    item,
+                    score: jaroWinkler(query.toLowerCase(), item.toLowerCase())
+                }));
                 
-                let resultMusic = document.createElement('div');
-                resultMusic.className = 'result-music';
-                resultMusic.id='result-music'
+                // Trier par similarité décroissante
+                scoredItems.sort((a, b) => b.score - a.score);
+                for(let i=0;i<3;i++){
+                    
+                    const bestMatch = scoredItems[i]
+                    let resultMusic = document.createElement('div');
+                    resultMusic.className = 'result-music';
+                    resultMusic.id='result-music'
 
-                const text = document.createElement('label');
-                text.textContent = list_music[i];
+                    const text = document.createElement('label');
+                    text.textContent = bestMatch.item;
 
-                const input=document.createElement("input");
-                input.type="checkbox";
-                input.id=list_music[i];
-                input.className="inputMusicPerso"
+                    const input=document.createElement("input");
+                    input.type="checkbox";
+                    input.id=bestMatch.item;
+                    input.className="inputMusicPerso"
 
-                resultMusic.appendChild(input)
-                resultMusic.appendChild(text)
-                tabMusique1.appendChild(resultMusic);  
+                    resultMusic.appendChild(input)
+                    resultMusic.appendChild(text)
+                    tabMusique1.appendChild(resultMusic);  
+                    addMusicPerso()
+                    cochedMusicPerso()
+                }
+                }
+            
                 
+                // Afficher le meilleur résultat
+            
             }
-            addMusicPerso()
-            cochedMusicPerso()
+            search()
+            
+
+            
         })
 }
 
 var music_select_Perso=JSON.parse(localStorage.getItem('music_select_Perso')) || []
 
+function NoMusicPerso(){
+    const inputNoMusicPerso=document.getElementById('inputNoMusicPerso')
+    const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
+    inputNoMusicPerso.addEventListener('change',()=>{
+        localStorage.setItem('AllMusicPerso',false)
+        document.getElementById('inputAllMusicPerso').checked=false
+        if(inputNoMusicPerso.checked){
+            localStorage.setItem('NoMusicPerso',true)
+            for(let i=0;i<inputMusicPerso.length;i++){
+                inputMusicPerso[i].checked=false
+                music_select_Perso=music_select_Perso.filter(item=>item!==inputMusicPerso[i].id)
+                for(let j=0;j<playlist.length;j++){
+                    if(inputMusicPerso[i].id== getMusicTitle(playlist[j])){
+                        playlist=playlist.filter(items=>items!==playlist[j])
+                    }
+                }
+            }
+            localStorage.setItem('playlist', JSON.stringify(playlist));
+            localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+        }else{
+            localStorage.setItem('NoMusicPerso',false)
+        }
+        
+    })
+}
+
+function AllMusicPerso(){
+    const inputAllMusicPerso=document.getElementById('inputAllMusicPerso')
+    const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
+    let listAllMusicPerso=[]
+    inputAllMusicPerso.addEventListener('change',async ()=>{
+        if(inputAllMusicPerso.checked){
+            localStorage.setItem('AllMusicPerso',true)
+            localStorage.setItem('NoMusicPerso',false)
+            document.getElementById('inputNoMusicPerso').checked=false
+            for(let i=0;i<inputMusicPerso.length;i++){
+                music_select_Perso=music_select_Perso.filter(item=>item!==inputMusicPerso[i].id)
+                localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+                inputMusicPerso[i].checked=false
+                for(let j=0;j<playlist.length;j++){
+                    if(inputMusicPerso[i].id== getMusicTitle(playlist[j])){
+                        playlist=playlist.filter(items=>items!==playlist[j])
+                    }
+                    
+                }
+            }
+            for(let i=0;i<inputMusicPerso.length;i++){
+                listAllMusicPerso.push(inputMusicPerso[i].id)
+            }
+            await fetch("http://127.0.0.1:8000/get_plays_music/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({name_music:listAllMusicPerso}),
+            }).then(response => response.json())
+            .then(data => {
+                let list_music=data.map(item => item.signedURL)
+                for(let i=0;i<list_music.length;i++){
+                    playlist.push(list_music[i])
+                }
+                for(let i=0;i<inputMusicPerso.length;i++){
+                    inputMusicPerso[i].checked=true
+                    music_select_Perso.push(inputMusicPerso[i].id)
+                }
+                list_music=[]
+                listAllMusicPerso=[]
+                playlist=shuffle(playlist)
+                localStorage.setItem('playlist', JSON.stringify(playlist));
+                localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+
+                duree()
+                title()
+                cover()
+            })
+            
+        }else{
+            localStorage.setItem('AllMusicPerso',false)
+            for(let i=0;i<inputMusicPerso.length;i++){
+                music_select_Perso=music_select_Perso.filter(item=>item!==inputMusicPerso[i].id)
+                localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+                inputMusicPerso[i].checked=false
+                for(let j=0;j<playlist.length;j++){
+                    if(inputMusicPerso[i].id== getMusicTitle(playlist[j])){
+                        playlist=playlist.filter(items=>items!==playlist[j])
+                    }
+                }
+                playlist=shuffle(playlist)
+                localStorage.setItem('playlist', JSON.stringify(playlist));
+            }
+        }
+    })
+}
+    
 
 function addMusicPerso(){
     const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
     inputMusicPerso.forEach(music=>{
         music.addEventListener('change',async ()=>{
+        const response=await fetch("http://127.0.0.1:8000/get_play_music/", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({name_music:music.id}),
+    }).then(response => response.json())
+        .then(data => {
+            let list_music = Object.values(data)
+            if(music.checked){
+                playlist.push(list_music[0])
+                document.getElementById("titreMusique").innerHTML=music.id
+                playlist=shuffle(playlist)
+                localStorage.setItem('playlist', JSON.stringify(playlist));
+                music_select_Perso.push(music.id)
+                localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+                duree()
+            }else{
+                document.getElementById('inputAllMusicPerso').checked=false
+                localStorage.setItem('AllMusicPerso',false)
+                music_select_Perso=music_select_Perso.filter(item=>item!==music.id)
+                localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));                
+                for(let i=0;i<playlist.length;i++){
+                    if(music.id== getMusicTitle(playlist[i])){
+                        playlist=playlist.filter(items=>items!==playlist[i])
+                    }
+                }
 
-                  const response=await fetch("http://127.0.0.1:8000/get_play_music/", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({name_music:music.id}),
-                }).then(response => response.json())
-                    .then(data => {
-                        let list_music=musicList = Object.values(data)
-                        if(music.checked){
-                            playlist.push(list_music[0])
-                            document.getElementById("titreMusique").innerHTML=music.id
-                            playlist=shuffle(playlist)
-                            localStorage.setItem('playlist', JSON.stringify(playlist));
-                            music_select_Perso.push(music.id)
-                            localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
-                            duree()
-                        }else{
-                            music_select_Perso=music_select_Perso.filter(item=>item!==music.id)
-                            localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
-                            const nbMusic=document.querySelectorAll('.inputMusicPerso')
-                            
-                            for(let i=0;i<playlist.length;i++){
-                                console.log(music.id,getMusicTitle(playlist[i]))
-                                if(music.id== getMusicTitle(playlist[i]))
-                                playlist=playlist.filter(items=>items!==playlist[i])
-                            }
-
-                            playlist=shuffle(playlist)
-                            localStorage.setItem('playlist', JSON.stringify(playlist));
+                playlist=shuffle(playlist)
+                localStorage.setItem('playlist', JSON.stringify(playlist));
 
 
-                        }
-                        
-                        })
+            }
+            
+            })
         })
     })
 }
@@ -1558,16 +1750,31 @@ function getMusicTitle(url) {
 function cochedMusicPerso(){
     const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
     inputMusicPerso.forEach(music=>{
-        for(let i=0;i<inputMusicPerso.length;i++){
+        
+        for(let i=0;i<music_select_Perso.length;i++){
             if(music.id==music_select_Perso[i]){
                 music.checked=true
             }
-                
         }
     })
+    try{
+        if(localStorage.getItem('AllMusicPerso')=='true'){
+            const inputAllMusicPerso=document.getElementById('inputAllMusicPerso')
+            if(inputAllMusicPerso){
+                inputAllMusicPerso.checked=true
+            }
+        }
+        if(localStorage.getItem('NoMusicPerso')=='true'){
+            const inputNoMusicPerso=document.getElementById('inputNoMusicPerso');
+            if(inputNoMusicPerso){
+                inputNoMusicPerso.checked=true
+            }
+        }
+    }finally{
+        
+    }
+    
 }
-
-
 
 
 const tab5=document.getElementById('tab5.1')
@@ -1578,5 +1785,65 @@ tab5.addEventListener('click',()=>{
 })
 
 
+
+
+
+function jaroWinkler(s1, s2) {
+    const m = 0.1; // Poids de la longueur commune
+    const p = 0.1; // Poids pour ajuster l'importance des premiers caractères
+
+    const s1Len = s1.length;
+    const s2Len = s2.length;
+    
+    if (s1Len === 0 || s2Len === 0) return 0;
+
+    const matchDistance = Math.floor(Math.max(s1Len, s2Len) / 2) - 1;
+    let matches = 0;
+    let transpositions = 0;
+
+    // Tableau pour les marques de caractères correspondants
+    const s1Matches = Array(s1Len).fill(false);
+    const s2Matches = Array(s2Len).fill(false);
+
+    // Trouver les correspondances
+    for (let i = 0; i < s1Len; i++) {
+        for (let j = Math.max(0, i - matchDistance); j < Math.min(s2Len, i + matchDistance + 1); j++) {
+            if (s1[i] === s2[j] && !s2Matches[j]) {
+                s1Matches[i] = true;
+                s2Matches[j] = true;
+                matches++;
+                break;
+            }
+        }
+    }
+
+    // Si aucun caractère ne correspond, la similarité est nulle
+    if (matches === 0) return 0;
+
+    // Calculer les transpositions
+    let k = 0;
+    for (let i = 0; i < s1Len; i++) {
+        if (s1Matches[i]) {
+            while (!s2Matches[k]) k++;
+            if (s1[i] !== s2[k]) transpositions++;
+            k++;
+        }
+    }
+
+    transpositions /= 2;
+
+    // Calcul du score de Jaro
+    const jaro = ((matches / s1Len) + (matches / s2Len) + ((matches - transpositions) / matches)) / 3;
+
+    // Appliquer la correction de Jaro-Winkler pour les premiers caractères
+    const l = s1.split('').findIndex((char, i) => char !== s2[i]);
+    const jaroWinklerScore = jaro + (Math.min(l, 4) * p * (1 - jaro));
+
+    return jaroWinklerScore;
+}
+
+document.getElementById('searchInput').addEventListener('input',()=>{
+    search()
+})
     
 

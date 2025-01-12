@@ -45,6 +45,7 @@ function getCookie(name) {
 }
 
 window.user_id=function(){
+    var token=localStorage.getItem("access_token")
     fetch("http://127.0.0.1:8000/get_user_id/", {
         method: "POST",
         headers: {
