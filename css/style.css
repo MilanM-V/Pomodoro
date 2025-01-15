@@ -293,7 +293,7 @@ button{
     border-radius: 2vw;
     position: fixed;
     top: -50%;
-    left: 28.6%;
+    left: 30%;
     transition: top 0.6s ease;
     
 }
@@ -805,19 +805,32 @@ option:checked,option:hover {
     color: #a0a0a0;
 }
 
+#connect{
+    background-color: #3191ff00;
+    height: 6vh;
+    width: 20vw;
+    border-radius: 0.8vw;
+    top: 18vh;
+    left: 1.5vw;
+    margin: 0px;
+    padding: 0px;
+    padding-left: 0vw;
+    padding-right: 3vw;
+    position:  absolute;
+}
+
 #youtubeSearch{
     border-radius: 0.8vw;
-    height: 6vh;
-    width: 17vw;
+    height: 100%;
+    width: 100%;
     text-align: left;
     font-size: 1.2vw;
     position: relative;
-    top: 8vh;
+    top: 0vh;
     left: 0vw;
     margin: 0px;
     padding: 0px;
     padding-left: 1vw;
-    padding-right: 3vw;
     appearance: none;
     font-family:'Nuku Nuku',sans-serif;
     border: none;
@@ -825,27 +838,28 @@ option:checked,option:hover {
 #youtubeSearch:default{
     border: none;
 }
+
+
 #searchButton{
-    background-color: #b3b3b3;
+    background-color: #afafaf;
     color: #000000 ;
     border: none;
-    height: 6vh;
+    height: 100%;
     width: 2.8vw;
     font-size: 2vw;
-    position: relative;
-    top: 1.85vh;
-    right: -14.2vw;
+    position: absolute;
+    top: 0vh;
+    right: 2vw;
     border-top-right-radius: 0.8vw ;
     border-bottom-right-radius: 0.8vw ;
+    border: none;
+    margin: 0;
+    padding: 0;
 
 }
 
 #searchButton:active{
     font-size: 1.8vw;
-    top: 1.7vh;
-    right: -14.2vw;
-    height: 6vh;
-    width: 2.8vw;
 }
 
 #tab5{
@@ -857,9 +871,9 @@ option:checked,option:hover {
 
 .result-item{
     position: relative;
-    top: 12vh;
+    top: 26vh;
     text-align: left;
-    left: 2vw;
+    left: 1.5vw;
     margin-right: 2vw;
     margin-bottom: 2vh;
 }
@@ -884,14 +898,14 @@ option:checked,option:hover {
 
 #downloadButton{
     font-family:'Nuku Nuku',sans-serif;
-    position: relative;
+    position: absolute;
     border-radius: 0.5vw;
     height: 7vh;
     width: 10vw;
     font-size: 1.5vw;
     background-color: #53a3ff;
-    top: 10vh;
-    left: -2vw;
+    top: 26vh;
+    left: 7vw;
     border: 0;
     margin: 0;
     padding: 0;
@@ -916,7 +930,7 @@ option:checked,option:hover {
     background-size:8px calc(100% - 0.35vw);
     position: relative;
     left: 16vw;
-    top: 5vh;
+    top: 18.5vh;
     display: none;
   }
   .loader:before {
@@ -951,7 +965,7 @@ option:checked,option:hover {
     text-align: center;
     display: flex;
     flex-direction: row;
-    gap: 1.5vw;
+    gap: 1.1vw;
     
 
 }
@@ -1008,6 +1022,7 @@ option:checked,option:hover {
     position: absolute;
     font-size: 1.0vw;
     padding-top: 0.5vw;
+    margin-right: 2.5vw;
 }
 
 .result-music input{
@@ -1055,8 +1070,217 @@ option:checked,option:hover {
     display: block;
 }
 
+.Back{
+    position: absolute;
+    width: 10vw;
+    height: 8vh;
+    border-radius: 0.5vw;
+    top: 40vh;
+    left: 1.5vw;
+    font-size: 1.5vw;
+    background-color: #b4bbbb;
+    font-family:'Nuku Nuku',sans-serif;
+}
+
+.Back:hover{
+    background-color: #898b8b;
+}
+
+#message_no_compte{
+    margin: 1vw;
+    width: 20vw;
+    text-align: center;
+    color: #f10000;
+    position: absolute;
+    top: 15vh;
+    left: 1vw;
+    font-size: 1.5vw;
+}
+
+.BackCreate{
+    position: absolute;
+    width: 10vw;
+    height: 8vh;
+    border-radius: 0.5vw;
+    top: 40vh;
+    left: 12.5vw;
+    font-size: 1.5vw;
+    background-color: #b4bbbb;
+    font-family:'Nuku Nuku',sans-serif;
+
+}
+
+.BackCreate:hover{
+    background-color: #898b8b;
+}
+
+.trash-button{
+    background-color: #00000000;
+    color: #ff0000;
+    border: none;
+    font-size: 1.5vw;
+    position: relative;
+    right: -18vw;
+}
+
+.supprfenetre{
+    width: 25vw;
+    height: 40vh;
+    background-color: #4b4a4a;
+    z-index: 1;
+    position: fixed;
+    top: 28vh;
+    left: 38vw;
+    border-radius: 1.5vw;
+    cursor: default;
+    border: 0.2vw #a3a3a3 solid;
+}
+
+.supprfenetre label{
+    color: #ffffff;
+    font-family:'Nuku Nuku',sans-serif;
+    position: absolute;
+    font-size: 1.5vw;
+    cursor: default;
+    top: 9vh;
+    left: 4vw;
+}
+
+.buttonyesupprfenetre{
+    background-color: #ff0000;
+    border-radius: 0.5vw;
+    height: 7vh;
+    width: 10vw;
+    font-family:'Nuku Nuku',sans-serif;
+    font-size: 1.5vw;
+    position: absolute;
+    bottom: 8vh;
+    left: 7.5vw;
+    
+}
+
+.buttonyesupprfenetre:hover{
+    background-color: #d30101;
+}
+
+.buttonyesupprfenetre:active{
+    transform: scale(95%);
+}
+
+.buttonclosesupprfenetre{
+    background-color: #00000000;
+    border: none;
+    color: #bdbdbd;
+    font-size: 2vw;
+    position: absolute;
+    top: 1vh;
+    right: 1vw;
+    display:block;
+}
+
+.buttonclosesupprfenetre:hover{
+    color: #ffffff;
+}
+
+.supprfenetreConteneur{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #000000bb;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.connection{
+    background-color: #ffffffab;
+    width: auto;
+    position: fixed;
+    right: 2vw;
+    top: 0vh;
+    height: 8vh;
+    border-bottom-right-radius: 0.5vw;
+    border-bottom-left-radius: 0.5vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+
+
+}
+
+.connection button{
+    font-family:'Nuku Nuku',sans-serif;
+    background-color: #8a8a8a;
+    position:relative;
+    top: 1.5vh;
+    border: none;
+    border-radius: 0.5vw;
+    height: 5vh;
+    width:100%;
+    
+}
+
+.connection button:hover{
+    background-color: #727272;
+}
+
+.logIn{
+    margin-right: 2vh;
+}
+
+.infoDlMusic{
+    border-radius: 50%;
+    width: 2.5vw;
+    height: 2.5vw;
+    font-size: 1.8vw;
+    background-color: #424242;
+    color: #ffffff;
+    border:none;
+    cursor: pointer;
+    position: absolute;
+    left: 0.5vw;
+    top: 11vh;
+}
+
+.fermerInfo{
+    width: 40vw;
+    height: 50vh;
+    background-color: #4e4e4e;
+    border-radius: 1.5vw;
+    border: 0.2vw #a3a3a3 solid;
+    position: fixed;
+    top: 11.724vw;
+    left: 29.84vw;
+    
+}
+
+.textfermerInfo{
+    position: absolute;
+    left: 0;
+    top: 9vh;
+    font-size: 2vw;
+    padding: 2vw;
+}
+
+.buttonclosefermerInfo{
+    font-size: 3vw;
+    background-color: #00000000;
+    border: none;
+    color: #cfcfcf;
+    position: absolute;
+    right: 0.5vw;
+}
+
+.buttonclosefermerInfo:hover{
+    color: #ffffff;
+}
+
 @media (max-width: 600px){
     header .wrapper{
+        top: 5vh;
         font-size: 4vw;
     }
     .content{
@@ -1675,6 +1899,491 @@ option:checked,option:hover {
         left: 0.4vw;
         font-size: 3vw;
         color: white;
+    }
+
+    
+    #connect{
+        background-color: #3191ff00;
+        height: 4vh;
+        width: 40vw;
+        border-radius: 0.8vw;
+        top: 18vh;
+        left: 1.5vw;
+        margin: 0px;
+        padding: 0px;
+        padding-left: 2vw;
+        padding-right: 3vw;
+        position:  absolute;
+        
+    }
+
+    #youtubeSearch{
+        border-radius: 0.8vw;
+        height: 100%;
+        width: 100%;
+        text-align: left;
+        font-size: 2.6vw;
+        position: relative;
+        top: 0vh;
+        left: 0vw;
+        margin: 0px;
+        padding: 0px;
+        padding-left: 1vw;
+        appearance: none;
+        font-family:'Nuku Nuku',sans-serif;
+        border: none;
+    }
+    #youtubeSearch:default{
+        border: none;
+    }
+
+
+    #searchButton{
+        background-color: #afafaf;
+        color: #000000 ;
+        border: none;
+        height: 100%;
+        width: 5vw;
+        font-size: 4vw;
+        position: absolute;
+        top: 0vh;
+        right: 2vw;
+        border-top-right-radius: 0.8vw ;
+        border-bottom-right-radius: 0.8vw ;
+        border: none;
+        margin: 0;
+        padding: 0;
+
+    }
+
+    #searchButton:active{
+        font-size: 1.8vw;
+    }
+
+    #tab5{
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+        max-height: 173vw;
+        width: 49vw;
+        background-color: #38171700;
+    }
+
+    .result-item{
+        position: relative;
+        top: 26vh;
+        text-align: left;
+        left: 4vw;
+        margin-right: 3vw;
+        margin-bottom: 2vh;
+        background-color: #3191ff00;
+    }
+    .result-item img{
+        width: 20vw;
+        height: auto;
+        cursor: pointer;
+        
+
+    }
+
+    .result-item img:target{
+        border: 0.2vw solid #8c1c96;
+        border-radius:2vw;
+        
+
+    }
+    .result-item span{
+        position: absolute;
+        font-size: 3vw;
+        margin-left: 1.5vw;
+    }
+
+    #downloadButton{
+        font-family:'Nuku Nuku',sans-serif;
+        position: absolute;
+        border-radius: 0.5vw;
+        height: 3.5vh;
+        width: 20vw;
+        font-size: 3vw;
+        background-color: #53a3ff;
+        top: 26vh;
+        left: 14vw;
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    #downloadButton:hover{
+        background-color: #3191ff;
+    }
+
+    #downloadButton:active{
+        transform: scale(95%);
+    }
+
+    .loader {
+        width: 12vw;
+        height: 4vh;
+        --c:no-repeat linear-gradient(#ffffff 0 0);
+        background:
+        var(--c) 0    100%,
+        var(--c) 50%  100%,
+        var(--c) 100% 100%;
+        background-size:8px calc(100% - 0.35vw);
+        position: relative;
+        left: 30vw;
+        top: 15.5vh;
+        display: none;
+    }
+    .loader:before {
+        content: "";
+        position: absolute;
+        width: 1.2vh;
+        height: 1.2vh;
+        border-radius: 50%;
+        background: #ffffff;
+        left: 0;
+        top: 0;
+        animation: 
+        l3-1 1.5s  linear infinite alternate,
+        l3-2 0.75s cubic-bezier(0,200,.8,200) infinite;
+    }
+    @keyframes l3-1 {
+        100% {left:calc(100% - 8px)}
+    }
+    @keyframes l3-2 {
+        100% {top:-0.02vh}
+    }
+
+
+    .tabsMusique {
+        background-color: #ff000000;
+        cursor: pointer;
+        color: #ffffff;
+        font-size: 4vw;
+        position: relative;
+        left: 1vw;
+        top: 2vh;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+        margin: 0;
+        margin-bottom: 0vh;
+        height: 6vh;
+
+    }
+
+    .list-choice-musique{
+        background-color: #272727;
+        height: 10vh;
+        padding: 0;
+        margin: 0;
+        border-top-right-radius: 2vw;
+    }
+
+
+    .tabMusique.active {
+        margin-bottom: 0vh;
+        font-weight: bold;
+        border-bottom: 0.2vw solid white;
+    }
+
+    /* Style du contenu des onglets */
+    .tab-content-Musique {
+        display: none;
+    }
+    .tab-content-Musique.active {
+        display: block;
+    }
+
+    #tabMusique1 {
+        position: absolute;
+        width: 100%;
+        right: 0px;
+        margin-top: 2vh;
+        background-color: #0077ff00;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 4vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 85%;
+        
+    }
+
+    .result-music{
+        background-color: #38171700;
+    }
+
+    .result-music label{
+        background-color: #ff313100;
+        left: 8vw;
+        text-align: left;
+        padding: 0px;
+        margin: 0px;
+        position: absolute;
+        font-size: 2.5vw;
+        padding-top: 3vw;
+        margin-right: 5vw;
+    }
+
+    .result-music input{
+        margin-top: 0px;
+        left: 0.5vw;
+        padding-top: 0px;
+    }
+
+    .result-music input[type="checkbox"]:checked::before {
+        content: '✔';  
+        text-align: center;
+        font-size: 3vw;
+        color: white;
+        position: relative;
+        top:0vh;
+        left: 0.20vw;
+        padding-bottom: 1vh;
+    }
+
+    .tab-content-Musique .result-music{
+        display: none;
+    }
+    .tab-content-Musique.active .result-music{
+        display: block;
+    }
+
+    .InputChooseMusic{
+        background-color: #3191ff00;
+    }
+
+    #searchInput{
+        appearance: none;
+        font-family:'Nuku Nuku',sans-serif;
+        border-radius: 2.5vw;
+        position: relative;
+        height: 4vh;
+        width: 40vw;
+        font-size: 3vw;
+        left: 2vw;
+    }
+
+    .tab-content-Musique .InputChooseMusic{
+        display: none;
+    }
+    .tab-content-Musique.active .InputChooseMusic{
+        display: block;
+    }
+
+    .Back{
+        position: absolute;
+        width: 10vw;
+        height: 8vh;
+        border-radius: 0.5vw;
+        top: 40vh;
+        left: 1.5vw;
+        font-size: 1.5vw;
+        background-color: #b4bbbb;
+        font-family:'Nuku Nuku',sans-serif;
+    }
+
+    .Back:hover{
+        background-color: #898b8b;
+    }
+
+    #message_no_compte{
+        margin: 1vw;
+        width: 20vw;
+        text-align: center;
+        color: #f10000;
+        position: absolute;
+        top: 15vh;
+        left: 1vw;
+        font-size: 1.5vw;
+    }
+
+    .BackCreate{
+        position: absolute;
+        width: 10vw;
+        height: 8vh;
+        border-radius: 0.5vw;
+        top: 40vh;
+        left: 12.5vw;
+        font-size: 1.5vw;
+        background-color: #b4bbbb;
+        font-family:'Nuku Nuku',sans-serif;
+
+    }
+
+    .BackCreate:hover{
+        background-color: #898b8b;
+    }
+
+    .trash-button{
+        background-color: #00000000;
+        color: #ff0000;
+        border: none;
+        font-size: 4vw;
+        position: relative;
+        right: -36.5vw;
+    }
+
+    .supprfenetre{
+        width: 60vw;
+        height: 30vh;
+        background-color: #4b4a4a;
+        z-index: 1;
+        position: fixed;
+        top: 30vh;
+        left: 20vw;
+        border-radius: 1.5vw;
+        cursor: default;
+        border: 0.2vw #a3a3a3 solid;
+    }
+
+    .supprfenetre label{
+        color: #ffffff;
+        font-family:'Nuku Nuku',sans-serif;
+        position: absolute;
+        font-size: 4vw;
+        cursor: default;
+        top: 9vh;
+        left: 7vw;
+    }
+
+    .buttonyesupprfenetre{
+        background-color: #ff0000;
+        border-radius: 1.5vw;
+        height: 7vh;
+        width: 25vw;
+        font-family:'Nuku Nuku',sans-serif;
+        font-size: 4vw;
+        position: absolute;
+        bottom: 4vh;
+        left: 18vw;
+        
+    }
+
+    .buttonyesupprfenetre:hover{
+        background-color: #d30101;
+    }
+
+    .buttonyesupprfenetre:active{
+        transform: scale(95%);
+    }
+
+    .buttonclosesupprfenetre{
+        background-color: #00000000;
+        border: none;
+        color: #bdbdbd;
+        font-size: 6vw;
+        position: absolute;
+        top: 1vh;
+        right: 1vw;
+        display:block;
+    }
+
+    .buttonclosesupprfenetre:hover{
+        color: #ffffff;
+    }
+
+    .supprfenetreConteneur{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        background-color: #000000bb;
+        top: 0;
+        left: 0;
+        z-index: 3;
+    }
+
+    .connection{
+        background-color: #ffffffab;
+        
+        position: fixed;
+        right: 6vw;
+        top: 0vh;
+        height: 4vh;
+        border-bottom-right-radius: 0.5vw;
+        border-bottom-left-radius: 0.5vw;
+        padding-left: auto;
+        padding-right: auto;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5vh;
+        width: auto;
+
+
+    }
+
+    .connection button{
+        font-family:'Nuku Nuku',sans-serif;
+        background-color: #8a8a8a;
+        position:relative;
+        top: 0.5vh;
+        border: none;
+        border-radius: 0.5vw;
+        height: 3vh;
+        width:auto;
+        font-size: 2vw;
+        right:  0vw;
+        
+    }
+
+    .connection button:hover{
+        background-color: #727272;
+    }
+
+    .logIn{
+        margin-right: 2vh;
+    }
+
+    .infoDlMusic{
+        border-radius: 50%;
+        width: 7vw;
+        height: 7vw;
+        font-size: 5vw;
+        background-color: #424242;
+        color: #ffffff;
+        border:none;
+        cursor: pointer;
+        position: absolute;
+        left: 2vw;
+        top: 12vh;
+    }
+
+    .fermerInfo{
+        width: 60vw;
+        height: 40vh;
+        background-color: #4e4e4e;
+        border-radius: 1.5vw;
+        border: 0.2vw #a3a3a3 solid;
+        position: fixed;
+        top: 60vw;
+        left: 20.84vw;
+        
+    }
+
+    .textfermerInfo{
+        position: absolute;
+        left: 0;
+        top: 9vh;
+        font-size: 5vw;
+        padding: 2vw;
+    }
+
+    .buttonclosefermerInfo{
+        font-size: 8vw;
+        background-color: #00000000;
+        border: none;
+        color: #cfcfcf;
+        position: absolute;
+        right: 0.5vw;
+    }
+
+    .buttonclosefermerInfo:hover{
+        color: #ffffff;
     }
 
 }

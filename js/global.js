@@ -1,4 +1,5 @@
 window.refreshAccessToken= async function() {
+    const token = localStorage.getItem("access_token");
     try {
         const response = await fetch("http://localhost:8000/refresh_token/", {
             method: "POST",
@@ -8,7 +9,7 @@ window.refreshAccessToken= async function() {
         });
 
         if (!response.ok) {
-            window.location.href = "./compte.html";
+            window.location.href = "./html/compte.html";
             const errorData = await response.json();
             throw new Error(errorData.detail || "Unable to refresh token");
             
@@ -18,7 +19,8 @@ window.refreshAccessToken= async function() {
 
         // Stocker les nouveaux tokens
         localStorage.setItem("access_token", data.access_token);
-        console.log(data.access_token)
+        setCookie("refresh-token", data.refresh_token);
+
         user_id();
         return data.access_token;
     } catch (error) {
@@ -45,7 +47,7 @@ function getCookie(name) {
 }
 
 window.user_id=function(){
-    var token=localStorage.getItem("access_token")
+    const token=localStorage.getItem("access_token")
     fetch("http://127.0.0.1:8000/get_user_id/", {
         method: "POST",
         headers: {
@@ -62,3 +64,8 @@ window.user_id=function(){
             }
         })
 }
+
+function setCookie(name, value) {
+    document.cookie = `${name}=${value}; path=/`;
+  }
+  

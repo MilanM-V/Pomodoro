@@ -15,6 +15,10 @@
 			<h1 class="Title" >Pomodoro Timer by Milan</h1>
 		</div>
     </header>
+    <div class="connection">
+        <button class="logIn">Se connecter</button>
+        <button class="CreateAccount">Creer son compte</button>
+    </div>
     <main>
         <audio id="music-player-bell">
             <source id="audio-source-bell" src="./musique/bells/Boxing Bell Sound Effect [0sORXQ-KHXw].mp3" type="audio/mpeg">
@@ -771,7 +775,7 @@
                         </div>
                         <div id="music_tabs">
                             <div class="tab-content-Musique active" id ='tabMusique1'>
-                                <div class="InputChooseMusic">
+                                <div class="InputChooseMusic" id="InputChooseMusic">
                                     <input 
                                         type="text" 
                                         id="searchInput" 
@@ -780,9 +784,12 @@
                                 </div>
                             </div>
                             <div class="tab-content-Musique" id ='tabMusique2'>
+                                <button class="infoDlMusic"><i class="fa-solid fa-info"></i></button>
                                 <div id="connect">
-                                    <input type="text" id="youtubeSearch" placeholder="Entrez un titre ou un artiste">
-                                    <button id="searchButton" for="youtubeSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <div class="contentDlSearch"></div>
+                                        <input type="text" id="youtubeSearch" placeholder="Entrez un titre ou un artiste">
+                                        <button id="searchButton" for="youtubeSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    </div>
                                     <button id="downloadButton" >Telecharger</button>
                                     <div class="loader" id="loader"></div> 
                                     <div class="results" id="searchResults"></div>
@@ -801,6 +808,7 @@
         </div>
 	</footer>
 <script src="./js/global.js"defer></script>
+
 <script src="./js/main.js"defer></script>
 
 </body>

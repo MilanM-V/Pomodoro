@@ -8,8 +8,8 @@ async function SaveUser(mail,mdp) {
     
     const data=await response.json();
     localStorage.setItem("access_token", data.access_token);
-    document.cookie = `refresh_token=${data.refresh_token}; Secure; HttpOnly; SameSite=Strict`;
-    window.location.href = "./music.html";
+    setCookie("refresh-token", data.refresh_token);
+    window.location.href = "../index.html";
 
 }
 
@@ -68,3 +68,7 @@ loginFormCreate.addEventListener("submit", (e) => {
         }
     }
 });
+
+function setCookie(name, value) {
+    document.cookie = `${name}=${value}; path=/`;
+  }

@@ -14,7 +14,8 @@ window.onload = function() {
     }
     colori()
 };
-
+var iteratio=0
+var AllMusicItem=[]
 
 var x=null;
 var chronos='chrono25'
@@ -1310,14 +1311,22 @@ if (token && isTokenExpired(token)) {
     message_no_compte.id = "message_no_compte"
     let collect = document.getElementById("tab5")
     collect.append(message_no_compte);
-    message_no_compte.innerHTML = "Vous devez-vous connecter pour pouvoir utiliser cette fonctionnalité <br><br><br>- Ajouter vos propre musique depuis youtube et creer vos playlist"
+    document.getElementById('InputChooseMusic').style.display="none"
+    message_no_compte.innerHTML = "Vous devez-vous connecter pour pouvoir utiliser cette fonctionnalite"
     let btnCompte=document.createElement('button');
     btnCompte.innerText='Se connecter';
     btnCompte.className='Back';
     btnCompte.onclick = function() {
-        window.location.href = './compte.html';
+        window.location.href = './html/compte.html';
+    };
+    let btnCreateCompte=document.createElement('button');
+    btnCreateCompte.innerText='Cree un compte';
+    btnCreateCompte.className='BackCreate';
+    btnCreateCompte.onclick = function() {
+        window.location.href = './html/creer-compte.html';
     };
     collect.append(btnCompte)
+    collect.append(btnCreateCompte)
     let message_compte = document.getElementById("connect");
     if (message_compte) {
         message_compte.remove();
@@ -1331,22 +1340,46 @@ const searchInput = document.getElementById('youtubeSearch');
 const searchButton = document.getElementById('searchButton');
 const searchResults = document.getElementById('searchResults');
 const preview = document.getElementById('preview');
-const downloadButton = document.getElementById('downloadButton');
 
-downloadButton.disabled = true;
+if(token){
+    const downloadButton = document.getElementById('downloadButton');
 
-searchButton.addEventListener('click', async () => {
-    const query = searchInput.value.trim();
-    if (!query) {
-        alert('Veuillez entrer un terme de recherche.');
-        return;
-    }
+    downloadButton.disabled = true;
 
-    // Appel à l'API YouTube
-    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=3&key=${API_KEY}`);
-    const data = await response.json();
-    displayResults(data.items);
-});
+    searchButton.addEventListener('click', async () => {
+        const query = searchInput.value.trim();
+        if (!query) {
+            alert('Veuillez entrer un terme de recherche.');
+            return;
+        }
+
+        // Appel à l'API YouTube
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=3&key=${API_KEY}`);
+        const data = await response.json();
+        displayResults(data.items);
+    });
+
+    document.getElementById('youtubeSearch').addEventListener('keydown',async(event)=>{
+        if(event.key=='Enter'){
+            const query = searchInput.value.trim();
+            if (!query) {
+                alert('Veuillez entrer un terme de recherche.');
+                return;
+            }
+    
+            // Appel à l'API YouTube
+            const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=3&key=${API_KEY}`);
+            const data = await response.json();
+            displayResults(data.items);
+    
+        }
+    })
+    downloadButton.addEventListener('click',()=>{
+        downloadVideo()
+    })
+}
+
+
 
 let id=0
 let videoId=""
@@ -1397,27 +1430,6 @@ function displayResults(items) {
 }
 
 
-document.getElementById('youtubeSearch').addEventListener('keydown',async(event)=>{
-    if(event.key=='Enter'){
-        const query = searchInput.value.trim();
-        if (!query) {
-            alert('Veuillez entrer un terme de recherche.');
-            return;
-        }
-
-        // Appel à l'API YouTube
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=3&key=${API_KEY}`);
-        const data = await response.json();
-        displayResults(data.items);
-
-    }
-})
-
-
-downloadButton.addEventListener('click',()=>{
-    downloadVideo()
-})
-
 const loadingSpinner = document.getElementById("loader");
 const btnDl=document.getElementById('downloadButton')
 
@@ -1425,15 +1437,27 @@ async function downloadVideo() {
     let videoId5=videoId
     let userId5=userId
     loadingSpinner.style.display = "block";
-    btnDl.style.left="-6vw";
+    if(isMobile){
+        btnDl.style.left="6vw";
+    }else{
+        btnDl.style.left="2vw";
+    }
+    
     if (videoId5!=="" && userId5!==""){
         const response = await fetch('http://127.0.0.1:8000/download_youtube_video', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                "Authorization": `Bearer ${token}`,
+                'Content-Type': 'application/json' },
             body: JSON.stringify({url:`https://www.youtube.com/watch?v=${videoId5}`,user_id:userId5})
         });
         loadingSpinner.style.display = "none";
-        btnDl.style.left="-2vw";
+        if(isMobile){
+            btnDl.style.left="14vw";
+        }else{
+            btnDl.style.left="7vw";
+        }
+        
         if (response.ok) {
             alert('Téléchargement réussi');
         }else if(response.status==410){
@@ -1443,26 +1467,41 @@ async function downloadVideo() {
         }
     }else{
         loadingSpinner.style.display = "none";
-        btnDl.style.left="-2vw";
+        if(isMobile){
+            btnDl.style.left="14vw";
+        }else{
+            btnDl.style.left="7vw";
+        }
     }
 }
 
 const tabsMusique = document.querySelectorAll('.tabMusique');
 const tabMusique_content = document.querySelectorAll('.tab-content-Musique');
-tabsMusique.forEach(tabMusique => {
-    tabMusique.addEventListener('click', () => {
-        
-        tabsMusique.forEach(t => t.classList.remove('active'));
-        tabMusique_content.forEach(content => content.classList.remove('active'));
+if(token){
+    tabsMusique.forEach(tabMusique => {
+        tabMusique.addEventListener('click', () => {
+            
+            tabsMusique.forEach(t => t.classList.remove('active'));
+            tabMusique_content.forEach(content => content.classList.remove('active'));
 
-        tabMusique.classList.add('active');
-        document.getElementById(tabMusique.dataset.tab).classList.add('active');
+            tabMusique.classList.add('active');
+            document.getElementById(tabMusique.dataset.tab).classList.add('active');
+        });
     });
-});
+    const tab5=document.getElementById('tab5.1')
+    tab5.addEventListener('click',()=>{
+        document.querySelectorAll('.result-music').forEach(element => {
+            element.remove();
+        });
+        Mymusique()
+    })
+
+}
 
 
 async function Mymusique(){
     let userId10=String(userId)
+    const token = localStorage.getItem("access_token");
     const response=await fetch("http://127.0.0.1:8000/get_music/", {
         method: "POST",
         headers: {
@@ -1474,15 +1513,17 @@ async function Mymusique(){
         .then(data => {
             const tabMusique1=document.getElementById("tabMusique1")
             let list_music=data.music_dict.map(item => item.path)
-
+            const inputMusicPerso=document.querySelectorAll('.inputMusicPerso') 
+            for(let i=0;i<inputMusicPerso.length;i++){
+                AllMusicItem.push(inputMusicPerso[i].id)
+            }
             
-
+            
             window.search=function search() {
-                var AllMusicItem=[]
-                const inputMusicPerso=document.querySelectorAll('.inputMusicPerso') 
-                for(let i=0;i<inputMusicPerso.length;i++){
-                    AllMusicItem.push(inputMusicPerso[i].id)
-                }
+                
+                
+                
+                
                 const query = document.getElementById("searchInput").value.trim();
                 const resultDiv = document.getElementById("result");
             
@@ -1526,35 +1567,66 @@ async function Mymusique(){
                             
                             let resultMusic = document.createElement('div');
                             resultMusic.className = 'result-music';
-                            resultMusic.id='result-music'
+                            resultMusic.id=`result-music${i}`
+                            
 
                             const text = document.createElement('label');
                             text.textContent = list_music[i];
+
+                            const button = document.createElement('button');
+                            button.className = 'trash-button'; 
+                            button.id=`trash-button${i}`
+                            
+                            
+                            const icon = document.createElement('i');
+                            icon.className = 'fa-solid fa-trash'; 
+
+                            button.appendChild(icon);
 
                             const input=document.createElement("input");
                             input.type="checkbox";
                             input.id=list_music[i];
                             input.className="inputMusicPerso"
-
+                            
                             resultMusic.appendChild(input)
                             resultMusic.appendChild(text)
+                            resultMusic.appendChild(button)
                             tabMusique1.appendChild(resultMusic);  
+                            
                             
                         }
                         }
+                    document.querySelectorAll('.trash-button').forEach(element => {
+                        element.addEventListener('click',()=>{
+                            pageDelMusic(element)
+                        })
+                    });
+                    if(iteratio==0){
+                        
+                        const inputMusicPerso=document.querySelectorAll('.inputMusicPerso') 
+                        for(let i=0;i<inputMusicPerso.length;i++){
+                            AllMusicItem.push(inputMusicPerso[i].id)
+                        }
+                        iteratio=1
+                    }
                     AllMusicPerso()
                     addMusicPerso()
                     NoMusicPerso()
                     cochedMusicPerso()
+                    
                 }else{
                     document.querySelectorAll('.result-music').forEach(element => {
                         element.remove();
+                        AllMusicItem=AllMusicItem
                     });
-                    // Calculer les similarités pour chaque élément
+                // Calculer les similarités pour chaque élément
+                
+
                 const scoredItems = AllMusicItem.map(item => ({
-                    item,
-                    score: jaroWinkler(query.toLowerCase(), item.toLowerCase())
+                    item, 
+                    score: jaroWinkler(query.toLowerCase(), item.toLowerCase()) // Le score calculé
                 }));
+                    
                 
                 // Trier par similarité décroissante
                 scoredItems.sort((a, b) => b.score - a.score);
@@ -1590,6 +1662,69 @@ async function Mymusique(){
 
             
         })
+}
+
+function pageDelMusic(element){
+    let supprfenetreConteneur = document.createElement('div');
+    supprfenetreConteneur.className='supprfenetreConteneur'
+
+    let supprfenetre = document.createElement('div');
+    supprfenetre.className='supprfenetre'
+
+    const textsupprfenetre=document.createElement('label')
+    textsupprfenetre.className='textsupprfenetre'
+    textsupprfenetre.innerHTML=`Etes vous sur de vouloir supprimer cette musique ? `
+    supprfenetre.appendChild(textsupprfenetre);  
+    
+    const buttonclosesupprfenetre=document.createElement('button')
+    buttonclosesupprfenetre.className='buttonclosesupprfenetre'
+    buttonclosesupprfenetre.id="buttonclosesupprfenetre"
+    const iconClose = document.createElement('i');
+    iconClose.className = 'fa-solid fa-xmark'; 
+    buttonclosesupprfenetre.appendChild(iconClose);  
+    supprfenetre.appendChild(buttonclosesupprfenetre);
+    
+    
+    const buttonyesupprfenetre=document.createElement('button')
+    buttonyesupprfenetre.className='buttonyesupprfenetre'
+    buttonyesupprfenetre.appendChild(document.createTextNode(' Supprimer'));  
+    supprfenetre.appendChild(buttonyesupprfenetre);  
+    supprfenetreConteneur.appendChild(supprfenetre)
+    document.getElementById('tabMusique1').appendChild(supprfenetreConteneur);  
+    
+    buttonclosesupprfenetre.addEventListener('click', () => {
+        supprfenetreConteneur.remove();
+        document.removeEventListener('click', handleOutsideClick);
+    });
+
+    buttonyesupprfenetre.addEventListener('click',async()=>{
+        let userId5=userId
+        await fetch("http://127.0.0.1:8000/supprMusic/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({name_music:document.querySelector(`#${element.parentElement.id} label `).innerHTML,user_id:userId5}),
+        })
+        document.querySelectorAll('.result-music').forEach(element => {
+            element.remove();
+        });
+        Mymusique()
+        supprfenetreConteneur.remove();
+    })
+    
+    const handleOutsideClick = (event) => {
+        if (!supprfenetre.contains(event.target)) {
+            supprfenetreConteneur.remove();
+            document.removeEventListener('click', handleOutsideClick);
+        }
+    };
+
+    setTimeout(() => {
+        document.addEventListener('click', handleOutsideClick);
+    }, 0);
+
+
 }
 
 var music_select_Perso=JSON.parse(localStorage.getItem('music_select_Perso')) || []
@@ -1643,6 +1778,8 @@ function AllMusicPerso(){
             for(let i=0;i<inputMusicPerso.length;i++){
                 listAllMusicPerso.push(inputMusicPerso[i].id)
             }
+            const token = localStorage.getItem("access_token");
+
             await fetch("http://127.0.0.1:8000/get_plays_music/", {
                 method: "POST",
                 headers: {
@@ -1694,6 +1831,7 @@ function addMusicPerso(){
     const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
     inputMusicPerso.forEach(music=>{
         music.addEventListener('change',async ()=>{
+        const token = localStorage.getItem("access_token");
         const response=await fetch("http://127.0.0.1:8000/get_play_music/", {
         method: "POST",
         headers: {
@@ -1777,12 +1915,6 @@ function cochedMusicPerso(){
 }
 
 
-const tab5=document.getElementById('tab5.1')
-tab5.addEventListener('click',()=>{
-    let resultMusic=document.querySelectorAll('#tab5.1')
-    resultMusic.remove()
-    Mymusique()
-})
 
 
 
@@ -1846,4 +1978,81 @@ document.getElementById('searchInput').addEventListener('input',()=>{
     search()
 })
     
+function getCookies(cookieName) {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const [name, value] = cookies[i].split('=');
+        if (name === cookieName) {
+            return decodeURIComponent(value);
+        }
+    }
+    return null; 
+}
 
+
+
+if(token){
+    document.querySelector('.logIn').remove()
+    document.querySelector('.CreateAccount').remove()
+    let btnLogOut=document.createElement('button')
+    btnLogOut.className="logOut"
+    btnLogOut.innerHTML='Se deconnnecter'
+    document.querySelector('.connection').appendChild(btnLogOut)
+    
+    btnLogOut.addEventListener('click',()=>{
+        localStorage.removeItem('access_token')
+        window.location.reload(); 
+
+    })
+    
+}else{
+    document.querySelector('.logIn').addEventListener('click',()=>{
+        window.location.href = "./html/compte.html";
+    })
+
+    document.querySelector('.CreateAccount').addEventListener('click',()=>{
+        window.location.href = "./html/creer-compte.html";
+    })
+}
+
+
+document.querySelector('.infoDlMusic').addEventListener('click',()=>{
+    let fermerInfoContent = document.createElement('div');
+    fermerInfoContent.className='supprfenetreConteneur'
+
+    let fermerInfo = document.createElement('div');
+    fermerInfo.className='fermerInfo'
+
+    const textfermerInfo=document.createElement('label')
+    textfermerInfo.className='textfermerInfo'
+    textfermerInfo.innerHTML=`Avec cette fonctionnaliter vous pouvez rechercher votre musique puis la telecharger, vous pourrer alors la retrouver dans vos music pour l'ecouter`
+    fermerInfo.appendChild(textfermerInfo);  
+    
+    const buttonclosefermerInfo=document.createElement('button')
+    buttonclosefermerInfo.className='buttonclosefermerInfo'
+    buttonclosefermerInfo.id="buttonclosefermerInfo"
+    const iconClose = document.createElement('i');
+    iconClose.className = 'fa-solid fa-xmark'; 
+    buttonclosefermerInfo.appendChild(iconClose);  
+    fermerInfo.appendChild(buttonclosefermerInfo);
+
+    fermerInfoContent.appendChild(fermerInfo); 
+    document.getElementById('tabMusique2').appendChild(fermerInfoContent);  
+    
+    buttonclosefermerInfo.addEventListener('click', () => {
+        fermerInfoContent.remove();
+        document.removeEventListener('click', handleOutsideClick);
+    });
+    
+    const handleOutsideClick = (event) => {
+        if (!fermerInfo.contains(event.target)) {
+            fermerInfoContent.remove();
+            document.removeEventListener('click', handleOutsideClick);
+        }
+    };
+
+    setTimeout(() => {
+        document.addEventListener('click', handleOutsideClick);
+    }, 0);
+
+})

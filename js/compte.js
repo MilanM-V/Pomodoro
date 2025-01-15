@@ -1,7 +1,10 @@
 async function ConnectUser(mail,mdp) {
+  const token = localStorage.getItem("access_token");
   const response = await fetch('http://127.0.0.1:8000/connect', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        "Authorization": `Bearer ${token}`,
+        'Content-Type': 'application/json' },
       body: JSON.stringify({mail:mail,mdp:mdp})
   });
   
@@ -9,7 +12,7 @@ async function ConnectUser(mail,mdp) {
   if (data){
     localStorage.setItem("access_token", data.access_token);
     setCookie("refresh-token", data.refresh_token);
-    window.location.href = "./music.html";
+    window.location.href = "../index.html";
 
   }else{
     document.getElementById("email").value="";
