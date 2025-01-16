@@ -1,5 +1,5 @@
 async function SaveUser(mail,mdp) {
-    const response = await fetch('https://pomodoro-api.up.railway.app/SaveUser', {
+    const response = await fetch('https://pomodoro-api.up.railway.app/SaveUser/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({mail:mail,mdp:mdp})

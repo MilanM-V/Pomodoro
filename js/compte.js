@@ -1,6 +1,6 @@
 async function ConnectUser(mail,mdp) {
   const token = localStorage.getItem("access_token");
-  const response =  await fetch('https://pomodoro-api.up.railway.app/connect', {
+  const response =  await fetch('https://pomodoro-api.up.railway.app/connect/', {
       method: 'POST',
       headers: { 
         "Authorization": `Bearer ${token}`,
