@@ -8,7 +8,7 @@ async function ConnectUser(mail,mdp) {
       body: JSON.stringify({mail:mail,mdp:mdp})
   });
   
-  const data= response.json();
+  const data= await response.json();
   if (data){
     localStorage.setItem("access_token", data.access_token);
     setCookie("refresh-token", data.refresh_token);
