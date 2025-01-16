@@ -1,6 +1,6 @@
 async function ConnectUser(mail,mdp) {
   const token = localStorage.getItem("access_token");
-  const response = await fetch('http://127.0.0.1:8000/connect', {
+  const response =  await fetch('https://pomodoro-api.up.railway.app/connect', {
       method: 'POST',
       headers: { 
         "Authorization": `Bearer ${token}`,
@@ -8,7 +8,7 @@ async function ConnectUser(mail,mdp) {
       body: JSON.stringify({mail:mail,mdp:mdp})
   });
   
-  const data=await response.json();
+  const data= response.json();
   if (data){
     localStorage.setItem("access_token", data.access_token);
     setCookie("refresh-token", data.refresh_token);

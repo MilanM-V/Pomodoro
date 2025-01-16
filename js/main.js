@@ -1444,7 +1444,7 @@ async function downloadVideo() {
     }
     
     if (videoId5!=="" && userId5!==""){
-        const response = await fetch('http://127.0.0.1:8000/download_youtube_video', {
+        const response = await fetch('https://pomodoro-api.up.railway.app/download_youtube_video/', {
             method: 'POST',
             headers: { 
                 "Authorization": `Bearer ${token}`,
@@ -1502,7 +1502,7 @@ if(token){
 async function Mymusique(){
     let userId10=String(userId)
     const token = localStorage.getItem("access_token");
-    const response=await fetch("http://127.0.0.1:8000/get_music/", {
+    const response=await fetch("https://pomodoro-api.up.railway.app/get_music/", {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -1699,7 +1699,7 @@ function pageDelMusic(element){
 
     buttonyesupprfenetre.addEventListener('click',async()=>{
         let userId5=userId
-        await fetch("http://127.0.0.1:8000/supprMusic/", {
+        await fetch("https://pomodoro-api.up.railway.app/supprMusic/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -1780,7 +1780,7 @@ function AllMusicPerso(){
             }
             const token = localStorage.getItem("access_token");
 
-            await fetch("http://127.0.0.1:8000/get_plays_music/", {
+            await fetch("https://pomodoro-api.up.railway.app/get_plays_music/", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -1832,7 +1832,7 @@ function addMusicPerso(){
     inputMusicPerso.forEach(music=>{
         music.addEventListener('change',async ()=>{
         const token = localStorage.getItem("access_token");
-        const response=await fetch("http://127.0.0.1:8000/get_play_music/", {
+        const response=await fetch("https://pomodoro-api.up.railway.app/get_play_music/", {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`,
