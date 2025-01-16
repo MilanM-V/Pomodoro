@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche YouTube et Prévisualisation</title>
+</head>
+<body>
+    <audio id="audioPlayer" controls>
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+    
+    <script>
+        const bucketName = "musics";  // Assure-toi que ce nom est correct et correspond à ce que tu as dans Supabase
+        const fileName = "Harry Styles _ Sign of the Times (Official Video).mp3";
+
+        const fileUrl = `https://qfjdoztzlpyzhroajnxz.supabase.co/storage/v1/object/sign/musics/Dua%20Lipa%20_%20Illusion%20(Official%20Music%20Video).mp3?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJtdXNpY3MvRHVhIExpcGEgXyBJbGx1c2lvbiAoT2ZmaWNpYWwgTXVzaWMgVmlkZW8pLm1wMyIsImlhdCI6MTczNjYzNzQ5NywiZXhwIjoyMDUxOTk3NDk3fQ.HFG7nk8JaxotFPpAoXhc1VLnnNi-2LFPlrqg-Ov2Ncw&t=2025-01-11T23%3A18%3A16.537Z`;
+        console.log(fileUrl);  // Vérifie l'URL générée
+
+        // Utilisation dans l'élément audio
+        const audioPlayer = document.getElementById("audioPlayer");
+        audioPlayer.src = fileUrl;
+
+    </script>
+</body>
+</html>

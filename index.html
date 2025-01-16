@@ -7,8 +7,6 @@
 	<script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2362441437802407"
-     crossorigin="anonymous"></script>
     <title>Pomodoro</title>
 </head>
 <body class="page">
@@ -17,6 +15,10 @@
 			<h1 class="Title" >Pomodoro Timer by Milan</h1>
 		</div>
     </header>
+    <div class="connection">
+        <button class="logIn">Se connecter</button>
+        <button class="CreateAccount">Creer son compte</button>
+    </div>
     <main>
         <audio id="music-player-bell">
             <source id="audio-source-bell" src="./musique/bells/Boxing Bell Sound Effect [0sORXQ-KHXw].mp3" type="audio/mpeg">
@@ -24,7 +26,7 @@
         <div class="content">
             <div class="musique">
 
-                <img id="coverImage"  alt="Cover MP3">
+                <img id="coverImage"  alt="Cette Musique ne contient pas de cover">
 
                 <p id="duree">-00:00</p>
 
@@ -66,6 +68,7 @@
                         <div class="tab" data-tab="tab2">Timer</div>
                         <div class="tab" data-tab="tab3">Musique</div>
                         <div class="tab" data-tab="tab4">Fond</div>
+                        <div class="tab" data-tab="tab5">Vos Musiques</div>
                     </div>
 
                 </div>
@@ -89,7 +92,7 @@
                             <button id="SoundBell" class="close-btn"><i class="fa-solid fa-volume-high"></i></button>
                             <p>pomodoro-timer-chill n'est pas affilie au titulaire de la marque deposee Pomodoro Technique, la societe Cirillo, et respecte ses droits de marque. Pomodoro Technique et Pomodoro sont des marques deposees de Francesco Cirillo.</p>
                             <div class="review">
-                                <p>Si vous voulez donnez votre avis ou emmetre des suggestion <a href="./review.html">vous pouvez le faire ici</a></p>
+                                <p>Si vous voulez donnez votre avis ou emmetre des suggestion <a href="./html/review.html">vous pouvez le faire ici</a></p>
                             </div>
                         </div>
                     </div>
@@ -761,7 +764,39 @@
                             </select>
                             <img id="extrait" src="./images/fond1.gif">
                         </div>
-                    </div>    
+                    </div>   
+                    <div class="tab-content" id="tab5">
+                        <div class="list-choice-musique" id="list-choice-musique">
+                            <div class="tabsMusique">
+                                <div class="tabMusique active" data-tab="tabMusique1" id="tab5.1">Vos Musiques</div>
+                                <div class="tabMusique" data-tab="tabMusique2">Ajouter des musiques</div>
+        
+                            </div>
+                        </div>
+                        <div id="music_tabs">
+                            <div class="tab-content-Musique active" id ='tabMusique1'>
+                                <div class="InputChooseMusic" id="InputChooseMusic">
+                                    <input 
+                                        type="text" 
+                                        id="searchInput" 
+                                        placeholder="Rechercher une musique..."
+                                    />
+                                </div>
+                            </div>
+                            <div class="tab-content-Musique" id ='tabMusique2'>
+                                <button class="infoDlMusic"><i class="fa-solid fa-info"></i></button>
+                                <div id="connect">
+                                    <div class="contentDlSearch"></div>
+                                        <input type="text" id="youtubeSearch" placeholder="Entrez un titre ou un artiste">
+                                        <button id="searchButton" for="youtubeSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    </div>
+                                    <button id="downloadButton" >Telecharger</button>
+                                    <div class="loader" id="loader"></div> 
+                                    <div class="results" id="searchResults"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -772,8 +807,9 @@
 			&copy; Copyright <strong><span>Milan MARCHAND--VALAT</span></strong>. All Rights Reserved
         </div>
 	</footer>
-    
-<script src="./js/main.js"></script>
+<script src="./js/global.js"defer></script>
+
+<script src="./js/main.js"defer></script>
 
 </body>
 </html>

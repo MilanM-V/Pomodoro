@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../css/style.css">
+	<script src="https://kit.fontawesome.com/62f8038c58.js" crossorigin="anonymous"></script>
+    <title>Pomodoro</title>
+</head>
+<body class="page">
+    <main>
+        <div class="content">
+            <div class="timer">
+                <button id="openModalBtn"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </div>
+        
+        <div id="modal" class="modal">
+            <div class="modal-content" id="modal-content">
+                
+                <button id="closeModalBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                <div class="list-page" id="list-page">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="tab5">Music</div>
+
+                    </div>
+                </div>
+                <div id="info-parametre">
+                    <div class="tab-content active" id="tab5">
+                        <div class="list-choice-musique" id="list-choice-musique">
+                            <div class="tabsMusique">
+                                <div class="tabMusique active" data-tab="tabMusique1">Vos Playlist</div>
+                                <div class="tabMusique" data-tab="tabMusique2">Ajouter des musiques</div>
+        
+                            </div>
+                        </div>
+                        <div id="music_tabs">
+                            <div class="tab-content-Musique active" id ='tabMusique1'>
+                                
+                            </div>
+                            <div class="tab-content-Musique" id ='tabMusique2'>
+                                <div id="connect">
+                                    <input type="text" id="youtubeSearch" placeholder="Entrez un titre ou un artiste">
+                                    <button id="searchButton" for="youtubeSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <button id="downloadButton" >Telecharger</button>
+                                    <div class="loader" id="loader"></div> 
+                                    <div class="results" id="searchResults"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+<script src="../js/global.js"defer></script>
+<script src="../js/music.js"defer></script>
+
+</body>
+</html>
