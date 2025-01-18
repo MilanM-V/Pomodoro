@@ -54,7 +54,6 @@ actChrono()
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        // Choisir un index aléatoire entre 0 et i
         const j = Math.floor(Math.random() * (i + 1));
         
         // Échanger les éléments array[i] et array[j]
@@ -1450,21 +1449,43 @@ async function downloadVideo() {
                 "Authorization": `Bearer ${token}`,
                 'Content-Type': 'application/json' },
             body: JSON.stringify({url:`https://www.youtube.com/watch?v=${videoId5}`,user_id:userId5})
-        });
-        loadingSpinner.style.display = "none";
-        if(isMobile){
-            btnDl.style.left="14vw";
-        }else{
-            btnDl.style.left="7vw";
-        }
+        }).then(response => response.json())
+        .then(data => {
+            if(data.message=="Video uploaded successfully"){
+                alert('Téléchargement réussi');
+            }else{
+                alert('Le téléchargement a échouer');
+            }
+            console.log(data)
+            music_select_Perso.push(data.response.data[0].path)
+            let responses= async function(){
+
+                await fetch("https://pomodoro-api.up.railway.app/get_play_music/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({name_music:data.response.data[0].path}),
+            }).then(response => response.json())
+                .then(data => {
+                    let list_music = Object.values(data)
+                    playlist.push(list_music[0])
+                    playlist=shuffle(playlist)
+                    localStorage.setItem('playlist', JSON.stringify(playlist));
+                    localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
+                    duree()
+            })}
+            responses()
+            loadingSpinner.style.display = "none";
+            if(isMobile){
+                btnDl.style.left="14vw";
+            }else{
+                btnDl.style.left="7vw";
+            }
+            
+        })
         
-        if (response.ok) {
-            alert('Téléchargement réussi');
-        }else if(response.status==410){
-            alert("Erreur la vidéo que vous essayer de télécharger n'est pas une musique");
-        }else {
-        alert('Erreur lors du téléchargement.');
-        }
     }else{
         loadingSpinner.style.display = "none";
         if(isMobile){
@@ -1520,9 +1541,6 @@ async function Mymusique(){
             
             
             window.search=function search() {
-                
-                
-                
                 
                 const query = document.getElementById("searchInput").value.trim();
                 const resultDiv = document.getElementById("result");
@@ -1737,15 +1755,16 @@ function NoMusicPerso(){
         document.getElementById('inputAllMusicPerso').checked=false
         if(inputNoMusicPerso.checked){
             localStorage.setItem('NoMusicPerso',true)
-            for(let i=0;i<inputMusicPerso.length;i++){
-                inputMusicPerso[i].checked=false
-                music_select_Perso=music_select_Perso.filter(item=>item!==inputMusicPerso[i].id)
+            inputMusicPerso.forEach(input=>{
+                input.checked=false
+                music_select_Perso=music_select_Perso.filter(item=>item!==input.id)
                 for(let j=0;j<playlist.length;j++){
-                    if(inputMusicPerso[i].id== getMusicTitle(playlist[j])){
+                    if(input.id== getMusicTitle(playlist[j])){
                         playlist=playlist.filter(items=>items!==playlist[j])
                     }
                 }
-            }
+            })
+
             localStorage.setItem('playlist', JSON.stringify(playlist));
             localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
         }else{
@@ -1759,27 +1778,23 @@ function AllMusicPerso(){
     const inputAllMusicPerso=document.getElementById('inputAllMusicPerso')
     const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
     let listAllMusicPerso=[]
+    
     inputAllMusicPerso.addEventListener('change',async ()=>{
         if(inputAllMusicPerso.checked){
             localStorage.setItem('AllMusicPerso',true)
             localStorage.setItem('NoMusicPerso',false)
             document.getElementById('inputNoMusicPerso').checked=false
-            for(let i=0;i<inputMusicPerso.length;i++){
-                music_select_Perso=music_select_Perso.filter(item=>item!==inputMusicPerso[i].id)
+            music_select_Perso=[]
+            inputMusicPerso.forEach(input=>{
+                music_select_Perso.push(input.id)
                 localStorage.setItem('music_select_Perso', JSON.stringify(music_select_Perso));
-                inputMusicPerso[i].checked=false
-                for(let j=0;j<playlist.length;j++){
-                    if(inputMusicPerso[i].id== getMusicTitle(playlist[j])){
-                        playlist=playlist.filter(items=>items!==playlist[j])
-                    }
-                    
-                }
-            }
+                input.checked=true
+            })
+
             for(let i=0;i<inputMusicPerso.length;i++){
                 listAllMusicPerso.push(inputMusicPerso[i].id)
             }
             const token = localStorage.getItem("access_token");
-
             await fetch("https://pomodoro-api.up.railway.app/get_plays_music/", {
                 method: "POST",
                 headers: {
@@ -1792,10 +1807,6 @@ function AllMusicPerso(){
                 let list_music=data.map(item => item.signedURL)
                 for(let i=0;i<list_music.length;i++){
                     playlist.push(list_music[i])
-                }
-                for(let i=0;i<inputMusicPerso.length;i++){
-                    inputMusicPerso[i].checked=true
-                    music_select_Perso.push(inputMusicPerso[i].id)
                 }
                 list_music=[]
                 listAllMusicPerso=[]
@@ -1843,6 +1854,8 @@ function addMusicPerso(){
         .then(data => {
             let list_music = Object.values(data)
             if(music.checked){
+                document.getElementById('inputNoMusicPerso').checked=false
+                localStorage.setItem('NoMusicPerso',false)
                 playlist.push(list_music[0])
                 document.getElementById("titreMusique").innerHTML=music.id
                 playlist=shuffle(playlist)
@@ -1888,7 +1901,6 @@ function getMusicTitle(url) {
 function cochedMusicPerso(){
     const inputMusicPerso=document.querySelectorAll('.inputMusicPerso')
     inputMusicPerso.forEach(music=>{
-        
         for(let i=0;i<music_select_Perso.length;i++){
             if(music.id==music_select_Perso[i]){
                 music.checked=true
